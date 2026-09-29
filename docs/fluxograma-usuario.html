@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CoreMotiom — Fluxograma Completo do Usuário</title>
+<meta name="description" content="Fluxograma completo das jornadas do usuário na plataforma CoreMotiom: autenticação, compra, venda C2C, lojas verificadas, comunidade, treinadores e painel admin." />
+<style>
+  :root {
+    --bg: #08090c;
+    --panel: #101217;
+    --panel-2: #14171e;
+    --line: #22262f;
+    --text: #f3f5f9;
+    --muted: #98a0b1;
+    --red: #e11d2e;
+    --red-soft: #f87171;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(225, 29, 46, 0.16), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(167, 139, 250, 0.08), transparent 55%),
+      var(--bg);
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1360px; margin: 0 auto; padding: 32px 20px 80px; }
+  header.hero {
+    border: 1px solid var(--line);
+    background: linear-gradient(160deg, rgba(24, 26, 33, 0.96), rgba(12, 13, 17, 0.96));
+    border-radius: 26px;
+    padding: 30px clamp(20px, 4vw, 40px);
+    position: relative;
+    overflow: hidden;
+  }
+  header.hero::after {
+    content: "";
+    position: absolute; inset: 0 0 auto 0; height: 3px;
+    background: linear-gradient(90deg, #7f1d1d, var(--red), #f97316);
+  }
+  .brandline { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .logo {
+    width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center;
+    background: linear-gradient(135deg, #b91c1c, var(--red));
+    font-weight: 900; letter-spacing: -0.5px; box-shadow: 0 10px 30px rgba(225, 29, 46, 0.35);
+  }
+  .brandline h1 { font-size: clamp(20px, 3vw, 30px); margin: 0; letter-spacing: -0.5px; }
+  .pill {
+    font-size: 10px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(248, 113, 113, 0.4);
+    background: rgba(225, 29, 46, 0.14); color: #fca5a5;
+  }
+  header.hero p.lead { color: var(--muted); font-size: 14px; max-width: 96ch; margin: 0 0 18px; }
+  header.hero code { background: #171a21; border: 1px solid var(--line); border-radius: 6px; padding: 1px 5px; font-size: 12.5px; }
+  .mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+  .mini {
+    border: 1px solid var(--line); background: rgba(20, 23, 30, 0.7); border-radius: 14px; padding: 10px 13px;
+  }
+  .mini span { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #7b8496; font-weight: 700; }
+  .mini strong { font-size: 12.5px; font-weight: 600; color: #dfe3ec; }
+  nav.toc {
+    position: sticky; top: 0; z-index: 20; margin: 20px 0 26px; padding: 10px;
+    display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+    background: rgba(8, 9, 12, 0.92); backdrop-filter: blur(10px);
+    border: 1px solid var(--line); border-radius: 18px;
+  }
+  nav.toc::-webkit-scrollbar { display: none; }
+  nav.toc a {
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    color: #b9c0ce; text-decoration: none; font-size: 12px; font-weight: 600;
+    padding: 7px 12px; border-radius: 999px; border: 1px solid transparent; transition: all 0.15s ease;
+  }
+  nav.toc a:hover { background: var(--panel-2); border-color: var(--line); color: #fff; }
+  nav.toc a b {
+    display: grid; place-items: center; width: 19px; height: 19px; border-radius: 6px;
+    background: rgba(225, 29, 46, 0.18); color: #fca5a5; font-size: 10.5px;
+  }
+  section.card {
+    border: 1px solid var(--line); background: var(--panel); border-radius: 24px;
+    padding: 22px clamp(16px, 2.4vw, 26px) 18px; margin-bottom: 26px; scroll-margin-top: 84px;
+  }
+  .card-head { display: flex; gap: 14px; align-items: flex-start; }
+  .num {
+    flex: 0 0 auto; width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center;
+    background: rgba(225, 29, 46, 0.14); border: 1px solid rgba(248, 113, 113, 0.32);
+    color: #fca5a5; font-weight: 800; font-size: 14px;
+  }
+  .card h2 { margin: 2px 0 6px; font-size: clamp(17px, 2.2vw, 22px); letter-spacing: -0.4px; }
+  .desc { color: var(--muted); font-size: 13px; margin: 0; max-width: 110ch; }
+  .legend { display: flex; flex-wrap: wrap; gap: 7px; margin: 16px 0 12px; }
+  .chip {
+    font-size: 10.5px; font-weight: 600; color: #cdd3de; border: 1px solid var(--line);
+    background: rgba(20, 23, 30, 0.75); border-radius: 999px; padding: 4px 10px 4px 8px;
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .chip::before { content: ""; width: 8px; height: 8px; border-radius: 3px; background: var(--c); }
+  .chip.big { font-size: 11.5px; padding: 6px 13px 6px 10px; }
+  .canvas {
+    border: 1px solid var(--line); border-radius: 18px; overflow-x: auto; overflow-y: hidden;
+    background: #0b0c10; padding: 4px;
+  }
+  .canvas .flow-svg { display: block; width: 100%; height: auto; min-width: 880px; font-family: inherit; }
+  .hint { color: #6f7889; font-size: 11.5px; margin: 10px 2px 0; }
+  .split { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .legend-item { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; font-size: 11.5px; color: var(--muted); }
+  .sample { display: block; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  thead th {
+    text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.9px;
+    color: #8d95a6; background: var(--panel-2); padding: 10px 12px; border-bottom: 1px solid var(--line);
+  }
+  tbody td { padding: 9px 12px; border-bottom: 1px solid #191d25; color: #cbd2de; vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.k { color: #fff; font-weight: 600; }
+  tbody td.yes { color: #6ee7b7; font-weight: 600; }
+  tbody td.no { color: #fca5a5; font-weight: 600; }
+  .tbl-wrap { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .gap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .gap {
+    border: 1px solid var(--line); background: var(--panel-2); border-radius: 18px; padding: 16px;
+    border-left: 3px solid var(--red-soft);
+  }
+  .gap .tag {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.9px; text-transform: uppercase;
+    color: #fcd34d; background: rgba(251, 191, 36, 0.12); border: 1px solid rgba(251, 191, 36, 0.28);
+    padding: 3px 9px; border-radius: 999px;
+  }
+  .gap h3 { font-size: 14px; margin: 10px 0 6px; }
+  .gap p { font-size: 12.5px; color: var(--muted); margin: 0; }
+  .edge-keys { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); }
+  .edge-key { display: inline-flex; align-items: center; gap: 8px; }
+  .edge-key i { width: 34px; height: 0; border-top: 2px solid var(--c); border-top-style: var(--d); display: inline-block; }
+  h2.section-title { font-size: clamp(18px, 2.3vw, 23px); letter-spacing: -0.4px; margin: 0 0 6px; }
+  .sub { color: var(--muted); font-size: 13px; margin: 0 0 18px; max-width: 110ch; }
+  footer.foot { color: #6b7385; font-size: 11.5px; text-align: center; margin-top: 34px; }
+  footer.foot code { background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
+  @media print {
+    body { background: #fff; color: #111; }
+    nav.toc { display: none; }
+    section.card, header.hero, .gap, .mini { break-inside: avoid; border-color: #ccc; background: #fff; }
+    .canvas { overflow: visible; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="brandline">
+      <div class="logo">CM</div>
+      <div>
+        <h1>CoreMotiom — Fluxograma Completo do Usuário</h1>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap">
+          <span class="pill">Marketplace esportivo + C2C</span>
+          <span class="pill">Next.js 15 · React 19 · Supabase</span>
+          <span class="pill">7 diagramas</span>
+        </div>
+      </div>
+    </div>
+    <p class="lead">
+      Documento único com todas as jornadas de usuário implementadas no projeto: do primeiro acesso como visitante
+      até as operações executivas do painel master. Cada diagrama foi montado a partir da leitura do código-fonte
+      (<code>app/</code>, <code>components/</code>, <code>lib/store.tsx</code>, <code>services/</code>, <code>app/api/</code> e a migração SQL),
+      incluindo decisões, guardas de acesso, gravações no banco e lacunas encontradas.
+    </p>
+    <div class="mini-grid"><div class="mini"><span>Rotas/telas renderizadas</span><strong>7 views: home, marketplace, stores, sell, coaches, community, admin</strong></div><div class="mini"><span>Modais globais</span><strong>AuthModal · SupabaseConfigModal · CheckoutModal · CreateStoreModal · ProductDetailModal</strong></div><div class="mini"><span>Tabelas PostgreSQL</span><strong>profiles · stores · products · orders · community_posts</strong></div><div class="mini"><span>Rotas de API</span><strong>/api/products · /api/stores · /api/listings · /api/users · /api/auth/sync</strong></div><div class="mini"><span>Services de domínio</span><strong>AuthService · ProductService · StoreService · OrderService · CommunityService</strong></div></div>
+  </header>
+
+  <nav class="toc">
+    <a href="#visao-geral"><b>1</b><span>Visão geral</span></a><a href="#autenticacao"><b>2</b><span>Autenticação, papéis e ciclo de sessão</span></a><a href="#compra"><b>3</b><span>Jornada de compra</span></a><a href="#venda"><b>4</b><span>Jornada de venda</span></a><a href="#engajamento"><b>5</b><span>Engajamento</span></a><a href="#admin"><b>6</b><span>Painel administrativo</span></a><a href="#dados"><b>7</b><span>Dados, serviços e persistência</span></a>
+    <a href="#papeis"><b>8</b><span>Permissões</span></a>
+    <a href="#status"><b>9</b><span>Status</span></a>
+    <a href="#lacunas"><b>10</b><span>Lacunas &amp; riscos</span></a>
+    <a href="#arquivos"><b>11</b><span>Arquivos-chave</span></a>
+    <a href="#leitura"><b>12</b><span>Como ler</span></a>
+  </nav>
+
+      <section class="card" id="visao-geral">
+        <div class="card-head">
+          <span class="num">1</span>
+          <div>
+            <h2>Visão geral — do primeiro acesso às jornadas por papel</h2>
+            <p class="desc">Mapa macro de tudo que o app entrega hoje: bootstrap da SPA, detecção de sessão, papéis (visitante, atleta, lojista, admin), as seis jornadas de uso e a camada de persistência.</p>
+          </div>
+        </div>
+        <div class="legend"><span class="chip" style="--c:#8B93A7">Visitante (sem conta)</span><span class="chip" style="--c:#34D399">Atleta / Usuário (role: user)</span><span class="chip" style="--c:#38BDF8">Lojista (role: seller)</span><span class="chip" style="--c:#F87171">Super Admin (e-mails master)</span><span class="chip" style="--c:#A78BFA">Sistema / Dados</span></div>
+        <div class="canvas" role="group" aria-label="Visão geral — do primeiro acesso às jornadas por papel">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1504 1091.8" width="1504" height="1091.8" role="img" aria-label="Visão geral — do primeiro acesso às jornadas por papel" class="flow-svg">
+<defs><marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8B93A7" /></marker><marker id="arrow-auth" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A78BFA" /></marker><marker id="arrow-success" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#34D399" /></marker><marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F87171" /></marker><marker id="arrow-admin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FBBF24" /></marker><marker id="arrow-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#38BDF8" /></marker></defs>
+<rect x="0" y="0" width="1504" height="1091.8" fill="#0B0C10" />
+<path d="M752,93.9 L752,139.9" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M752,209.8 L752,255.8" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M752,338.9 L752,361.9 L200,361.9 L200,384.9" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="460.93" y="343.9" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="476" y="354.9" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">Não</text>
+<path d="M752,338.9 L752,384.9" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="706.93" y="341.9" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="722" y="352.9" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">Sim</text>
+<path d="M752,338.9 L752,361.9 L1304,361.9 L1304,384.9" fill="none" stroke="#FBBF24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-admin)" />
+<rect x="936.68" y="342.9" width="90.65" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="982" y="353.9" text-anchor="middle" font-size="10.3" font-weight="600" fill="#E7CD8C">e-mail master</text>
+<path d="M200,454.8 L200,500.8" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M200,583.9 L200,629.9" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="192.93" y="598.9" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="208" y="609.9" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">Sim</text>
+<path d="M318,542.35 L645,535.75" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="506.43" y="519.05" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="521.5" y="530.05" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">Não</text>
+<path d="M752,454.8 L752,500.8" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="675.85" y="458.8" width="48.3" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="700" y="469.8" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">compra</text>
+<path d="M752,454.8 L752,477.8 L1028,477.8 L1028,500.8" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="831.85" y="458.8" width="48.3" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="856" y="469.8" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">engaja</text>
+<path d="M1304,454.8 L1304,500.8" fill="none" stroke="#FBBF24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-admin)" />
+<rect x="1269.7" y="469.8" width="84.6" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1312" y="480.8" text-anchor="middle" font-size="10.3" font-weight="600" fill="#E7CD8C">acesso total</text>
+<path d="M200,699.8 L200,722.8 L476,722.8 L476,745.8" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-auth)" />
+<rect x="335.75" y="702.8" width="72.5" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="372" y="713.8" text-anchor="middle" font-size="10.3" font-weight="600" fill="#D6CCF5">após login</text>
+<path d="M752,570.7 L752,596.7 L476,596.7 L476,745.8" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="622.88" y="576.7" width="42.25" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="644" y="587.7" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">vende</text>
+<path d="M1304,570.7 L1304,596.7 L752,596.7 L752,745.8" fill="none" stroke="#FBBF24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-admin)" />
+<rect x="993.8" y="576.7" width="60.4" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1024" y="587.7" text-anchor="middle" font-size="10.3" font-weight="600" fill="#E7CD8C">homologa</text>
+<path d="M476,802.5 L476,883.45 L640,883.45" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-data)" />
+<rect x="554.78" y="866.45" width="66.45" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="588" y="877.45" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A9D8F2">C2C grava</text>
+<path d="M752,802.5 L752,825.5 L700,825.5 L700,848.5" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-data)" />
+<rect x="643.75" y="808.5" width="72.5" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="680" y="819.5" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A9D8F2">loja grava</text>
+<path d="M921,535.75 L895,535.75 L895,883.45 L864,883.45" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-data)" />
+<rect x="852.75" y="690.6" width="72.5" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="889" y="701.6" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A9D8F2">feed grava</text>
+<path d="M752,918.4 L752,964.4" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="658" y="26" width="188" height="67.9" rx="33.95" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="752" y="48.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">App carrega em “/”</text><text x="752" y="64.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Next.js 15 + layout +</text><text x="752" y="77.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">CoreMotiomProvider</text>
+<rect x="645" y="139.9" width="214" height="69.9" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="752" y="163" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Bootstrap do estado</text><text x="752" y="179.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">testSupabaseConnection +</text><text x="752" y="192.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">produtos, lojas e posts ao vivo</text>
+<polygon points="660,255.8 844,255.8 870,297.35 844,338.9 660,338.9 634,297.35" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="752" y="278.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Sessão válida?</text><text x="752" y="295.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Supabase getSession +</text><text x="752" y="308.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">localStorage</text><text x="752" y="321.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">(coremotiom_state_v1)</text>
+<rect x="93" y="384.9" width="214" height="69.9" rx="13" fill="#181C25" stroke="#8B93A7" stroke-width="1.5" /><text x="200" y="408" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#E5E7EB">VISITANTE</text><text x="200" y="424.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">Explora marketplace, lojas,</text><text x="200" y="437.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">treinadores e feed (leitura)</text>
+<rect x="645" y="384.9" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="752" y="408" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">ATLETA / LOJISTA</text><text x="752" y="424.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">role = user | seller · perfil</text><text x="752" y="437.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">sincronizado</text>
+<rect x="1197" y="384.9" width="214" height="69.9" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="1304" y="408" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">ADMIN MASTER</text><text x="1304" y="424.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">E-mail na lista de</text><text x="1304" y="437.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">administradores credenciados</text>
+<polygon points="108,500.8 292,500.8 318,542.35 292,583.9 108,583.9 82,542.35" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="200" y="523.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Ação exige conta?</text><text x="200" y="540.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Favoritar, anunciar, postar,</text><text x="200" y="553.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">comentar, agendar, criar</text><text x="200" y="566.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">loja</text>
+<rect x="645" y="500.8" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="752" y="523.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">JORNADAS DE COMPRA E USO</text><text x="752" y="540.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Marketplace → carrinho →</text><text x="752" y="553.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">checkout → pedido em custódia</text>
+<rect x="1197" y="500.8" width="214" height="69.9" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="1304" y="523.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">PODERES DE ADMINISTRAÇÃO</text><text x="1304" y="540.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">8 módulos executivos do painel</text><text x="1304" y="553.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">master</text>
+<rect x="93" y="629.9" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="200" y="653" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">AuthModal</text><text x="200" y="669.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">login · cadastro · Google ·</text><text x="200" y="682.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">esqueci a senha</text>
+<rect x="369" y="745.8" width="214" height="56.7" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="476" y="768.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Vender C2C</text><text x="476" y="785.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Anúncio de equipamento seminovo</text>
+<rect x="645" y="745.8" width="214" height="56.7" rx="13" fill="#0D2337" stroke="#38BDF8" stroke-width="1.5" /><text x="752" y="768.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#EFF6FF">Loja oficial + selo</text><text x="752" y="785.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">CNPJ, auditoria e homologação</text>
+<rect x="921" y="500.8" width="214" height="69.9" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="1028" y="523.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Comunidade &amp; Treinadores</text><text x="1028" y="540.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Feed de atletas e assessoria</text><text x="1028" y="553.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">esportiva</text>
+<polygon points="655,848.5 864,848.5 849,918.4 640,918.4" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="752" y="871.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Persistência</text><text x="752" y="887.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">localStorage + Supabase +</text><text x="752" y="901" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">PostgreSQL (RLS) via API Routes</text>
+<rect x="658" y="964.4" width="188" height="83.4" rx="41.7" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="752" y="986.5" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">Toasts, estados e</text><text x="752" y="1002" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">logout</text><text x="752" y="1018.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">Feedback global em todas</text><text x="752" y="1031.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">as ações</text>
+</svg>
+        </div>
+        <p class="hint">Dica: use a rolagem horizontal para ver o diagrama inteiro em telas pequenas.</p>
+      </section>
+
+      <section class="card" id="autenticacao">
+        <div class="card-head">
+          <span class="num">2</span>
+          <div>
+            <h2>Autenticação, papéis e ciclo de sessão</h2>
+            <p class="desc">AuthModal (4 modos), acesso rápido de demonstração, login por e-mail/senha, cadastro com tipo de conta, Google OAuth via popup + /auth/callback, guarda de admin e logout.</p>
+          </div>
+        </div>
+        <div class="legend"><span class="chip" style="--c:#34D399">Atleta / Usuário (role: user)</span><span class="chip" style="--c:#38BDF8">Lojista (role: seller)</span><span class="chip" style="--c:#F87171">Super Admin (e-mails master)</span><span class="chip" style="--c:#FBBF24">Alerta / Lacuna / Erro</span><span class="chip" style="--c:#A78BFA">Sistema / Dados</span><span class="chip" style="--c:#22C55E">Confirmação / Sucesso</span></div>
+        <div class="canvas" role="group" aria-label="Autenticação, papéis e ciclo de sessão">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1504 1336.3" width="1504" height="1336.3" role="img" aria-label="Autenticação, papéis e ciclo de sessão" class="flow-svg">
+<defs><marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8B93A7" /></marker><marker id="arrow-auth" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A78BFA" /></marker><marker id="arrow-success" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#34D399" /></marker><marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F87171" /></marker><marker id="arrow-admin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FBBF24" /></marker><marker id="arrow-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#38BDF8" /></marker></defs>
+<rect x="0" y="0" width="1504" height="1336.3" fill="#0B0C10" />
+<path d="M752,110 L752,156" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M752,225.9 L752,271.9" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M752,225.9 L752,248.9 L200,248.9 L200,271.9" fill="none" stroke="#FBBF24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-admin)" />
+<rect x="420.63" y="229.9" width="102.75" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="472" y="240.9" text-anchor="middle" font-size="10.3" font-weight="600" fill="#E7CD8C">atalho de teste</text>
+<path d="M752,325.9 L752,351.9 L476,351.9 L476,416.5" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="589.85" y="333.9" width="48.3" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="614" y="344.9" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">e-mail</text>
+<path d="M752,325.9 L752,351.9 L1028,351.9 L1028,416.5" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="859.8" y="333.9" width="60.4" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="890" y="344.9" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">cadastro</text>
+<path d="M870,298.9 L1197,313.45" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-auth)" />
+<rect x="1009.35" y="288.17" width="48.3" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1033.5" y="299.17" text-anchor="middle" font-size="10.3" font-weight="600" fill="#D6CCF5">Google</text>
+<path d="M476,499.6 L476,545.6" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,599.6 L476,625.6 L200,625.6 L200,677" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="322.93" y="607.6" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="338" y="618.6" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">Não</text>
+<path d="M476,599.6 L476,625.6 L702,625.6 L702,677" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="553.92" y="605.6" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="569" y="616.6" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">Sim</text>
+<path d="M1028,486.4 L1028,545.6" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1028,631 L1028,680 L804,680 L804,677" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="863.65" y="649" width="96.7" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="912" y="660" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">aguarda e-mail</text>
+<path d="M1304,355 L1304,381 L752,381 L752,677" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-auth)" />
+<rect x="940.68" y="362" width="90.65" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="986" y="373" text-anchor="middle" font-size="10.3" font-weight="600" fill="#D6CCF5">perfil Google</text>
+<path d="M752,762.4 L752,808.4" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M645,849.95 L310,849.95" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="405" y="829.95" width="133" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="471.5" y="840.95" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">recuperação de senha</text>
+<path d="M859,849.95 L1197,849.95" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1304,891.5 L1304,914.5 L752,914.5 L752,937.5" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M752,1049.3 L752,1072.3 L200,1072.3 L200,1095.3" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="460.93" y="1054.3" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="476" y="1065.3" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">Não</text>
+<path d="M752,1049.3 L752,1072.3 L1304,1072.3 L1304,1095.3" fill="none" stroke="#FBBF24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-admin)" />
+<rect x="1012.93" y="1054.3" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1028" y="1065.3" text-anchor="middle" font-size="10.3" font-weight="600" fill="#E7CD8C">Sim</text>
+<path d="M200,1165.2 L200,1188.2 L702,1188.2 L702,1211.2" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="432.9" y="1170.2" width="36.2" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="451" y="1181.2" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">sair</text>
+<path d="M1304,1165.2 L1304,1188.2 L802,1188.2 L802,1211.2" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="1034.9" y="1170.2" width="36.2" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1053" y="1181.2" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">sair</text>
+<rect x="658" y="26" width="188" height="84" rx="42" fill="#181C25" stroke="#8B93A7" stroke-width="1.5" /><text x="752" y="49.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#E5E7EB">Usuário aciona</text><text x="752" y="64.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#E5E7EB">“Entrar”,</text><text x="752" y="80.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#E5E7EB">“Cadastrar” ou uma</text><text x="752" y="95.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#E5E7EB">ação protegida</text>
+<rect x="645" y="156" width="214" height="69.9" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="752" y="179.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">AuthModal abre</text><text x="752" y="195.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">modo: login | register | forgot</text><text x="752" y="208.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">| switch</text>
+<rect x="93" y="271.9" width="214" height="98.6" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="200" y="295" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Acesso rápido de 1</text><text x="200" y="310.5" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">clique</text><text x="200" y="326.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Super Admin · Lojista Pro ·</text><text x="200" y="339.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Atleta — switchRole() /</text><text x="200" y="353.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">loginAsMasterAdmin()</text>
+<polygon points="660,271.9 844,271.9 870,298.9 844,325.9 660,325.9 634,298.9" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="752" y="303.25" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Qual método?</text>
+<rect x="1197" y="271.9" width="214" height="83.1" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="1304" y="295" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Google OAuth</text><text x="1304" y="311.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Supabase popup → /auth/callback</text><text x="1304" y="324.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">→ postMessage</text><text x="1304" y="337.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">OAUTH_AUTH_SUCCESS</text>
+<rect x="369" y="416.5" width="214" height="83.1" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="476" y="439.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Login e-mail + senha</text><text x="476" y="455.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">zod →</text><text x="476" y="469" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">AuthService.loginWithEmail →</text><text x="476" y="482.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Supabase Auth</text>
+<rect x="921" y="416.5" width="214" height="69.9" rx="13" fill="#0D2337" stroke="#38BDF8" stroke-width="1.5" /><text x="1028" y="439.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#EFF6FF">Criar conta</text><text x="1028" y="455.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">nome, e-mail, senha e tipo:</text><text x="1028" y="469" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">Atleta C2C ou Lojista B2C</text>
+<polygon points="384,545.6 568,545.6 594,572.6 568,599.6 384,599.6 358,572.6" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="476" y="576.95" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Credenciais válidas?</text>
+<polygon points="936,545.6 1120,545.6 1146,588.3 1120,631 936,631 910,588.3" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="1028" y="568.7" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Confirmação de e-mail</text><text x="1028" y="584.2" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">pendente?</text><text x="1028" y="600.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">signUp sem sessão → aviso</text><text x="1028" y="613.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">para confirmar</text>
+<rect x="93" y="677" width="214" height="83.1" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="200" y="700.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Erro exibido no modal</text><text x="200" y="716.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">credenciais inválidas ·</text><text x="200" y="729.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Supabase não configurado ·</text><text x="200" y="742.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">OAuth desativado</text>
+<rect x="645" y="677" width="214" height="85.4" rx="13" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="752" y="700.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">getProfileOrCreate →</text><text x="752" y="715.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">setUser + allUsers</text><text x="752" y="731.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">toast de boas-vindas e</text><text x="752" y="745" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">fechamento do modal</text>
+<rect x="90" y="808.4" width="220" height="83.1" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.3" stroke-dasharray="6 5" /><text x="200" y="831.5" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Esqueci a senha</text><text x="200" y="847.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Modal só exibe aviso:</text><text x="200" y="860.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">resetPassword() existe no</text><text x="200" y="874.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">service e não é chamado ⚠</text>
+<rect x="645" y="808.4" width="214" height="83.1" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="752" y="831.5" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Sessão monitorada</text><text x="752" y="847.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">getSession + onAuthStateChange</text><text x="752" y="860.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">→ setUser / SIGNED_OUT limpa</text><text x="752" y="874.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">usuário</text>
+<rect x="1197" y="808.4" width="214" height="83.1" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="1304" y="831.5" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Papéis derivados</text><text x="1304" y="847.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">role · isVisitor ·</text><text x="1304" y="860.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">isAuthenticated ·</text><text x="1304" y="874.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">isUserAdmin(email)</text>
+<polygon points="660,937.5 844,937.5 870,993.4 844,1049.3 660,1049.3 634,993.4" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="752" y="960.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">E-mail na lista</text><text x="752" y="976.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">master?</text><text x="752" y="992.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">mattheusxmljz ·</text><text x="752" y="1005.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">professorchines2026 ·</text><text x="752" y="1018.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">operacaoamd ·</text><text x="752" y="1031.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">admin@coremotiom</text>
+<rect x="93" y="1095.3" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="200" y="1118.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Atleta / Lojista</text><text x="200" y="1134.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">compra, anuncia, cria loja e</text><text x="200" y="1147.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">publica no feed</text>
+<rect x="1197" y="1095.3" width="214" height="69.9" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="1304" y="1118.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">Admin master</text><text x="1304" y="1134.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Painel liberado; demais perfis</text><text x="1304" y="1147.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">veem “Acesso Restrito”</text>
+<rect x="658" y="1211.2" width="188" height="81.1" rx="40.55" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="752" y="1233.3" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">Logout</text><text x="752" y="1249.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">AuthService.signOut →</text><text x="752" y="1262.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">limpa usuário → volta para</text><text x="752" y="1275.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">a Home</text>
+</svg>
+        </div>
+        <p class="hint">Dica: use a rolagem horizontal para ver o diagrama inteiro em telas pequenas.</p>
+      </section>
+
+      <section class="card" id="compra">
+        <div class="card-head">
+          <span class="num">3</span>
+          <div>
+            <h2>Jornada de compra — descoberta, carrinho, pagamento e custódia</h2>
+            <p class="desc">Fluxo completo de compra: Home e busca global, filtros do marketplace, ficha do produto, carrinho, entrega, três meios de pagamento, criação do pedido e ciclo de status até a entrega.</p>
+          </div>
+        </div>
+        <div class="legend"><span class="chip" style="--c:#8B93A7">Visitante (sem conta)</span><span class="chip" style="--c:#34D399">Atleta / Usuário (role: user)</span><span class="chip" style="--c:#FBBF24">Alerta / Lacuna / Erro</span><span class="chip" style="--c:#22C55E">Confirmação / Sucesso</span><span class="chip" style="--c:#A78BFA">Sistema / Dados</span><span class="chip" style="--c:#F87171">Super Admin (e-mails master)</span></div>
+        <div class="canvas" role="group" aria-label="Jornada de compra — descoberta, carrinho, pagamento e custódia">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1228 1755.3" width="1228" height="1755.3" role="img" aria-label="Jornada de compra — descoberta, carrinho, pagamento e custódia" class="flow-svg">
+<defs><marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8B93A7" /></marker><marker id="arrow-auth" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A78BFA" /></marker><marker id="arrow-success" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#34D399" /></marker><marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F87171" /></marker><marker id="arrow-admin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FBBF24" /></marker><marker id="arrow-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#38BDF8" /></marker></defs>
+<rect x="0" y="0" width="1228" height="1755.3" fill="#0B0C10" />
+<path d="M476,122.6 L476,168.6" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,251.7 L476,297.7" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,394 L476,440" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,523.1 L476,569.1" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,623.1 L476,698.2" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="456.83" y="652.65" width="54.35" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="484" y="663.65" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">comprar</text>
+<path d="M594,596.1 L921,610.65" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="733.35" y="585.38" width="48.3" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="757.5" y="596.38" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">salvar</text>
+<path d="M476,783.6 L476,829.6" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,912.7 L476,971.9" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M583,871.15 L609,871.15 L609,877.75 L918,877.75" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="669.1" y="858.75" width="108.8" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="723.5" y="869.75" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">sem exigir conta</text>
+<path d="M476,1055 L476,1101" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M583,1013.45 L609,1013.45 L609,1149.15 L918,1149.15" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-auth)" />
+<rect x="676.13" y="1148.15" width="102.75" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="727.5" y="1159.15" text-anchor="middle" font-size="10.3" font-weight="600" fill="#D6CCF5">atalho p/ login</text>
+<path d="M476,1170.9 L476,1243.3" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,1339.6 L476,1385.6" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,1439.6 L476,1462.6 L200,1462.6 L200,1485.6" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="295.7" y="1444.6" width="84.6" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="338" y="1455.6" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">PIX / boleto</text>
+<path d="M476,1439.6 L476,1462.6 L752,1462.6 L752,1485.6" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="589.85" y="1444.6" width="48.3" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="614" y="1455.6" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">cartão</text>
+<path d="M200,1555.5 L200,1578.5 L476,1578.5 L476,1601.5" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="301.75" y="1560.5" width="72.5" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="338" y="1571.5" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">aguardando</text>
+<path d="M752,1555.5 L752,1578.5 L476,1578.5 L476,1601.5" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<path d="M570,1656.4 L921,1643.05" fill="none" stroke="#FBBF24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-admin)" />
+<rect x="697.15" y="1629.73" width="96.7" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="745.5" y="1640.73" text-anchor="middle" font-size="10.3" font-weight="600" fill="#E7CD8C">acompanhamento</text>
+<rect x="382" y="26" width="188" height="96.6" rx="48.3" fill="#181C25" stroke="#8B93A7" stroke-width="1.5" /><text x="476" y="48.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#E5E7EB">Home — carrossel de</text><text x="476" y="63.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#E5E7EB">destaques</text><text x="476" y="79.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">Vitrine Bento, filtros por</text><text x="476" y="93" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">modalidade e abas B2C /</text><text x="476" y="106.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">C2C</text>
+<rect x="369" y="168.6" width="214" height="83.1" rx="13" fill="#181C25" stroke="#8B93A7" stroke-width="1.5" /><text x="476" y="191.7" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#E5E7EB">Descoberta do produto</text><text x="476" y="207.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">Barra lateral com busca</text><text x="476" y="221.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">instantânea (⌘K) ou “Explorar</text><text x="476" y="234.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">Catálogo”</text>
+<rect x="369" y="297.7" width="214" height="96.3" rx="13" fill="#181C25" stroke="#8B93A7" stroke-width="1.5" /><text x="476" y="320.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#E5E7EB">Marketplace</text><text x="476" y="337" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">Filtros: tipo (B2C/C2C),</text><text x="476" y="350.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">categoria, modalidade,</text><text x="476" y="363.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">condição, selo verificado,</text><text x="476" y="376.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">ordenação e paginação</text>
+<rect x="369" y="440" width="214" height="83.1" rx="13" fill="#181C25" stroke="#8B93A7" stroke-width="1.5" /><text x="476" y="463.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#E5E7EB">Seleciona o produto</text><text x="476" y="479.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">ProductDetailModal: galeria,</text><text x="476" y="492.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">numeração, frete por CEP,</text><text x="476" y="505.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#A8AFBF">descrição, loja e vendedor</text>
+<polygon points="384,569.1 568,569.1 594,596.1 568,623.1 384,623.1 358,596.1" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="476" y="600.45" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Qual ação?</text>
+<rect x="921" y="569.1" width="214" height="83.1" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="1028" y="592.2" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Favoritar / curtir</text><text x="1028" y="608.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Salva na lista de desejos</text><text x="1028" y="621.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">(localStorage) · visitante →</text><text x="1028" y="634.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">AuthModal ⚠</text>
+<rect x="369" y="698.2" width="214" height="85.4" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="476" y="721.3" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Comprar agora /</text><text x="476" y="736.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Adicionar ao carrinho</text><text x="476" y="753" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">addToCart com tamanho</text><text x="476" y="766.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">selecionado</text>
+<rect x="369" y="829.6" width="214" height="83.1" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="476" y="852.7" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Passo 1 — Carrinho</text><text x="476" y="868.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Alterar quantidade, remover</text><text x="476" y="882.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">itens, subtotal + frete com</text><text x="476" y="895.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">seguro</text>
+<rect x="369" y="971.9" width="214" height="83.1" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="476" y="995" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Passo 2 — Entrega</text><text x="476" y="1011.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Destinatário, CEP, telefone,</text><text x="476" y="1024.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">endereço, cidade/UF · envio</text><text x="476" y="1037.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">fixado em “pac” ⚠</text>
+<rect x="369" y="1101" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="476" y="1124.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Passo 3 — Pagamento</text><text x="476" y="1140.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">PIX (−5% + QR + copia-e-cola) ·</text><text x="476" y="1153.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Cartão (1–12x) · Boleto</text>
+<rect x="369" y="1243.3" width="214" height="96.3" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="476" y="1266.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">createOrder</text><text x="476" y="1282.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">OrderService grava no</text><text x="476" y="1295.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Supabase/PostgreSQL · se</text><text x="476" y="1309" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">falhar, gera pedido local com</text><text x="476" y="1322.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">PIX e rastreio</text>
+<polygon points="384,1385.6 568,1385.6 594,1412.6 568,1439.6 384,1439.6 358,1412.6" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="476" y="1416.95" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Forma de pagamento?</text>
+<rect x="93" y="1485.6" width="214" height="69.9" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="200" y="1508.7" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">PIX / Boleto</text><text x="200" y="1524.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">payment_status = pending ·</text><text x="200" y="1538.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">order_status = pending_payment</text>
+<rect x="645" y="1485.6" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="752" y="1508.7" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">Cartão de crédito</text><text x="752" y="1524.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">payment_status = completed ·</text><text x="752" y="1538.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">order_status = preparing</text>
+<rect x="382" y="1601.5" width="188" height="109.8" rx="54.9" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="476" y="1623.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">Passo 4 — Pedido</text><text x="476" y="1639.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">confirmado</text><text x="476" y="1655.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">Nº do pedido, valor retido</text><text x="476" y="1668.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">em custódia, prazo de 2 a</text><text x="476" y="1681.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">4 dias e código de</text><text x="476" y="1694.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">rastreio</text>
+<rect x="921" y="1601.5" width="214" height="83.1" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="1028" y="1624.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">Retaguarda do pedido</text><text x="1028" y="1640.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Admin confirma pagamento</text><text x="1028" y="1654" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">(sandbox) e muda status: paid →</text><text x="1028" y="1667.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">shipped → delivered</text>
+<rect x="918" y="829.6" width="220" height="96.3" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.3" stroke-dasharray="6 5" /><text x="1028" y="852.7" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Compra como visitante ⚠</text><text x="1028" y="868.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Carrinho e checkout não exigem</text><text x="1028" y="882.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">login · createOrder usa</text><text x="1028" y="895.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">“guest-user”, sem dono para</text><text x="1028" y="908.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">consultar depois</text>
+<rect x="918" y="1101" width="220" height="96.3" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.3" stroke-dasharray="6 5" /><text x="1028" y="1124.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Caminho com login</text><text x="1028" y="1140.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Favoritar, publicar, comentar,</text><text x="1028" y="1153.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">agendar e vender continuam</text><text x="1028" y="1166.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">exigindo conta (ir para o fluxo</text><text x="1028" y="1179.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">2)</text>
+</svg>
+        </div>
+        <p class="hint">Dica: use a rolagem horizontal para ver o diagrama inteiro em telas pequenas.</p>
+      </section>
+
+      <section class="card" id="venda">
+        <div class="card-head">
+          <span class="num">4</span>
+          <div>
+            <h2>Jornada de venda — C2C, loja oficial e selo verificado</h2>
+            <p class="desc">Dois caminhos de oferta: atleta anunciando equipamento seminovo (C2C com custódia) e lojista abrindo/enviando loja para auditoria de CNPJ, com a homologação feita pelo admin.</p>
+          </div>
+        </div>
+        <div class="legend"><span class="chip" style="--c:#8B93A7">Visitante (sem conta)</span><span class="chip" style="--c:#34D399">Atleta / Usuário (role: user)</span><span class="chip" style="--c:#38BDF8">Lojista (role: seller)</span><span class="chip" style="--c:#F87171">Super Admin (e-mails master)</span><span class="chip" style="--c:#FBBF24">Alerta / Lacuna / Erro</span><span class="chip" style="--c:#22C55E">Confirmação / Sucesso</span></div>
+        <div class="canvas" role="group" aria-label="Jornada de venda — C2C, loja oficial e selo verificado">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1504 1126.4" width="1504" height="1126.4" role="img" aria-label="Jornada de venda — C2C, loja oficial e selo verificado" class="flow-svg">
+<defs><marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8B93A7" /></marker><marker id="arrow-auth" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A78BFA" /></marker><marker id="arrow-success" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#34D399" /></marker><marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F87171" /></marker><marker id="arrow-admin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FBBF24" /></marker><marker id="arrow-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#38BDF8" /></marker></defs>
+<rect x="0" y="0" width="1504" height="1126.4" fill="#0B0C10" />
+<path d="M200,72 L200,153.1" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M200,207.1 L200,233.1 L476,233.1 L476,269" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="322.93" y="215.1" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="338" y="226.1" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">Sim</text>
+<path d="M200,207.1 L200,384.9" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="192.93" y="288" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="208" y="299" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">Não</text>
+<path d="M476,338.9 L476,361.9 L200,361.9 L200,384.9" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-auth)" />
+<rect x="341.75" y="341.9" width="72.5" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="378" y="352.9" text-anchor="middle" font-size="10.3" font-weight="600" fill="#D6CCF5">após login</text>
+<path d="M200,468 L200,514" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M200,610.3 L200,656.3" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M200,710.3 L200,733.3 L476,733.3 L476,756.3" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="315.93" y="713.3" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="331" y="724.3" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">Não</text>
+<path d="M200,710.3 L200,756.3" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="146.93" y="714.3" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="162" y="725.3" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">Sim</text>
+<path d="M586,783.3 L612,783.3 L612,562.15 L307,562.15" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="428.33" y="542.15" width="54.35" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="455.5" y="553.15" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">corrige</text>
+<path d="M200,839.4 L200,885.4" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M200,955.3 L200,1001.3" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1028,107.1 L1028,153.1" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1028,223 L1028,269" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1028,338.9 L1028,384.9" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1028,468 L1028,514" fill="none" stroke="#FBBF24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-admin)" />
+<rect x="984.63" y="483" width="102.75" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1036" y="494" text-anchor="middle" font-size="10.3" font-weight="600" fill="#E7CD8C">fila de análise</text>
+<path d="M1028,599.4 L1028,656.3" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1028,710.3 L1028,733.3 L752,733.3 L752,756.3" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="874.93" y="715.3" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="890" y="726.3" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">Sim</text>
+<path d="M1028,710.3 L1028,733.3 L1304,733.3 L1304,756.3" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="1150.93" y="715.3" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1166" y="726.3" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">Não</text>
+<path d="M752,826.2 L752,852.2 L1028,852.2 L1028,885.4" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="106" y="26" width="188" height="46" rx="23" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="200" y="53.35" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Menu “Vender C2C”</text>
+<polygon points="108,153.1 292,153.1 318,180.1 292,207.1 108,207.1 82,180.1" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="200" y="184.45" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">É visitante?</text>
+<rect x="369" y="269" width="214" height="69.9" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="476" y="292.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Bloqueio + AuthModal</text><text x="476" y="308.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Tela “Acesso Restrito para</text><text x="476" y="321.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Atletas Cadastrados”</text>
+<rect x="93" y="384.9" width="214" height="83.1" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="200" y="408" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Central de Vendas C2C</text><text x="200" y="424.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Abas: Criar anúncio · Meus</text><text x="200" y="437.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">anúncios · Vendas em custódia ·</text><text x="200" y="450.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Rascunhos</text>
+<rect x="93" y="514" width="214" height="96.3" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="200" y="537.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Formulário do anúncio</text><text x="200" y="553.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Título, categoria, modalidade,</text><text x="200" y="566.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">condição, preço, preço</text><text x="200" y="579.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">original, descrição, fotos por</text><text x="200" y="592.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">URL, local e frete</text>
+<polygon points="108,656.3 292,656.3 318,683.3 292,710.3 108,710.3 82,683.3" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="200" y="679.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Título e preço</text><text x="200" y="695.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">preenchidos?</text>
+<rect x="366" y="756.3" width="220" height="54" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.3" stroke-dasharray="6 5" /><text x="476" y="779.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Toast “Campos</text><text x="476" y="795.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">obrigatórios”</text>
+<rect x="93" y="756.3" width="214" height="83.1" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="200" y="779.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">createProduct</text><text x="200" y="795.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">product_type = c2c · stock 1 ·</text><text x="200" y="808.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">status active → POST</text><text x="200" y="822" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">/api/listings</text>
+<rect x="93" y="885.4" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="200" y="908.5" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">Anúncio publicado</text><text x="200" y="924.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">Aparece no marketplace e em</text><text x="200" y="937.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">“Meus anúncios” (com exclusão)</text>
+<rect x="106" y="1001.3" width="188" height="81.1" rx="40.55" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="200" y="1023.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">Venda em custódia</text><text x="200" y="1039.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">Valor retido e liberado</text><text x="200" y="1052.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">após confirmação/inspeção</text><text x="200" y="1066" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">do comprador</text>
+<rect x="934" y="26" width="188" height="81.1" rx="40.55" fill="#0D2337" stroke="#38BDF8" stroke-width="1.5" /><text x="1028" y="48.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#EFF6FF">Quero ser lojista</text><text x="1028" y="64.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">Cadastro com tipo de conta</text><text x="1028" y="77.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">“Lojista B2C” ou botão</text><text x="1028" y="90.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">“Criar loja”</text>
+<rect x="921" y="153.1" width="214" height="69.9" rx="13" fill="#0D2337" stroke="#38BDF8" stroke-width="1.5" /><text x="1028" y="176.2" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#EFF6FF">CreateStoreModal</text><text x="1028" y="192.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">Nome, categoria, descrição,</text><text x="1028" y="205.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">contatos, logo e banner</text>
+<rect x="921" y="269" width="214" height="69.9" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="1028" y="292.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">createStore</text><text x="1028" y="308.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Loja criada e usuário promovido</text><text x="1028" y="321.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">a seller com store_id</text>
+<rect x="921" y="384.9" width="214" height="83.1" rx="13" fill="#0D2337" stroke="#38BDF8" stroke-width="1.5" /><text x="1028" y="408" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#EFF6FF">Solicitar verificação</text><text x="1028" y="424.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">CNPJ, razão social e site →</text><text x="1028" y="437.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">verification_status = pending</text><text x="1028" y="450.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#9CCBEC">(promessa de 24h)</text>
+<rect x="921" y="514" width="214" height="85.4" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="1028" y="537.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">Admin audita em</text><text x="1028" y="552.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">“Auditoria de Lojas”</text><text x="1028" y="568.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Lojas pendentes listadas no</text><text x="1028" y="582" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">painel master</text>
+<polygon points="936,656.3 1120,656.3 1146,683.3 1120,710.3 936,710.3 910,683.3" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="1028" y="687.65" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">Aprovar?</text>
+<rect x="645" y="756.3" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="752" y="779.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">Selo “Loja Verificada”</text><text x="752" y="795.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">is_verified = true · produtos</text><text x="752" y="808.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">ganham is_verified_store</text>
+<rect x="1197" y="756.3" width="214" height="69.9" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="1304" y="779.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Verificação recusada</text><text x="1304" y="795.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">verification_status = rejected</text><text x="1304" y="808.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">com observações</text>
+<rect x="934" y="885.4" width="188" height="68.5" rx="34.25" fill="#0D2337" stroke="#38BDF8" stroke-width="1.5" /><text x="1028" y="908.5" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#EFF6FF">Loja visível com</text><text x="1028" y="924" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#EFF6FF">filtro “somente</text><text x="1028" y="939.5" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#EFF6FF">verificadas”</text>
+</svg>
+        </div>
+        <p class="hint">Dica: use a rolagem horizontal para ver o diagrama inteiro em telas pequenas.</p>
+      </section>
+
+      <section class="card" id="engajamento">
+        <div class="card-head">
+          <span class="num">5</span>
+          <div>
+            <h2>Engajamento — comunidade, treinadores e favoritos</h2>
+            <p class="desc">Fluxos sociais e de serviço: feed com 5 categorias, publicação, curtidas e comentários; agendamento de assessoria esportiva com CREF; e a lista de desejos.</p>
+          </div>
+        </div>
+        <div class="legend"><span class="chip" style="--c:#8B93A7">Visitante (sem conta)</span><span class="chip" style="--c:#34D399">Atleta / Usuário (role: user)</span><span class="chip" style="--c:#A78BFA">Sistema / Dados</span><span class="chip" style="--c:#FBBF24">Alerta / Lacuna / Erro</span><span class="chip" style="--c:#22C55E">Confirmação / Sucesso</span></div>
+        <div class="canvas" role="group" aria-label="Engajamento — comunidade, treinadores e favoritos">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1504 816.7" width="1504" height="816.7" role="img" aria-label="Engajamento — comunidade, treinadores e favoritos" class="flow-svg">
+<defs><marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8B93A7" /></marker><marker id="arrow-auth" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A78BFA" /></marker><marker id="arrow-success" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#34D399" /></marker><marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F87171" /></marker><marker id="arrow-admin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FBBF24" /></marker><marker id="arrow-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#38BDF8" /></marker></defs>
+<rect x="0" y="0" width="1504" height="816.7" fill="#0B0C10" />
+<path d="M200,135.8 L200,181.8" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M200,235.8 L200,297.7" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M200,235.8 L200,261.8 L476,261.8 L476,297.7" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M200,235.8 L200,261.8 L752,261.8 L752,297.7" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M200,380.8 L200,429.1" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M752,354.4 L752,380.4 L200,380.4 L200,429.1" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="436.73" y="403.4" width="78.55" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="476" y="414.4" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">exige conta</text>
+<path d="M200,483.1 L200,531.8" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="192.93" y="499.45" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="208" y="510.45" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">Sim</text>
+<path d="M200,483.1 L200,507.45 L476,507.45 L476,531.8" fill="none" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-success)" />
+<rect x="348.93" y="487.45" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="364" y="498.45" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A7E9CE">Não</text>
+<path d="M307,566.75 L369,566.75" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-auth)" />
+<path d="M583,566.75 L642,579.95" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<path d="M1028,122.6 L1028,181.8" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1028,251.7 L1028,297.7" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1028,367.6 L1028,531.8" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="1008.83" y="441.7" width="54.35" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1036" y="452.7" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">agendar</text>
+<path d="M1028,614.9 L1028,674.1" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1304,107.1 L1304,181.8" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1186,208.8 L1160,208.8 L1160,457.45 L1197,457.45" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="1154.93" y="316.13" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1170" y="327.13" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">Sim</text>
+<path d="M1304,235.8 L1304,297.7" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="1296.93" y="258.75" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1312" y="269.75" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">Não</text>
+<path d="M1197,457.45 L1171,457.45 L1171,340.4 L1197,340.4" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-auth)" />
+<rect x="1146.75" y="387.93" width="72.5" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1183" y="398.93" text-anchor="middle" font-size="10.3" font-weight="600" fill="#D6CCF5">após login</text>
+<path d="M1197,340.4 L1171,340.4 L1171,723.4 L1194,723.4" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="1177.72" y="514.9" width="78.55" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="1217" y="525.9" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">abrir lista</text>
+<rect x="106" y="26" width="188" height="109.8" rx="54.9" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="200" y="48.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Comunidade — Feed de</text><text x="200" y="63.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Atletas</text><text x="200" y="79.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Filtro por categoria:</text><text x="200" y="93" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">equipamentos, treino,</text><text x="200" y="106.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">eventos, dúvidas e</text><text x="200" y="119.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">conquistas</text>
+<polygon points="108,181.8 292,181.8 318,208.8 292,235.8 108,235.8 82,208.8" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="200" y="213.15" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Qual interação?</text>
+<rect x="93" y="297.7" width="214" height="83.1" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="200" y="320.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Publicar post</text><text x="200" y="337" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Título, conteúdo e categoria ·</text><text x="200" y="350.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">badge “Admin / Loja Oficial /</text><text x="200" y="363.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Atleta”</text>
+<rect x="369" y="297.7" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="476" y="320.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Curtir</text><text x="476" y="337" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">likeCommunityPost → likes_count</text><text x="476" y="350.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">+1</text>
+<rect x="645" y="297.7" width="214" height="56.7" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="752" y="320.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Comentar</text><text x="752" y="337" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Comentário com avatar e data</text>
+<polygon points="108,429.1 292,429.1 318,456.1 292,483.1 108,483.1 82,456.1" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="200" y="460.45" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">É visitante?</text>
+<rect x="93" y="531.8" width="214" height="69.9" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="200" y="554.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">AuthModal</text><text x="200" y="571.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Curtir é livre; publicar e</text><text x="200" y="584.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">comentar exigem conta</text>
+<rect x="369" y="531.8" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="476" y="554.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">Post/comentário no feed</text><text x="476" y="571.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">CommunityService grava em</text><text x="476" y="584.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">community_posts</text>
+<rect x="642" y="531.8" width="220" height="96.3" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.3" stroke-dasharray="6 5" /><text x="752" y="554.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Moderação</text><text x="752" y="571.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">reportCommunityPost() e</text><text x="752" y="584.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">adminDeleteCommunityPost()</text><text x="752" y="597.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">existem no store, mas nenhuma</text><text x="752" y="610.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">tela oferece os botões ⚠</text>
+<rect x="934" y="26" width="188" height="96.6" rx="48.3" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="1028" y="48.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Treinadores</text><text x="1028" y="63.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Especializados</text><text x="1028" y="79.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Cards com CREF validado,</text><text x="1028" y="93" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">avaliação, modalidade e</text><text x="1028" y="106.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">valor/hora</text>
+<rect x="921" y="181.8" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="1028" y="204.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Filtro por modalidade</text><text x="1028" y="221.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Corrida · Maratona · Triatlo ·</text><text x="1028" y="234.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Ciclismo · Trail Running</text>
+<rect x="921" y="297.7" width="214" height="69.9" rx="13" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="1028" y="320.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Escolhe plano</text><text x="1028" y="337" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Mensal · Consultoria pontual ·</text><text x="1028" y="350.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Temporada</text>
+<rect x="921" y="531.8" width="214" height="83.1" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="1028" y="554.9" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Confirmar agendamento</text><text x="1028" y="571.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Visitante → AuthModal ⚠ (modal</text><text x="1028" y="584.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">fecha sozinho após ~2,5s, sem</text><text x="1028" y="597.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">persistir)</text>
+<rect x="934" y="674.1" width="188" height="53" rx="26.5" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="1028" y="697.2" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">Toast de solicitação</text><text x="1028" y="712.7" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">enviada</text>
+<rect x="1210" y="26" width="188" height="81.1" rx="40.55" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="1304" y="48.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#ECFDF5">Favoritar produto</text><text x="1304" y="64.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">Coração no card do</text><text x="1304" y="77.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">marketplace e na ficha do</text><text x="1304" y="90.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#8FD9C0">produto</text>
+<polygon points="1212,181.8 1396,181.8 1422,208.8 1396,235.8 1212,235.8 1186,208.8" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="1304" y="213.15" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Visitante?</text>
+<rect x="1197" y="429.1" width="214" height="56.7" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="1304" y="452.2" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">AuthModal</text><text x="1304" y="468.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Login necessário para salvar</text>
+<rect x="1197" y="297.7" width="214" height="85.4" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="1304" y="320.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">toggleFavorite →</text><text x="1304" y="336.3" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">localStorage</text><text x="1304" y="352.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Lista de favoritos salva por</text><text x="1304" y="365.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">navegador</text>
+<rect x="1194" y="674.1" width="220" height="98.6" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.3" stroke-dasharray="6 5" /><text x="1304" y="697.2" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">“Meus Favoritos” na</text><text x="1304" y="712.7" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">sidebar</text><text x="1304" y="728.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Abre a view “profile”, que não é</text><text x="1304" y="742.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">renderizada em app/page.tsx ⚠ —</text><text x="1304" y="755.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">lista sem tela</text>
+</svg>
+        </div>
+        <p class="hint">Dica: use a rolagem horizontal para ver o diagrama inteiro em telas pequenas.</p>
+      </section>
+
+      <section class="card" id="admin">
+        <div class="card-head">
+          <span class="num">6</span>
+          <div>
+            <h2>Painel administrativo — 8 módulos executivos</h2>
+            <p class="desc">Guarda de acesso por e-mail master, barra de ações rápidas e os módulos: métricas, auditoria de lojas, catálogo, usuários, pedidos/custódia, lojas e banco de dados.</p>
+          </div>
+        </div>
+        <div class="legend"><span class="chip" style="--c:#F87171">Super Admin (e-mails master)</span><span class="chip" style="--c:#FBBF24">Alerta / Lacuna / Erro</span><span class="chip" style="--c:#A78BFA">Sistema / Dados</span><span class="chip" style="--c:#22C55E">Confirmação / Sucesso</span></div>
+        <div class="canvas" role="group" aria-label="Painel administrativo — 8 módulos executivos">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1228 811.7" width="1228" height="811.7" role="img" aria-label="Painel administrativo — 8 módulos executivos" class="flow-svg">
+<defs><marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8B93A7" /></marker><marker id="arrow-auth" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A78BFA" /></marker><marker id="arrow-success" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#34D399" /></marker><marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F87171" /></marker><marker id="arrow-admin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FBBF24" /></marker><marker id="arrow-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#38BDF8" /></marker></defs>
+<rect x="0" y="0" width="1228" height="811.7" fill="#0B0C10" />
+<path d="M476,122.6 L476,168.6" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,222.6 L476,245.6 L1028,245.6 L1028,268.6" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="736.93" y="227.6" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="752" y="238.6" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">Não</text>
+<path d="M476,222.6 L476,268.6" fill="none" stroke="#FBBF24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-admin)" />
+<rect x="430.93" y="232.6" width="30.15" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="446" y="243.6" text-anchor="middle" font-size="10.3" font-weight="600" fill="#E7CD8C">Sim</text>
+<path d="M921,310.15 L583,303.55" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-auth)" />
+<rect x="704.58" y="286.85" width="114.85" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="762" y="297.85" text-anchor="middle" font-size="10.3" font-weight="600" fill="#D6CCF5">após login master</text>
+<path d="M476,338.5 L476,364.5 L200,364.5 L200,397.7" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="258.83" y="345.5" width="54.35" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="286" y="356.5" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">módulos</text>
+<path d="M476,338.5 L476,397.7" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,338.5 L476,364.5 L752,364.5 L752,397.7" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,338.5 L476,378.5 L1028,378.5 L1028,397.7" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M200,496.3 L200,542.3" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M476,467.6 L476,542.3" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M752,480.8 L752,542.3" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M1028,480.8 L1028,542.3" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<path d="M307,583.85 L333,583.85 L333,719.55 L366,719.55" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-data)" />
+<rect x="354.85" y="632.7" width="48.3" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="379" y="643.7" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A9D8F2">status</text>
+<path d="M752,612.2 L752,711.95 L934,711.95" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-data)" />
+<rect x="849.78" y="692.95" width="66.45" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="883" y="703.95" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A9D8F2">contagens</text>
+<path d="M1028,625.4 L1028,671.4" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-data)" />
+<rect x="972.88" y="629.4" width="42.25" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="994" y="640.4" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A9D8F2">grava</text>
+<rect x="382" y="26" width="188" height="96.6" rx="48.3" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="476" y="48.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">Acesso ao Painel</text><text x="476" y="63.6" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">Admin</text><text x="476" y="79.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Item de menu só aparece</text><text x="476" y="93" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">para admin ou e-mail</text><text x="476" y="106.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">master</text>
+<polygon points="384,168.6 568,168.6 594,195.6 568,222.6 384,222.6 358,195.6" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="476" y="199.95" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">isUserAdmin(email)?</text>
+<rect x="921" y="268.6" width="214" height="83.1" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="1028" y="291.7" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Tela “Acesso Restrito”</text><text x="1028" y="307.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Botão “Entrar como Super Admin</text><text x="1028" y="321.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Master” e atalho para o</text><text x="1028" y="334.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">marketplace</text>
+<rect x="369" y="268.6" width="214" height="69.9" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="476" y="291.7" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">Barra master</text><text x="476" y="307.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Sincronizar Supabase · + Novo</text><text x="476" y="321.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Usuário · Console SQL</text>
+<rect x="93" y="397.7" width="214" height="98.6" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="200" y="420.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">1. Métricas &amp;</text><text x="200" y="436.3" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">Ecossistema</text><text x="200" y="452.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">GMV, receita estimada de</text><text x="200" y="465.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">custódia (4,5%), lojas</text><text x="200" y="478.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">verificadas, B2C x C2C</text>
+<rect x="369" y="397.7" width="214" height="69.9" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="476" y="420.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">2. Auditoria de Lojas</text><text x="476" y="437" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Aprovar ou recusar selo · notas</text><text x="476" y="450.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">de compliance</text>
+<rect x="645" y="397.7" width="214" height="83.1" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="752" y="420.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">3. Moderar Catálogo</text><text x="752" y="437" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Status</text><text x="752" y="450.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">active/draft/sold/suspended,</text><text x="752" y="463.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">filtro e exclusão de anúncios</text>
+<rect x="921" y="397.7" width="214" height="83.1" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="1028" y="420.8" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">4. Usuários &amp; Atletas</text><text x="1028" y="437" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Criar, excluir, banir/desbanir</text><text x="1028" y="450.2" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">e trocar papel · conta master</text><text x="1028" y="463.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">protegida</text>
+<rect x="93" y="542.3" width="214" height="83.1" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="200" y="565.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">5. Pedidos &amp; Custódia</text><text x="200" y="581.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Status do pedido e do pagamento</text><text x="200" y="594.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">· confirmar pagamento em</text><text x="200" y="608" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">sandbox</text>
+<rect x="369" y="542.3" width="214" height="69.9" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="476" y="565.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">6. Lojas Oficiais</text><text x="476" y="581.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">Lista consolidada com selo,</text><text x="476" y="594.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">dono e catálogo</text>
+<rect x="645" y="542.3" width="214" height="69.9" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="752" y="565.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">7. Banco Supabase</text><text x="752" y="581.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Contagens por tabela, host</text><text x="752" y="594.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">PostgreSQL, RLS e console SQL</text>
+<rect x="921" y="542.3" width="214" height="83.1" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="1028" y="565.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Ações de API</text><text x="1028" y="581.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Papel, banimento e exclusão de</text><text x="1028" y="594.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">usuário chamam /api/users ·</text><text x="1028" y="608" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">lojas usam /api/stores</text>
+<rect x="366" y="671.4" width="220" height="96.3" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.3" stroke-dasharray="6 5" /><text x="476" y="694.5" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Somente estado local</text><text x="476" y="710.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">adminUpdateOrderStatus e</text><text x="476" y="723.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">adminToggleProductStatus alteram</text><text x="476" y="737.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">só a memória (sem gravar no</text><text x="476" y="750.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">banco) ⚠</text>
+<rect x="934" y="671.4" width="188" height="81.1" rx="40.55" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="1028" y="693.5" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">Sync Supabase</text><text x="1028" y="709.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">Recarrega produtos, lojas</text><text x="1028" y="722.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">e posts no estado · toast</text><text x="1028" y="736.1" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">de resultado</text>
+</svg>
+        </div>
+        <p class="hint">Dica: use a rolagem horizontal para ver o diagrama inteiro em telas pequenas.</p>
+      </section>
+
+      <section class="card" id="dados">
+        <div class="card-head">
+          <span class="num">7</span>
+          <div>
+            <h2>Dados, serviços e persistência — onde cada ação é gravada</h2>
+            <p class="desc">Camadas do sistema: estado global no cliente, services que falam com o Supabase e com as API Routes, pool PostgreSQL com RLS, server actions validadas por zod (hoje sem uso) e o fallback offline.</p>
+          </div>
+        </div>
+        <div class="legend"><span class="chip" style="--c:#A78BFA">Sistema / Dados</span><span class="chip" style="--c:#FBBF24">Alerta / Lacuna / Erro</span><span class="chip" style="--c:#22C55E">Confirmação / Sucesso</span><span class="chip" style="--c:#F87171">Super Admin (e-mails master)</span></div>
+        <div class="canvas" role="group" aria-label="Dados, serviços e persistência — onde cada ação é gravada">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 952 540.4" width="952" height="540.4" role="img" aria-label="Dados, serviços e persistência — onde cada ação é gravada" class="flow-svg">
+<defs><marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8B93A7" /></marker><marker id="arrow-auth" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A78BFA" /></marker><marker id="arrow-success" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#34D399" /></marker><marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F87171" /></marker><marker id="arrow-admin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FBBF24" /></marker><marker id="arrow-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#38BDF8" /></marker></defs>
+<rect x="0" y="0" width="952" height="540.4" fill="#0B0C10" />
+<rect x="70" y="-6" width="531" height="264.2" rx="22" fill="rgba(167,139,250,0.05)" stroke="#3A3159" stroke-width="1.2" />
+<text x="585" y="12" text-anchor="end" font-size="10.5" font-weight="700" letter-spacing="0.9" fill="#6B7280">CLIENTE (BROWSER)</text>
+<rect x="75" y="252.2" width="805" height="135.1" rx="22" fill="rgba(56,189,248,0.05)" stroke="#27455C" stroke-width="1.2" />
+<text x="864" y="270.2" text-anchor="end" font-size="10.5" font-weight="700" letter-spacing="0.9" fill="#6B7280">SERVIDOR NEXT.JS</text>
+<rect x="70" y="381.3" width="812" height="135.1" rx="22" fill="rgba(52,211,153,0.04)" stroke="#26493D" stroke-width="1.2" />
+<text x="866" y="399.3" text-anchor="end" font-size="10.5" font-weight="700" letter-spacing="0.9" fill="#6B7280">DADOS PERSISTENTES</text>
+<path d="M200,109.1 L200,132.1 L516,132.1 L516,155.1" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="336.88" y="114.1" width="42.25" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="358" y="125.1" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">ações</text>
+<path d="M140,109.1 L140,155.1" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-data)" />
+<rect x="108.73" y="124.1" width="78.55" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="148" y="135.1" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A9D8F2">saveState()</text>
+<path d="M476,238.2 L476,261.2 L150,261.2 L150,284.2" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="291.88" y="243.2" width="42.25" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="313" y="254.2" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">fetch</text>
+<path d="M200,367.3 L200,413.3" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-data)" />
+<rect x="180.83" y="382.3" width="54.35" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="208" y="393.3" text-anchor="middle" font-size="10.3" font-weight="600" fill="#A9D8F2">pg Pool</text>
+<path d="M476,238.2 L476,284.2" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="491.7" y="242.2" width="84.6" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="534" y="253.2" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">sem chamadas</text>
+<path d="M583,196.65 L609,196.65 L609,448.25 L583,448.25" fill="none" stroke="#FBBF24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-admin)" />
+<rect x="590.9" y="305.45" width="36.2" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="609" y="316.45" text-anchor="middle" font-size="10.3" font-weight="600" fill="#E7CD8C">auth</text>
+<path d="M583,196.65 L621,196.65 L621,448.25 L640,448.25" fill="none" stroke="#8B93A7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-flow)" />
+<rect x="605.88" y="241.45" width="42.25" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="627" y="252.45" text-anchor="middle" font-size="10.3" font-weight="600" fill="#C7CDDA">mídia</text>
+<path d="M642,196.65 L616,196.65 L616,67.55 L307,67.55" fill="none" stroke="#F87171" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arrow-error)" />
+<rect x="383.15" y="50.55" width="96.7" height="15" rx="7" fill="#0B0C10" opacity="0.94" />
+<text x="431.5" y="61.55" text-anchor="middle" font-size="10.3" font-weight="600" fill="#F0B0B0">hidrata (seed)</text>
+<rect x="93" y="26" width="214" height="83.1" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="200" y="49.1" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Estado global</text><text x="200" y="65.3" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">CoreMotiomProvider: produtos,</text><text x="200" y="78.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">lojas, pedidos, carrinho,</text><text x="200" y="91.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">favoritos, posts, toasts</text>
+<polygon points="103,155.1 312,155.1 297,225 88,225" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="200" y="178.2" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">localStorage</text><text x="200" y="194.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">coremotiom_state_v1: user, cart,</text><text x="200" y="207.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">orders, favorites, posts</text>
+<rect x="369" y="155.1" width="214" height="83.1" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="476" y="178.2" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Services do cliente</text><text x="476" y="194.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">AuthService · ProductService ·</text><text x="476" y="207.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">StoreService · OrderService ·</text><text x="476" y="220.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">CommunityService</text>
+<rect x="642" y="155.1" width="220" height="83.1" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.3" stroke-dasharray="6 5" /><text x="752" y="178.2" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Fallback offline</text><text x="752" y="194.4" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Sem Supabase: INITIAL_PRODUCTS,</text><text x="752" y="207.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">INITIAL_STORES e dados de</text><text x="752" y="220.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">demonstração seguem operando</text>
+<rect x="93" y="284.2" width="214" height="83.1" rx="13" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="200" y="307.3" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">API Routes</text><text x="200" y="323.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">/api/products · /api/stores ·</text><text x="200" y="336.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">/api/listings · /api/users ·</text><text x="200" y="349.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">/api/auth/sync</text>
+<rect x="366" y="284.2" width="220" height="83.1" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.3" stroke-dasharray="6 5" /><text x="476" y="307.3" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Server Actions (zod)</text><text x="476" y="323.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">auth · products · stores ·</text><text x="476" y="336.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">orders — nenhuma é chamada pelo</text><text x="476" y="349.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">cliente hoje ⚠</text>
+<rect x="642" y="284.2" width="220" height="83.1" rx="13" fill="#2B2107" stroke="#FBBF24" stroke-width="1.3" stroke-dasharray="6 5" /><text x="752" y="307.3" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FFFBEB">Middleware</text><text x="752" y="323.5" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">Apenas injeta o header</text><text x="752" y="336.7" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">x-coremotiom-platform — não</text><text x="752" y="349.9" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#E3C87F">protege rotas ⚠</text>
+<polygon points="103,413.3 312,413.3 297,496.4 88,496.4" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="200" y="436.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F0FDF4">PostgreSQL (Supabase)</text><text x="200" y="452.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">profiles · stores · products ·</text><text x="200" y="465.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">orders · community_posts</text><text x="200" y="479" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#93DBA8">(migração SQL + RLS)</text>
+<rect x="369" y="413.3" width="214" height="69.9" rx="13" fill="#2E1219" stroke="#F87171" stroke-width="1.5" /><text x="476" y="436.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#FEF2F2">Supabase Auth</text><text x="476" y="452.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">E-mail/senha, OAuth Google e</text><text x="476" y="465.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#EBA8A8">callback em /auth/callback</text>
+<polygon points="655,413.3 864,413.3 849,483.2 640,483.2" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="752" y="436.4" text-anchor="middle" font-family="inherit" font-size="12.6" font-weight="700" fill="#F5F3FF">Imagens do catálogo</text><text x="752" y="452.6" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">Arquivos em /public/products e</text><text x="752" y="465.8" text-anchor="middle" font-family="inherit" font-size="10.4" fill="#BDB0EE">URLs externas nos anúncios</text>
+</svg>
+        </div>
+        <p class="hint">Dica: use a rolagem horizontal para ver o diagrama inteiro em telas pequenas.</p>
+      </section>
+
+  <section class="card" id="papeis">
+    <h2 class="section-title">8. Papéis e permissões por tela</h2>
+    <p class="sub">Como o app decide o que cada perfil vê e faz (lib/store.tsx + guardas em cada componente).</p>
+    <div class="tbl-wrap"><table><thead><tr><th>Capacidade</th><th>Visitante</th><th>Atleta (user)</th><th>Lojista (seller)</th><th>Admin master</th></tr></thead><tbody><tr><td class="k">Navegar Home, Marketplace, Lojas, Treinadores e Feed</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td></tr><tr><td class="k">Busca global (⌘K) e filtros do marketplace</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td></tr><tr><td class="k">Curtir post da comunidade</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td></tr><tr><td class="k">Favoritar produto</td><td class="no">não → AuthModal</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td></tr><tr><td class="k">Adicionar ao carrinho e finalizar compra</td><td class="yes">sim (pedido guest)</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td></tr><tr><td class="k">Publicar post e comentar</td><td class="no">não → AuthModal</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td></tr><tr><td class="k">Agendar treinador</td><td class="no">não → AuthModal</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td></tr><tr><td class="k">Anunciar equipamento C2C (SellC2CView)</td><td class="no">não → AuthModal</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td></tr><tr><td class="k">Criar loja oficial (CreateStoreModal)</td><td class="no">não</td><td class="yes">sim (vira seller)</td><td class="yes">sim</td><td class="yes">sim</td></tr><tr><td class="k">Solicitar selo de loja verificada</td><td class="no">não</td><td class="no">não</td><td class="yes">sim (dono)</td><td class="yes">sim</td></tr><tr><td class="k">Ver o item “Painel Admin” na sidebar</td><td class="no">não</td><td class="no">não</td><td class="no">não</td><td class="yes">sim</td></tr><tr><td class="k">Aprovar lojas, moderar catálogo e usuários</td><td class="no">não</td><td class="no">não</td><td class="no">não</td><td class="yes">sim</td></tr><tr><td class="k">Acesso rápido de demonstração (switchRole)</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td><td class="yes">sim</td></tr></tbody></table></div>
+  </section>
+
+  <section class="card" id="status">
+    <h2 class="section-title">9. Máquina de estados do domínio</h2>
+    <p class="sub">Todos os estados previstos nos tipos do projeto e quem os movimenta.</p>
+    <div class="tbl-wrap"><table><thead><tr><th>Entidade</th><th>Status possíveis</th><th>Quem altera</th></tr></thead><tbody><tr><td class="k">Order.order_status</td><td>pending_payment → paid → preparing → shipped → delivered · cancelled</td><td>Checkout (criação) e Admin (confirmar pagamento / alterar status)</td></tr><tr><td class="k">Order.payment_status</td><td>pending · completed · failed · refunded</td><td>Checkout e Admin (sandbox)</td></tr><tr><td class="k">Store.verification_status</td><td>none → pending → verified / rejected</td><td>Lojista solicita; Admin homologa</td></tr><tr><td class="k">Product.status</td><td>active · draft · sold · suspended</td><td>Lojista (criação) e Admin (moderação)</td></tr><tr><td class="k">UserProfile.role</td><td>visitor · user · seller · admin</td><td>Cadastro e Admin (updateUserRole)</td></tr><tr><td class="k">UserProfile.is_banned</td><td>false → true (ban_reason)</td><td>Admin (banir / desbanir)</td></tr></tbody></table></div>
+  </section>
+
+  <section class="card" id="lacunas">
+    <h2 class="section-title">10. Lacunas e riscos encontrados no fluxo</h2>
+    <p class="sub">Pontos em que o caminho do usuário termina em tela vazia, em ação sem persistência ou em risco operacional. Cada item traz o impacto direto na jornada.</p>
+    <div class="gap-grid">
+        <article class="gap">
+          <span class="tag">Navegação</span>
+          <h3>View “profile” não existe</h3>
+          <p>A sidebar leva para activeView = &quot;profile&quot; em “Meus Favoritos” e no avatar mobile, mas app/page.tsx não renderiza esse bloco — a tela fica vazia, sem lista de favoritos, dados do perfil ou pedidos do usuário.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Navegação</span>
+          <h3>View “news” declarada e sem tela</h3>
+          <p>ActiveView inclui &quot;news&quot; e o store carrega INITIAL_NEWS, mas nenhum componente consome essas notícias.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Funcionalidade</span>
+          <h3>SmartScanView órfão</h3>
+          <p>components/SmartScanView.tsx (análise de desgaste/pace com IA) tem 356 linhas e não é importado por nenhuma view do app.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Manutenção</span>
+          <h3>Componentes duplicados</h3>
+          <p>AuthModal, MarketplaceView, ProductCard, ProductDetailModal, StoresView, CreateStoreModal, Footer e AdminDashboard existem na raiz de components/ e também em subpastas que apenas reexportam — risco real de editar o arquivo errado.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Checkout</span>
+          <h3>Checkout não coleta bairro/número</h3>
+          <p>O formulário pede apenas endereço, cidade e UF, mas grava &quot;Bela Vista&quot; e número &quot;1000&quot; fixos; o shippingMethod é sempre &quot;pac&quot;. O checkoutSchema do zod exige neighborhood e number — o server action de checkout rejeitaria esses dados.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Arquitetura</span>
+          <h3>Server actions sem uso</h3>
+          <p>serverLogin, serverSignUp, serverProcessCheckout, serverCreateProduct e serverCreateStore nunca são chamadas: os componentes falam direto com Supabase/services. Duas trilhas concorrentes de escrita, com validações diferentes.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Regra de negócio</span>
+          <h3>Visitante finaliza compra</h3>
+          <p>O carrinho e o CheckoutModal não exigem login; createOrder usa user?.id || &quot;guest-user&quot;. Pedidos de visitante não têm dono para consulta posterior.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Comunidade</span>
+          <h3>Moderação de posts inacessível</h3>
+          <p>reportCommunityPost e adminDeleteCommunityPost existem no store, mas nenhum componente expõe botão de denúncia ou exclusão — os campos is_reported/report_reason nunca são acionados pela UI.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Autenticação</span>
+          <h3>Recuperação de senha inoperante</h3>
+          <p>O modal de “Esqueci a senha” só exibe uma mensagem informativa; AuthService.resetPassword existe e não é chamado, e não há rota /auth/reset-password.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Dados</span>
+          <h3>Status de pedido e produto só em memória</h3>
+          <p>adminUpdateOrderStatus e adminToggleProductStatus alteram apenas o estado do React. Não há função de ordens em lib/db-queries.ts — pedidos vivem em localStorage/Supabase, sem trilha administrativa persistida.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Segurança</span>
+          <h3>Credenciais no código</h3>
+          <p>lib/db.ts traz DEFAULT_DATABASE_URL com usuário e senha do PostgreSQL em texto puro como fallback. Essas credenciais devem sair do repositório e virar variável de ambiente (com rotação).</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Segurança</span>
+          <h3>Middleware não protege rotas</h3>
+          <p>middleware.ts apenas adiciona o header de plataforma; /admin e APIs internas não têm verificação de sessão no servidor — a regra de admin é só client-side (isUserAdmin por e-mail).</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Dados</span>
+          <h3>Favoritos, carrinho e pedidos sem tabela</h3>
+          <p>A migração SQL cobre profiles, stores, products, orders e community_posts; carrinho e favoritos existem apenas no localStorage e não sincronizam entre dispositivos.</p>
+        </article>
+        <article class="gap">
+          <span class="tag">Funcionalidade</span>
+          <h3>Agendamento de treinador não persiste</h3>
+          <p>handleConfirmBooking só dispara toast e fecha o modal após 2,5s: não há tabela, serviço ou registro de agendamento.</p>
+        </article>
+    </div>
+  </section>
+
+  <section class="card" id="arquivos">
+    <h2 class="section-title">11. Arquivos-chave por fluxo</h2>
+    <p class="sub">Onde mexer para evoluir cada jornada.</p>
+    <div class="tbl-wrap"><table><thead><tr><th>Fluxo</th><th>Ponto de entrada</th><th>Regras e dados</th></tr></thead><tbody><tr><td class="k">Shell e navegação</td><td>app/layout.tsx · app/page.tsx · components/Sidebar.tsx</td><td>lib/store.tsx (ActiveView, modais globais, toasts)</td></tr><tr><td class="k">Autenticação</td><td>components/AuthModal.tsx · app/auth/callback/page.tsx</td><td>services/authService.ts · app/api/auth/sync/route.ts · lib/db-queries.ts</td></tr><tr><td class="k">Compra</td><td>components/HomeHeroAndHighlights.tsx · MarketplaceView · ProductDetailModal · CheckoutModal</td><td>services/orderService.ts · lib/schemas/order.schema.ts</td></tr><tr><td class="k">Venda C2C</td><td>components/SellC2CView.tsx · ProductCard.tsx</td><td>services/productService.ts · app/api/listings/route.ts · lib/schemas/product.schema.ts</td></tr><tr><td class="k">Lojas e selo</td><td>components/StoresView.tsx · CreateStoreModal.tsx · AdminDashboard.tsx</td><td>services/storeService.ts · app/api/stores/route.ts · lib/schemas/store.schema.ts</td></tr><tr><td class="k">Comunidade</td><td>components/CommunityView.tsx</td><td>services/communityService.ts · lib/initial-data.ts</td></tr><tr><td class="k">Treinadores</td><td>components/CoachesView.tsx</td><td>INITIAL_COACHES (lib/initial-data.ts)</td></tr><tr><td class="k">Administração</td><td>components/AdminDashboard.tsx</td><td>lib/store.tsx (ações admin) · app/api/users/route.ts · app/api/products/route.ts</td></tr><tr><td class="k">Banco e infraestrutura</td><td>lib/db.ts · lib/db-queries.ts · middleware.ts</td><td>supabase/migrations/20250101000000_coremotiom_initial_schema.sql</td></tr></tbody></table></div>
+  </section>
+
+  <section class="card" id="leitura">
+    <h2 class="section-title">12. Como ler este fluxograma</h2>
+    <div class="split">
+      <div>
+        <h3 style="font-size:13px;margin:0 0 12px;color:#cfd5e0">Formatos dos nós</h3>
+        <div class="split"><div class="legend-item"><svg viewBox="0 0 168 42" width="168" height="42" class="sample"><rect x="0" y="0" width="168" height="42" rx="21" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="84" y="25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#F5F3FF">Início</text></svg><span>Início</span></div><div class="legend-item"><svg viewBox="0 0 168 42" width="168" height="42" class="sample"><rect x="0" y="0" width="168" height="42" rx="12" fill="#0E2A22" stroke="#34D399" stroke-width="1.5" /><text x="84" y="25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#ECFDF5">Ação / tela</text></svg><span>Ação / tela</span></div><div class="legend-item"><svg viewBox="0 0 168 42" width="168" height="42" class="sample"><polygon points="18,0 150,0 168,21 150,42 18,42 0,21" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" /><text x="84" y="25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#FFFBEB">Decisão / guarda</text></svg><span>Decisão / guarda</span></div><div class="legend-item"><svg viewBox="0 0 168 42" width="168" height="42" class="sample"><polygon points="12,0 168,0 156,42 0,42" fill="#1C1633" stroke="#A78BFA" stroke-width="1.5" /><text x="84" y="25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#F5F3FF">Dado / persistência</text></svg><span>Dado / persistência</span></div><div class="legend-item"><svg viewBox="0 0 168 42" width="168" height="42" class="sample"><rect x="0" y="0" width="168" height="42" rx="12" fill="#2B2107" stroke="#FBBF24" stroke-width="1.5" stroke-dasharray="6 5" /><text x="84" y="25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#FFFBEB">Observação / lacuna</text></svg><span>Observação / lacuna</span></div><div class="legend-item"><svg viewBox="0 0 168 42" width="168" height="42" class="sample"><rect x="0" y="0" width="168" height="42" rx="21" fill="#0E2A22" stroke="#22C55E" stroke-width="1.5" /><text x="84" y="25" text-anchor="middle" font-size="11.5" font-weight="700" fill="#F0FDF4">Fim de fluxo</text></svg><span>Fim de fluxo</span></div></div>
+      </div>
+      <div>
+        <h3 style="font-size:13px;margin:0 0 12px;color:#cfd5e0">Cores por perfil</h3>
+        <div class="legend"><span class="chip big" style="--c:#8B93A7">Visitante (sem conta)</span><span class="chip big" style="--c:#34D399">Atleta / Usuário (role: user)</span><span class="chip big" style="--c:#38BDF8">Lojista (role: seller)</span><span class="chip big" style="--c:#F87171">Super Admin (e-mails master)</span><span class="chip big" style="--c:#A78BFA">Sistema / Dados</span><span class="chip big" style="--c:#FBBF24">Alerta / Lacuna / Erro</span><span class="chip big" style="--c:#22C55E">Confirmação / Sucesso</span></div>
+        <h3 style="font-size:13px;margin:18px 0 12px;color:#cfd5e0">Tipos de seta</h3>
+        <div class="edge-keys"><span class="edge-key"><i style="--c:#8B93A7;--d:none"></i>Fluxo padrão</span><span class="edge-key"><i style="--c:#A78BFA;--d:none"></i>Autenticação / sessão</span><span class="edge-key"><i style="--c:#34D399;--d:none"></i>Caminho de sucesso</span><span class="edge-key"><i style="--c:#F87171;--d:5 4"></i>Erro, bloqueio ou lacuna</span><span class="edge-key"><i style="--c:#FBBF24;--d:none"></i>Ação administrativa</span><span class="edge-key"><i style="--c:#38BDF8;--d:none"></i>Gravação / leitura de dados</span></div>
+        <p style="font-size:12px;color:#79818f;margin-top:18px">
+          Nós com traço tracejado e cor âmbar marcam lacunas ou comportamentos apenas parciais no código atual.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Gerado por <code>scripts/generate-user-flowchart.mjs</code> a partir do estado do repositório ·
+    CoreMotiom (BIRFeuFeu/-CoreMotion) · documento autocontido, sem dependências externas.
+  </footer>
+</div>
+</body>
+</html>

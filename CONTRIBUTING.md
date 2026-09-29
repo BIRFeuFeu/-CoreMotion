@@ -83,3 +83,30 @@ components/
 ├── admin/        # Auditoria administrativa, moderação e métricas
 └── shared/       # Header, Footer, EmptyStates, Skeletons
 ```
+
+---
+
+## 5. Documentação de Fluxos (Fluxograma do Usuário)
+
+O mapa completo das jornadas de usuário da plataforma fica em `docs/fluxograma-usuario.html`
+(documento autocontido, sem dependências externas): acesso e papéis, autenticação, compra com custódia,
+venda C2C, lojas oficiais e selo de verificação, comunidade, treinadores, painel master e a camada de dados.
+
+O arquivo é **gerado por script** — não edite o HTML à mão:
+
+```bash
+# regenerar o documento
+node scripts/generate-user-flowchart.mjs
+
+# gerar também os SVGs individuais de cada diagrama (útil para inspeção/print)
+FLOW_EMIT_SVG=/tmp/fluxos node scripts/generate-user-flowchart.mjs
+```
+
+Regras de manutenção:
+
+1. Ao mudar uma jornada (nova tela, nova guarda de acesso, novo status, nova gravação no banco),
+   atualize o diagrama correspondente em `scripts/generate-user-flowchart.mjs` e rode o script novamente.
+2. O script valida automaticamente arestas órfãs, nós fora da área e labels sobrepostos a nós —
+   avisos de layout aparecem no terminal e devem ser resolvidos antes do commit.
+3. Nós com traço tracejado e cor âmbar documentam lacunas conhecidas do fluxo; ao corrigir a lacuna,
+   remova o marcador ⚠ do texto e atualize a seção 10 ("Lacunas e riscos").
