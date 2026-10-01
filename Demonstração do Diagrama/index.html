@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#11151c">
+<meta name="description" content="Diagrama completo dos 48 casos de uso do CoreMotiom. Navegue pelos módulos, aproxime e explore as conexões.">
+<title>Casos de uso · CoreMotiom</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="identity"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 5H9L5 12l4 7h8M11 12h8"/></svg></span><div><strong>CoreMotiom</strong><span class="divider">/</span><span class="page-name">Casos de uso</span></div><span class="meta">48 UC · 6 módulos</span></div>
+  <div class="top-actions"><label class="module-select"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><select id="module" aria-label="Ir para um módulo"><option value="">Ir para módulo</option><option value="0">01 · Conta & Acesso</option><option value="1">02 · Descoberta & Compra</option><option value="2">03 · Oferta & Lojas</option><option value="3">04 · Comunidade & Serviços</option><option value="4">05 · Administração</option><option value="5">06 · Plataforma & Integrações</option></select></label><a class="text-button svg-download" href="diagrama.svg" download title="Baixar o diagrama em SVG">SVG <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg></a><a class="text-button package" href="coremotiom-diagrama.zip" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg><span>Baixar página</span></a></div>
+</header>
+<main id="stage" tabindex="0" aria-label="Diagrama navegável de casos de uso" aria-describedby="instructions">
+  <img id="diagram" src="diagrama.svg" width="1736" height="1921" alt="Diagrama completo do CoreMotiom: 48 casos de uso distribuídos em Conta e Acesso, Descoberta e Compra, Oferta e Lojas, Comunidade e Serviços, Administração e Plataforma e Integrações." draggable="false">
+</main>
+<div id="load-error" class="load-error" role="alert" hidden>Não foi possível carregar o diagrama. Mantenha o arquivo diagrama.svg na mesma pasta da página e tente recarregar.</div>
+<div class="canvas-label" aria-hidden="true"><span></span> DIAGRAMA DE CASOS DE USO <small>UML</small></div>
+<div class="bottom-tools" role="group" aria-label="Controles do diagrama">
+  <button id="minus" class="icon-button" title="Diminuir zoom (−)" aria-label="Diminuir zoom"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+  <button id="actual" class="zoom-value" title="Tamanho real (1)" aria-label="Restaurar zoom para 100%"><output id="zoom">100%</output></button>
+  <button id="plus" class="icon-button" title="Aumentar zoom (+)" aria-label="Aumentar zoom"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></button>
+  <span class="tool-divider"></span>
+  <button id="fit" class="icon-button" title="Enquadrar tudo (0 ou duplo clique)" aria-label="Enquadrar todo o diagrama"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button>
+  <button id="width" class="icon-button" title="Ajustar à largura (L)" aria-label="Ajustar diagrama à largura"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5v14M21 5v14M6 12h12M9 9l-3 3 3 3m6-6 3 3-3 3"/></svg></button>
+  <span class="tool-divider"></span>
+  <button id="help-button" class="icon-button" title="Como navegar (?)" aria-label="Abrir instruções de navegação" aria-expanded="false" aria-controls="help"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 8.5a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4M12 16v.2"/></svg></button>
+</div>
+<div id="help" class="help-panel" hidden><strong>Navegar pelo diagrama</strong><dl><dt>Mover</dt><dd>Arraste ou use as setas</dd><dt>Zoom</dt><dd>Roda do mouse, pinça ou <kbd>+</kbd> <kbd>−</kbd></dd><dt>Ver tudo</dt><dd>Duplo clique ou <kbd>0</kbd></dd><dt>Tamanho real</dt><dd><kbd>1</kbd></dd><dt>Ajustar à largura</dt><dd><kbd>L</kbd></dd></dl><p>Use “Ir para módulo” para aproximar uma seção.</p></div>
+<p id="instructions" class="navigation-hint">Arraste para mover <span>·</span> Role para aproximar</p>
+<aside class="minimap" aria-label="Visão geral do diagrama"><div class="minimap-title">VISÃO GERAL<span>↗</span></div><svg id="map" viewBox="0 0 1736 1921" tabindex="0" role="slider" aria-label="Navegação vertical pela visão geral" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><image href="diagrama.svg" width="1736" height="1921"/><rect id="map-window" x="0" y="0" width="1736" height="1921" rx="22"/></svg></aside>
+<script src="viewer.js"></script>
+</body>
+</html>
