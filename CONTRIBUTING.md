@@ -86,27 +86,42 @@ components/
 
 ---
 
-## 5. Documentação de Fluxos (Fluxograma do Usuário)
+## 5. Documentação de Fluxos e Casos de Uso
 
-O mapa completo das jornadas de usuário da plataforma fica em `docs/fluxograma-usuario.html`
-(documento autocontido, sem dependências externas): acesso e papéis, autenticação, compra com custódia,
-venda C2C, lojas oficiais e selo de verificação, comunidade, treinadores, painel master e a camada de dados.
+A documentação viva das jornadas do produto tem duas saídas, ambas geradas por script:
 
-O arquivo é **gerado por script** — não edite o HTML à mão:
+| Artefato | Conteúdo |
+| --- | --- |
+| `docs/fluxograma-usuario.html` | documento navegável (autocontido, sem CDN): 7 fluxos de usuário, diagrama UML de casos de uso, catálogo de 48 UC, permissões, máquina de estados, lacunas e arquivos-chave |
+| `docs/fluxograma-usuario.pdf` | o mesmo conteúdo em PDF A4, com capa, sumário numerado e os diagramas embutidos em alta resolução |
 
 ```bash
-# regenerar o documento
-node scripts/generate-user-flowchart.mjs
+npm run flow        # gera HTML e PDF
+npm run flow:html   # apenas docs/fluxograma-usuario.html
+npm run flow:pdf    # apenas docs/fluxograma-usuario.pdf (rasteriza os SVGs e monta o A4)
+```
 
-# gerar também os SVGs individuais de cada diagrama (útil para inspeção/print)
-FLOW_EMIT_SVG=/tmp/fluxos node scripts/generate-user-flowchart.mjs
+Os arquivos são **gerados** — nunca edite o HTML/PDF à mão. A fonte de verdade é:
+
+```text
+scripts/lib/flowchart-core.mjs   # fluxos de usuário (nós, arestas), tabelas de permissões/status/lacunas,
+                                 # motor de layout, roteamento ortogonal e renderizador SVG
+scripts/lib/usecase-core.mjs     # atores, 48 casos de uso em 6 módulos e o layout do diagrama UML
+scripts/lib/pdf-kit.mjs          # mini-kit A4 (texto, tabelas, cartões, imagens, rodapé numerado)
+scripts/generate-user-flowchart.mjs      # entrada que produz HTML + manifesto JSON
+scripts/generate-user-flowchart-pdf.mjs  # entrada que produz o PDF
 ```
 
 Regras de manutenção:
 
-1. Ao mudar uma jornada (nova tela, nova guarda de acesso, novo status, nova gravação no banco),
-   atualize o diagrama correspondente em `scripts/generate-user-flowchart.mjs` e rode o script novamente.
-2. O script valida automaticamente arestas órfãs, nós fora da área e labels sobrepostos a nós —
-   avisos de layout aparecem no terminal e devem ser resolvidos antes do commit.
-3. Nós com traço tracejado e cor âmbar documentam lacunas conhecidas do fluxo; ao corrigir a lacuna,
-   remova o marcador ⚠ do texto e atualize a seção 10 ("Lacunas e riscos").
+1. Ao mudar uma jornada (nova tela, guarda de acesso, status ou gravação no banco), atualize o diagrama
+   correspondente em `scripts/lib/flowchart-core.mjs` e rode `npm run flow`.
+2. Ao criar/remover uma funcionalidade, atualize os casos de uso em `scripts/lib/usecase-core.mjs`
+   (o diagrama, as estatísticas e o catálogo se ajustam automaticamente).
+3. O gerador de HTML valida arestas órfãs, nós fora da área e labels sobrepostos; avisos de layout
+   aparecem no terminal e devem ser resolvidos antes do commit.
+4. Casos de uso com `flag` (e nós âmbar marcados com `(!)` no PDF) documentam lacunas conhecidas;
+   ao corrigir a lacuna, remova o marcador e atualize a seção 10 ("Lacunas e riscos").
+5. O PDF precisa de `pdf-lib` e `@resvg/resvg-js` (ambos em `devDependencies`). Em ambientes offline,
+   aponte `PDF_LIB_PATH` para o módulo `pdf-lib` e `FLOW_PNG_DIR` para uma pasta com os PNGs
+   numerados (`01-…png` a `08-…png`) gerados por `FLOW_EMIT_SVG=/tmp/fluxos npm run flow:html`.
