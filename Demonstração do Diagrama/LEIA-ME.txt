@@ -1,0 +1,53 @@
+COREMOTIOM — DIAGRAMA DE CASOS DE USO
+
+Esta página é estática. Não precisa de GitHub, banco de dados, Node.js, npm
+ou instalação. Não carrega bibliotecas ou fontes de serviços externos.
+
+ABRIR NO COMPUTADOR
+1. Extraia todos os arquivos do ZIP para uma pasta.
+2. Abra index.html no navegador.
+3. Mantenha o HTML, CSS, JavaScript, favicon e diagrama.svg juntos.
+
+PUBLICAR PARA ACESSO POR LINK (SEM GITHUB)
+1. Crie ou entre na sua conta Netlify para gerenciar a publicação.
+2. Acesse https://app.netlify.com/drop
+3. Extraia o ZIP. Arraste a pasta que contém index.html para a área de upload.
+   Não envie a pasta inteira do repositório do CoreMotiom.
+4. Após a publicação, copie o endereço fornecido pelo Netlify e envie à pessoa.
+5. Para atualizar, envie a pasta atualizada na área de deploy do mesmo projeto.
+
+Consulte as condições e os limites do plano de hospedagem escolhido.
+Instruções oficiais:
+https://docs.netlify.com/deploy/create-deploys/#drag-and-drop
+
+COMPARTILHAR SEM HOSPEDAGEM
+Envie o ZIP por e-mail ou como documento no WhatsApp. A outra pessoa deve
+extrair a pasta inteira e abrir index.html em um computador. Para celulares,
+prefira publicar e compartilhar um link.
+
+NAVEGAÇÃO
+- Arraste o diagrama para movê-lo.
+- Roda do mouse ou pinça com dois dedos: zoom no ponto indicado.
+- Botões + e −: aproximar e afastar.
+- Duplo clique ou tecla 0: enquadrar tudo.
+- Tecla 1: tamanho real; tecla L: ajustar à largura.
+- Setas: mover. ?: ajuda; Escape: fechar ajuda.
+- Menu "Ir para módulo": aproximar uma seção sem esconder as demais.
+- Clique ou arraste no minimapa para navegar.
+- Botão SVG: baixar o diagrama vetorial.
+
+ESCOPO
+Os 48 casos de uso e suas relações vêm do documento mestre do CoreMotiom.
+A página permite visualizar o diagrama, não executar funcionalidades do produto.
+Os pontos âmbar preservam as lacunas do catálogo original. Ausência de ponto
+não comprova implementação em produção. Em particular, frete e pagamento
+no código analisado usam simulações, não integrações reais.
+
+PRIVACIDADE E ACESSO
+Não há autenticação nesta página: ao publicá-la, o diagrama ficará acessível
+publicamente. O pacote não inclui o repositório, arquivos .env ou credenciais.
+O preview no Arena serve para conferir o trabalho; não é uma hospedagem
+permanente. Para acesso independente da sessão, publique em um host estático.
+
+O botão "Baixar página" pertence ao preview do Arena; o pacote distribuído
+mantém o botão SVG e os mesmos controles de navegação, sem depender de outro ZIP.
