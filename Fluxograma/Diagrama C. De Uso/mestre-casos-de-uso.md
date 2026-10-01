@@ -12,12 +12,12 @@ os 48 casos de uso em formato de dados (§4), as regras do layout UML (§5), a e
 - Produto documentado: **CoreMotiom** — `Next.js 15 · React 19 · TypeScript · Supabase / PostgreSQL · Tailwind CSS v4`
 - Repositório de origem: `BIRFeuFeu/-CoreMotion`
 - Gerado em: `1 de outubro de 2026`
-- Artefatos de referência: `docs/fluxograma-usuario.html` (§8 e §9), `docs/casos-de-uso.pdf` (7 páginas) e o capítulo equivalente em `docs/fluxograma-usuario.pdf`
-- Documento irmão: `docs/mestre-fluxograma.md` (os 7 fluxos de usuário + pipeline HTML/PDF compartilhado)
+- Artefatos de referência: `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html` (§8 e §9), `Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf` (7 páginas) e o capítulo equivalente em `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf`
+- Documento irmão: `Fluxograma/Diagrama C. De Uso/mestre-fluxograma.md` (os 7 fluxos de usuário + pipeline HTML/PDF compartilhado)
 
 ### Como usar este arquivo em um chat novo
 
-1. Anexe **este arquivo** (idealmente junto de `docs/mestre-fluxograma.md`, que traz o dossiê completo do site
+1. Anexe **este arquivo** (idealmente junto de `Fluxograma/Diagrama C. De Uso/mestre-fluxograma.md`, que traz o dossiê completo do site
    e o kit de geração de PDF).
 2. Cole o prompt abaixo.
 
@@ -63,9 +63,9 @@ imprimível. Casos parciais ou inoperantes no código atual são marcados como *
 
 | Entregável | Onde vive | Conteúdo obrigatório |
 | --- | --- | --- |
-| **A. Seção do HTML** | `docs/fluxograma-usuario.html` §8 e §9 | Diagrama UML inline + catálogo com 48 linhas agrupadas por módulo |
-| **B. Capítulo do PDF principal** | `docs/fluxograma-usuario.pdf` (páginas 12–15) | Diagrama em página própria + catálogo paginado |
-| **C. PDF dedicado** | `docs/casos-de-uso.pdf` (7 páginas) | Capa, sumário, atores e sistemas externos, diagrama, catálogo, resumo por módulo, lacunas e manutenção |
+| **A. Seção do HTML** | `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html` §8 e §9 | Diagrama UML inline + catálogo com 48 linhas agrupadas por módulo |
+| **B. Capítulo do PDF principal** | `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf` (páginas 12–15) | Diagrama em página própria + catálogo paginado |
+| **C. PDF dedicado** | `Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf` (7 páginas) | Capa, sumário, atores e sistemas externos, diagrama, catálogo, resumo por módulo, lacunas e manutenção |
 
 **Critérios de aceitação** (validados no §8):
 
@@ -115,7 +115,7 @@ imprimível. Casos parciais ou inoperantes no código atual são marcados como *
 2. Catálogo: `pills` de contagem, tabela `ID · Caso de uso · Atores · Onde está no código` com linhas de grupo
    por módulo e flag `(!)` junto ao nome.
 
-### 2.3 PDF dedicado (`docs/casos-de-uso.pdf`, 7 páginas)
+### 2.3 PDF dedicado (`Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf`, 7 páginas)
 
 | Página | Conteúdo |
 | --- | --- |
@@ -136,7 +136,7 @@ comunidade** (feed social e assessoria com treinadores) —, além de um **paine
 custódia (escrow) e taxa de 4,5%.
 
 > O dossiê completo do site (telas, componentes, services, API, banco, seeds, ambiente, 14 lacunas e mapa de
-> arquivos) está no §3 de `docs/mestre-fluxograma.md`. Abaixo, o recorte necessário para os casos de uso.
+> arquivos) está no §3 de `Fluxograma/Diagrama C. De Uso/mestre-fluxograma.md`. Abaixo, o recorte necessário para os casos de uso.
 
 ### 3.1 Papéis e atores
 
@@ -1460,7 +1460,7 @@ Listas de apoio (papel por ator e descrição longa das integrações):
 ```bash
 npm i -D pdf-lib @resvg/resvg-js   # o PDF precisa dos dois
 npm run flow                       # HTML + PDF principal + PDF de casos de uso
-npm run flow:uc                    # apenas docs/casos-de-uso.pdf
+npm run flow:uc                    # apenas Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf
 npm run mestres                    # regenera os dois arquivos mestre
 ```
 
@@ -1479,7 +1479,7 @@ npm run mestres                    # regenera os dois arquivos mestre
 - [ ] IDs `UC01`–`UC48` únicos e presentes no diagrama **e** no catálogo.
 - [ ] Nenhuma associação cruza uma faixa de módulo; nenhum rótulo de ator sobreposto.
 - [ ] Todas as 5 integrações externas aparecem associadas a pelo menos um UC.
-- [ ] `docs/casos-de-uso.pdf` com 7 páginas, sumário correto e nenhuma página em branco.
+- [ ] `Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf` com 7 páginas, sumário correto e nenhuma página em branco.
 - [ ] HTML sem recursos externos, com o SVG inline e o catálogo com 48 linhas.
 
 ---
@@ -2137,7 +2137,7 @@ function coverUseCases(doc, manifest, figures) {
     x: 52, y: 80, size: 8.4, font: doc.fonts.regular, color: PALETTE.faint,
   });
   doc.page.drawText(
-    pdfSafe('Documento complementar a docs/fluxograma-usuario.pdf, que detalha as jornadas passo a passo.'),
+    pdfSafe('Documento complementar a fluxograma-usuario.pdf, que detalha as jornadas passo a passo.'),
     { x: 52, y: 64, size: 8.4, font: doc.fonts.regular, color: PALETTE.faint }
   );
 }
@@ -2261,7 +2261,7 @@ async function renderUseCaseStructure(doc, manifest, figures, record) {
   );
   doc.bullets([
     'npm run flow .......................... regenera HTML, o PDF do fluxograma e este PDF de casos de uso',
-    'FLOW_PDF_ONLY=casos npm run flow:pdf ... regenera apenas docs/casos-de-uso.pdf',
+    'FLOW_PDF_ONLY=casos npm run flow:pdf ... regenera apenas casos-de-uso.pdf',
   ]);
 }
 

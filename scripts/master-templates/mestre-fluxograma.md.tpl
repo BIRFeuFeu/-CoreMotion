@@ -12,12 +12,12 @@ entregáveis (§2) e o **código-fonte de referência completo** (Apêndice B).
 - Produto documentado: **CoreMotiom** — `{{STACK}}`
 - Repositório de origem: `{{REPO}}`
 - Gerado em: `{{DATA_GERACAO}}`
-- Artefatos de referência: `docs/fluxograma-usuario.html` (navegável) e `docs/fluxograma-usuario.pdf` (A4, {{PAGINAS_PDF}} páginas)
-- Documento irmão: `docs/mestre-casos-de-uso.md` (diagrama e catálogo dos 48 casos de uso)
+- Artefatos de referência: `{{DOCS_DIR}}/fluxograma-usuario.html` (navegável) e `{{DOCS_DIR}}/fluxograma-usuario.pdf` (A4, {{PAGINAS_PDF}} páginas)
+- Documento irmão: `{{DOCS_DIR}}/mestre-casos-de-uso.md` (diagrama e catálogo dos 48 casos de uso)
 
 ### Como usar este arquivo em um chat novo
 
-1. Anexe **este arquivo** (e, se quiser o pacote completo, também `docs/mestre-casos-de-uso.md`).
+1. Anexe **este arquivo** (e, se quiser o pacote completo, também `{{DOCS_DIR}}/mestre-casos-de-uso.md`).
 2. Cole o prompt abaixo. Ele é autossuficiente: manda o chat ler os dados do §4, seguir o §5 e validar pelo §8.
 
 ```text
@@ -74,7 +74,7 @@ papéis (visitante, atleta, lojista, admin) e pelas lacunas conhecidas.
 
 ## 2. Especificação dos entregáveis
 
-### 2.1 HTML — `docs/fluxograma-usuario.html`
+### 2.1 HTML — `{{DOCS_DIR}}/fluxograma-usuario.html`
 
 Documento único, tema escuro, largura máxima de leitura, `nav` fixa com âncoras. Seções, na ordem:
 
@@ -88,7 +88,7 @@ Documento único, tema escuro, largura máxima de leitura, `nav` fixa com âncor
 | 5 | Engajamento — comunidade, treinadores e favoritos | diagrama 5 |
 | 6 | Painel administrativo — 8 módulos executivos | diagrama 6 |
 | 7 | Dados, serviços e persistência — onde cada ação é gravada | diagrama 7 |
-| 8 | Diagrama de casos de uso — tudo que a plataforma oferece | UML (ver `docs/mestre-casos-de-uso.md`) |
+| 8 | Diagrama de casos de uso — tudo que a plataforma oferece | UML (ver `{{DOCS_DIR}}/mestre-casos-de-uso.md`) |
 | 9 | Catálogo completo de casos de uso | 48 linhas agrupadas por módulo |
 | 10 | Papéis e permissões por tela | matriz 13 × 5 (Capacidade × 4 papéis) |
 | 11 | Máquina de estados do domínio | tabela de 6 entidades com status e quem altera |
@@ -99,7 +99,7 @@ Documento único, tema escuro, largura máxima de leitura, `nav` fixa com âncor
 Cada bloco de diagrama traz: número, título, descrição, legenda de atores (pílulas coloridas), o SVG em
 `figure` com `viewBox` próprio e, quando útil, uma tabela de leitura (“o que observar”).
 
-### 2.2 PDF — `docs/fluxograma-usuario.pdf`
+### 2.2 PDF — `{{DOCS_DIR}}/fluxograma-usuario.pdf`
 
 | Página | Conteúdo |
 | --- | --- |
@@ -228,10 +228,10 @@ Larguras por tipo (px): `start/end 188` · `process 214` · `decision 236` · `d
 npm i -D pdf-lib @resvg/resvg-js
 
 # 2. gerar o HTML + manifesto de dados
-npm run flow:html          # docs/fluxograma-usuario.html   (+ docs/.flowchart-data.json, ignorado no git)
+npm run flow:html          # {{DOCS_DIR}}/fluxograma-usuario.html   (+ {{DOCS_DIR}}/.flowchart-data.json, ignorado no git)
 
 # 3. gerar o PDF (rasteriza os SVGs do manifesto com resvg e monta o A4 com pdf-lib)
-npm run flow:pdf           # docs/fluxograma-usuario.pdf (+ docs/casos-de-uso.pdf)
+npm run flow:pdf           # {{DOCS_DIR}}/fluxograma-usuario.pdf (+ {{DOCS_DIR}}/casos-de-uso.pdf)
 
 # atalhos úteis
 npm run flow               # HTML + os dois PDFs
@@ -241,7 +241,7 @@ FLOW_EMIT_JSON=/tmp/flow.json npm run flow:html
 FLOW_MANIFEST=... FLOW_PNG_DIR=... PDF_DEBUG=1 npm run flow:pdf   # modo offline/depuração
 ```
 
-- **Manifesto** (`docs/.flowchart-data.json`): metadados, os 7 diagramas (com `width`/`height`), os 48 casos de
+- **Manifesto** (`{{DOCS_DIR}}/.flowchart-data.json`): metadados, os 7 diagramas (com `width`/`height`), os 48 casos de
   uso, permissões, estados, lacunas e arquivos. É o contrato entre o gerador de HTML e o de PDF; se estiver
   velho, o gerador de PDF o reexecuta sozinho.
 - **Rasterização**: `@resvg/resvg-js` renderiza cada SVG em PNG com `zoom 2`; fontes DejaVu empacotadas quando
@@ -283,7 +283,7 @@ FLOW_MANIFEST=... FLOW_PNG_DIR=... PDF_DEBUG=1 npm run flow:pdf   # modo offline
 import fs from 'node:fs';
 import { createCanvas } from '@napi-rs/canvas';
 const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
-const doc = await pdfjs.getDocument({ data: new Uint8Array(fs.readFileSync('docs/fluxograma-usuario.pdf')) }).promise;
+const doc = await pdfjs.getDocument({ data: new Uint8Array(fs.readFileSync('{{DOCS_DIR}}/fluxograma-usuario.pdf')) }).promise;
 for (let n = 1; n <= doc.numPages; n++) {
   const page = await doc.getPage(n);
   const vp = page.getViewport({ scale: 1.4 });
@@ -302,7 +302,7 @@ const text = (await (await doc.getPage(2)).getTextContent()).items.map(i => i.st
 1. **Fonte de verdade**: `scripts/lib/flowchart-core.mjs` (dados + layout + SVG). Nunca edite o HTML/PDF gerados.
 2. Mudou uma jornada (tela nova, guarda de acesso, status ou gravação)? Atualize `DIAGRAMS` e rode `npm run flow`.
 3. Mudou a lista de lacunas? Atualize `GAPS` — ela alimenta a seção 12, o PDF e este mestre automaticamente.
-4. Ao criar/remover caso de uso, ajuste `scripts/lib/usecase-core.mjs` (ver `docs/mestre-casos-de-uso.md`).
+4. Ao criar/remover caso de uso, ajuste `scripts/lib/usecase-core.mjs` (ver `{{DOCS_DIR}}/mestre-casos-de-uso.md`).
 5. Rode `npm run mestres` para manter este documento sincronizado com o código.
 
 ---

@@ -36,7 +36,8 @@ import {
 } from './lib/flowchart-core.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const OUT_HTML = path.join(ROOT, 'docs', 'fluxograma-usuario.html');
+const DOCS_DIR = path.join(ROOT, 'Fluxograma', 'Diagrama C. De Uso');
+const OUT_HTML = path.join(DOCS_DIR, 'fluxograma-usuario.html');
 const SVG_DUMP_DIR = process.env.FLOW_EMIT_SVG || '';
 const EMIT_JSON = process.env.FLOW_EMIT_JSON || '';
 
@@ -516,7 +517,7 @@ if (EMIT_JSON) {
 fs.mkdirSync(path.dirname(OUT_HTML), { recursive: true });
 fs.writeFileSync(OUT_HTML, buildHtml(), 'utf8');
 console.log(
-  `✓ docs/fluxograma-usuario.html gerado (${DIAGRAMS.length} diagramas, ${(
+  `✓ Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html gerado (${DIAGRAMS.length} diagramas, ${(
     fs.statSync(OUT_HTML).size / 1024
   ).toFixed(1)} KB)`
 );

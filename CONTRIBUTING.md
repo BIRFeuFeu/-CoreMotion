@@ -88,29 +88,30 @@ components/
 
 ## 5. Documentação de Fluxos e Casos de Uso
 
-A documentação viva das jornadas do produto tem duas saídas, ambas geradas por script:
+A documentação viva das jornadas do produto fica toda em **`Fluxograma/Diagrama C. De Uso/`** e é gerada por
+script (HTML navegável, dois PDFs e dois arquivos mestre autocontidos):
 
 | Artefato | Conteúdo |
 | --- | --- |
-| `docs/fluxograma-usuario.html` | documento navegável (autocontido, sem CDN): 7 fluxos de usuário, diagrama UML de casos de uso, catálogo de 48 UC, permissões, máquina de estados, lacunas e arquivos-chave |
-| `docs/fluxograma-usuario.pdf` | o mesmo conteúdo em PDF A4, com capa, sumário numerado e os diagramas embutidos em alta resolução |
-| `docs/casos-de-uso.pdf` | recorte só de casos de uso: atores e sistemas externos, diagrama UML, catálogo dos 48 UC, resumo por módulo e lacunas |
-| `docs/mestre-fluxograma.md` | **arquivo mestre** autocontido do fluxograma: dossiê completo do site, dados dos 7 fluxos, regras de layout/render e código-fonte de referência |
-| `docs/mestre-casos-de-uso.md` | **arquivo mestre** autocontido dos casos de uso: 48 UC, atores, integrações, regras do diagrama UML e código do núcleo |
+| `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html` | documento navegável (autocontido, sem CDN): 7 fluxos de usuário, diagrama UML de casos de uso, catálogo de 48 UC, permissões, máquina de estados, lacunas e arquivos-chave |
+| `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf` | o mesmo conteúdo em PDF A4, com capa, sumário numerado e os diagramas embutidos em alta resolução |
+| `Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf` | recorte só de casos de uso: atores e sistemas externos, diagrama UML, catálogo dos 48 UC, resumo por módulo e lacunas |
+| `Fluxograma/Diagrama C. De Uso/mestre-fluxograma.md` | **arquivo mestre** autocontido do fluxograma: dossiê completo do site, dados dos 7 fluxos, regras de layout/render e código-fonte de referência |
+| `Fluxograma/Diagrama C. De Uso/mestre-casos-de-uso.md` | **arquivo mestre** autocontido dos casos de uso: 48 UC, atores, integrações, regras do diagrama UML e código do núcleo |
 
 ```bash
 npm run flow        # gera HTML + os dois PDFs
-npm run flow:html   # apenas docs/fluxograma-usuario.html
-npm run flow:pdf    # docs/fluxograma-usuario.pdf e docs/casos-de-uso.pdf
-npm run flow:uc     # apenas docs/casos-de-uso.pdf
-npm run mestres     # regenera os dois arquivos mestre (docs/mestre-*.md)
+npm run flow:html   # apenas Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html
+npm run flow:pdf    # Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf e Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf
+npm run flow:uc     # apenas Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf
+npm run mestres     # regenera os dois arquivos mestre (Fluxograma/Diagrama C. De Uso/mestre-*.md)
 ```
 
 Os **arquivos mestre** são documentos autocontidos pensados para um chat novo (ou um dev sem o
 repositório) recriar a documentação inteira: eles carregam o dossiê do site, os dados normativos dos
 diagramas, a especificação de layout e o código-fonte dos núcleos. Rode `npm run flow:pdf` antes de
 `npm run mestres` para que as contagens de páginas citadas neles fiquem corretas (o gerador lê o
-sidecar `docs/.flowchart-pages.json`).
+sidecar `.flowchart-pages.json`).
 
 Os arquivos são **gerados** — nunca edite o HTML/PDF à mão. A fonte de verdade é:
 

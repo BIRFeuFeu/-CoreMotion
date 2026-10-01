@@ -13,7 +13,7 @@
  *   3. Monta o PDF A4 — capa, sumário numerado, os 7 fluxos, o diagrama de casos de
  *      uso, o catálogo de UC, permissões, máquina de estados, lacunas e arquivos.
  *
- * Saída: docs/fluxograma-usuario.pdf
+ * Saída: Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf (+ casos-de-uso.pdf)
  */
 
 import fs from 'node:fs';
@@ -33,11 +33,13 @@ import {
 import { PdfDoc, PALETTE, pdfSafe } from './lib/pdf-kit.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const OUT_PDF = path.join(ROOT, 'docs', 'fluxograma-usuario.pdf');
-const OUT_PDF_UC = path.join(ROOT, 'docs', 'casos-de-uso.pdf');
+const DOCS_REL = 'Fluxograma/Diagrama C. De Uso';
+const DOCS_DIR = path.join(ROOT, 'Fluxograma', 'Diagrama C. De Uso');
+const OUT_PDF = path.join(DOCS_DIR, 'fluxograma-usuario.pdf');
+const OUT_PDF_UC = path.join(DOCS_DIR, 'casos-de-uso.pdf');
 /** FLOW_PDF_ONLY=fluxos|casos limita a geração a um dos documentos. */
 const ONLY = (process.env.FLOW_PDF_ONLY || '').toLowerCase();
-const MANIFEST = process.env.FLOW_MANIFEST || path.join(ROOT, 'docs', '.flowchart-data.json');
+const MANIFEST = process.env.FLOW_MANIFEST || path.join(DOCS_DIR, '.flowchart-data.json');
 const PNG_DIR = process.env.FLOW_PNG_DIR || '';
 const HTML_SCRIPT = path.join(ROOT, 'scripts', 'generate-user-flowchart.mjs');
 const CORE_FILES = [
@@ -316,7 +318,7 @@ async function renderStructure(doc, manifest, figures, record) {
     { boldFirst: true }
   );
   doc.paragraph(
-    'Para leitura com zoom, os mesmos diagramas estão disponíveis em docs/fluxograma-usuario.html, gerado a partir deste mesmo núcleo de dados.',
+    'Para leitura com zoom, os mesmos diagramas estão disponíveis em fluxograma-usuario.html (nesta mesma pasta), gerado a partir deste mesmo núcleo de dados.',
     { size: 8.4, color: PALETTE.faint }
   );
 
@@ -398,8 +400,8 @@ async function renderStructure(doc, manifest, figures, record) {
       'Ao mudar uma jornada, atualize scripts/lib/flowchart-core.mjs (fluxos) ou scripts/lib/usecase-core.mjs (casos de uso) e rode os geradores.'
   );
   doc.bullets([
-    'node scripts/generate-user-flowchart.mjs ......... regenera docs/fluxograma-usuario.html',
-    'node scripts/generate-user-flowchart-pdf.mjs ..... regenera docs/fluxograma-usuario.pdf',
+    'node scripts/generate-user-flowchart.mjs ......... regenera fluxograma-usuario.html',
+    'node scripts/generate-user-flowchart-pdf.mjs ..... regenera os dois PDFs desta pasta',
     'npm i -D @resvg/resvg-js ......................... rasterizador usado para embutir os diagramas',
   ]);
 }
@@ -453,7 +455,7 @@ function coverUseCases(doc, manifest, figures) {
     x: 52, y: 80, size: 8.4, font: doc.fonts.regular, color: PALETTE.faint,
   });
   doc.page.drawText(
-    pdfSafe('Documento complementar a docs/fluxograma-usuario.pdf, que detalha as jornadas passo a passo.'),
+    pdfSafe('Documento complementar a fluxograma-usuario.pdf, que detalha as jornadas passo a passo.'),
     { x: 52, y: 64, size: 8.4, font: doc.fonts.regular, color: PALETTE.faint }
   );
 }
@@ -577,7 +579,7 @@ async function renderUseCaseStructure(doc, manifest, figures, record) {
   );
   doc.bullets([
     'npm run flow .......................... regenera HTML, o PDF do fluxograma e este PDF de casos de uso',
-    'FLOW_PDF_ONLY=casos npm run flow:pdf ... regenera apenas docs/casos-de-uso.pdf',
+    'FLOW_PDF_ONLY=casos npm run flow:pdf ... regenera apenas casos-de-uso.pdf',
   ]);
 }
 
@@ -644,7 +646,7 @@ async function main() {
     fs.writeFileSync(OUT_PDF, bytes);
     pageCounts.main = doc.pages.length;
     console.log(
-      `✓ docs/fluxograma-usuario.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
+      `✓ Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
     );
   }
 
@@ -659,13 +661,13 @@ async function main() {
     fs.writeFileSync(OUT_PDF_UC, bytes);
     pageCounts.uc = doc.pages.length;
     console.log(
-      `✓ docs/casos-de-uso.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
+      `✓ Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
     );
     console.log(`  sumário: ${Object.entries(ucPageMap).map(([k, v]) => `${k}=p${v}`).join(' · ')}`);
   }
 
   // sidecar usado pelos geradores de documentação mestre (não versionado)
-  const sidecar = path.join(ROOT, 'docs', '.flowchart-pages.json');
+  const sidecar = path.join(DOCS_DIR, '.flowchart-pages.json');
   const previous = fs.existsSync(sidecar) ? JSON.parse(fs.readFileSync(sidecar, 'utf8')) : {};
   fs.writeFileSync(sidecar, JSON.stringify({ ...previous, ...pageCounts, generatedAt: new Date().toISOString() }, null, 2));
 }

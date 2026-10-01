@@ -5,17 +5,17 @@
  * Produz dois arquivos autocontidos (markdown) que permitem a um chat novo do Arena
  * recriar a documentação do produto sem acesso ao repositório:
  *
- *   docs/mestre-fluxograma.md      — fluxograma do usuário: dossiê do site, dados dos 7
+ *   Fluxograma/Diagrama C. De Uso/mestre-fluxograma.md    — dossiê do site, dados dos 7
  *                                    diagramas, regras de layout/render e código-fonte
  *                                    de referência (núcleo + geradores + kit de PDF).
- *   docs/mestre-casos-de-uso.md    — diagrama UML e catálogo dos 48 casos de uso,
+ *   Fluxograma/Diagrama C. De Uso/mestre-casos-de-uso.md  — diagrama UML e catálogo dos 48 UC,
  *                                    com dados, regras de layout e código do núcleo.
  *
  * Uso:
  *   node scripts/generate-master-docs.mjs
  *   MASTER_SEM_CODIGO=1 node scripts/generate-master-docs.mjs   # sem o apêndice de código
  *
- * As contagens de página dos PDFs vêm de docs/.flowchart-pages.json (escrito pelo gerador
+ * As contagens de página dos PDFs vêm de .flowchart-pages.json (escrito pelo gerador
  * de PDF). Se o arquivo não existir, os comandos `npm run flow:pdf` são sugeridos no aviso.
  */
 
@@ -49,8 +49,10 @@ import {
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TPL_DIR = path.join(ROOT, 'scripts', 'master-templates');
-const OUT_FLOW = path.join(ROOT, 'docs', 'mestre-fluxograma.md');
-const OUT_UC = path.join(ROOT, 'docs', 'mestre-casos-de-uso.md');
+const DOCS_REL = 'Fluxograma/Diagrama C. De Uso';
+const DOCS_DIR = path.join(ROOT, 'Fluxograma', 'Diagrama C. De Uso');
+const OUT_FLOW = path.join(DOCS_DIR, 'mestre-fluxograma.md');
+const OUT_UC = path.join(DOCS_DIR, 'mestre-casos-de-uso.md');
 const SEM_CODIGO = !!process.env.MASTER_SEM_CODIGO;
 
 const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
@@ -281,12 +283,12 @@ function slice(rel, from, to, { includeTo = false } = {}) {
  * ------------------------------------------------------------------ */
 
 function pageCounts() {
-  const sidecar = path.join(ROOT, 'docs', '.flowchart-pages.json');
+  const sidecar = path.join(DOCS_DIR, '.flowchart-pages.json');
   if (fs.existsSync(sidecar)) {
     const data = JSON.parse(fs.readFileSync(sidecar, 'utf8'));
     if (data.main && data.uc) return { main: data.main, uc: data.uc };
   }
-  console.warn('! docs/.flowchart-pages.json ausente — rode `npm run flow:pdf` antes para numerar as páginas com precisão.');
+  console.warn('! .flowchart-pages.json ausente — rode `npm run flow:pdf` antes para numerar as páginas com precisão.');
   return { main: 18, uc: 7 };
 }
 
@@ -327,6 +329,7 @@ function buildFlowMaster() {
     : codeOf('scripts/lib/flowchart-core.mjs');
   const values = {
     DATA_GERACAO,
+    DOCS_DIR: DOCS_REL,
     STACK: META.stack,
     REPO: META.repo,
     PAGINAS_PDF: String(pages.main),
@@ -356,6 +359,7 @@ function buildUcMaster() {
   const pages = pageCounts();
   const values = {
     DATA_GERACAO,
+    DOCS_DIR: DOCS_REL,
     STACK: META.stack,
     REPO: META.repo,
     PAGINAS_UC_PDF: String(pages.uc),
@@ -407,8 +411,8 @@ function main() {
   fs.writeFileSync(OUT_FLOW, flow);
   fs.writeFileSync(OUT_UC, uc);
   const kb = (s) => `${(Buffer.byteLength(s) / 1024).toFixed(0)} KB`;
-  console.log(`✓ docs/mestre-fluxograma.md gerado (${kb(flow)}, ${flow.split('\n').length} linhas)`);
-  console.log(`✓ docs/mestre-casos-de-uso.md gerado (${kb(uc)}, ${uc.split('\n').length} linhas)`);
+  console.log(`✓ Fluxograma/Diagrama C. De Uso/mestre-fluxograma.md gerado (${kb(flow)}, ${flow.split('\n').length} linhas)`);
+  console.log(`✓ Fluxograma/Diagrama C. De Uso/mestre-casos-de-uso.md gerado (${kb(uc)}, ${uc.split('\n').length} linhas)`);
   console.log(
     `  conteúdo: ${DIAGRAMS.length} diagramas de fluxo · ${USE_CASE_STATS.total} casos de uso · ` +
       `${GAPS.length} lacunas · ${USE_CASE_STATS.parciais} UC com lacuna${SEM_CODIGO ? ' · sem apêndice de código' : ''}`

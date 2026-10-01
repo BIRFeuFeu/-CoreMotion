@@ -16,7 +16,7 @@
  * Lê o mapeamento de telas/fluxos do app (app/page.tsx, lib/store.tsx, components/*,
  * services/*, app/api/*, supabase/migrations) e gera:
  *
- *   docs/fluxograma-usuario.html   → documento visual autocontido (SVGs inline, sem CDN)
+ *   Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html → documento autocontido (SVGs inline, sem CDN)
  *
  * Uso:
  *   node scripts/generate-user-flowchart.mjs

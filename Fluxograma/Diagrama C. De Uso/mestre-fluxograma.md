@@ -12,12 +12,12 @@ entregáveis (§2) e o **código-fonte de referência completo** (Apêndice B).
 - Produto documentado: **CoreMotiom** — `Next.js 15 · React 19 · TypeScript · Supabase / PostgreSQL · Tailwind CSS v4`
 - Repositório de origem: `BIRFeuFeu/-CoreMotion`
 - Gerado em: `1 de outubro de 2026`
-- Artefatos de referência: `docs/fluxograma-usuario.html` (navegável) e `docs/fluxograma-usuario.pdf` (A4, 18 páginas)
-- Documento irmão: `docs/mestre-casos-de-uso.md` (diagrama e catálogo dos 48 casos de uso)
+- Artefatos de referência: `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html` (navegável) e `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf` (A4, 18 páginas)
+- Documento irmão: `Fluxograma/Diagrama C. De Uso/mestre-casos-de-uso.md` (diagrama e catálogo dos 48 casos de uso)
 
 ### Como usar este arquivo em um chat novo
 
-1. Anexe **este arquivo** (e, se quiser o pacote completo, também `docs/mestre-casos-de-uso.md`).
+1. Anexe **este arquivo** (e, se quiser o pacote completo, também `Fluxograma/Diagrama C. De Uso/mestre-casos-de-uso.md`).
 2. Cole o prompt abaixo. Ele é autossuficiente: manda o chat ler os dados do §4, seguir o §5 e validar pelo §8.
 
 ```text
@@ -74,7 +74,7 @@ papéis (visitante, atleta, lojista, admin) e pelas lacunas conhecidas.
 
 ## 2. Especificação dos entregáveis
 
-### 2.1 HTML — `docs/fluxograma-usuario.html`
+### 2.1 HTML — `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html`
 
 Documento único, tema escuro, largura máxima de leitura, `nav` fixa com âncoras. Seções, na ordem:
 
@@ -88,7 +88,7 @@ Documento único, tema escuro, largura máxima de leitura, `nav` fixa com âncor
 | 5 | Engajamento — comunidade, treinadores e favoritos | diagrama 5 |
 | 6 | Painel administrativo — 8 módulos executivos | diagrama 6 |
 | 7 | Dados, serviços e persistência — onde cada ação é gravada | diagrama 7 |
-| 8 | Diagrama de casos de uso — tudo que a plataforma oferece | UML (ver `docs/mestre-casos-de-uso.md`) |
+| 8 | Diagrama de casos de uso — tudo que a plataforma oferece | UML (ver `Fluxograma/Diagrama C. De Uso/mestre-casos-de-uso.md`) |
 | 9 | Catálogo completo de casos de uso | 48 linhas agrupadas por módulo |
 | 10 | Papéis e permissões por tela | matriz 13 × 5 (Capacidade × 4 papéis) |
 | 11 | Máquina de estados do domínio | tabela de 6 entidades com status e quem altera |
@@ -99,7 +99,7 @@ Documento único, tema escuro, largura máxima de leitura, `nav` fixa com âncor
 Cada bloco de diagrama traz: número, título, descrição, legenda de atores (pílulas coloridas), o SVG em
 `figure` com `viewBox` próprio e, quando útil, uma tabela de leitura (“o que observar”).
 
-### 2.2 PDF — `docs/fluxograma-usuario.pdf`
+### 2.2 PDF — `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf`
 
 | Página | Conteúdo |
 | --- | --- |
@@ -2859,10 +2859,10 @@ Larguras por tipo (px): `start/end 188` · `process 214` · `decision 236` · `d
 npm i -D pdf-lib @resvg/resvg-js
 
 # 2. gerar o HTML + manifesto de dados
-npm run flow:html          # docs/fluxograma-usuario.html   (+ docs/.flowchart-data.json, ignorado no git)
+npm run flow:html          # Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html   (+ Fluxograma/Diagrama C. De Uso/.flowchart-data.json, ignorado no git)
 
 # 3. gerar o PDF (rasteriza os SVGs do manifesto com resvg e monta o A4 com pdf-lib)
-npm run flow:pdf           # docs/fluxograma-usuario.pdf (+ docs/casos-de-uso.pdf)
+npm run flow:pdf           # Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf (+ Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf)
 
 # atalhos úteis
 npm run flow               # HTML + os dois PDFs
@@ -2872,7 +2872,7 @@ FLOW_EMIT_JSON=/tmp/flow.json npm run flow:html
 FLOW_MANIFEST=... FLOW_PNG_DIR=... PDF_DEBUG=1 npm run flow:pdf   # modo offline/depuração
 ```
 
-- **Manifesto** (`docs/.flowchart-data.json`): metadados, os 7 diagramas (com `width`/`height`), os 48 casos de
+- **Manifesto** (`Fluxograma/Diagrama C. De Uso/.flowchart-data.json`): metadados, os 7 diagramas (com `width`/`height`), os 48 casos de
   uso, permissões, estados, lacunas e arquivos. É o contrato entre o gerador de HTML e o de PDF; se estiver
   velho, o gerador de PDF o reexecuta sozinho.
 - **Rasterização**: `@resvg/resvg-js` renderiza cada SVG em PNG com `zoom 2`; fontes DejaVu empacotadas quando
@@ -2922,7 +2922,7 @@ FLOW_MANIFEST=... FLOW_PNG_DIR=... PDF_DEBUG=1 npm run flow:pdf   # modo offline
 import fs from 'node:fs';
 import { createCanvas } from '@napi-rs/canvas';
 const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
-const doc = await pdfjs.getDocument({ data: new Uint8Array(fs.readFileSync('docs/fluxograma-usuario.pdf')) }).promise;
+const doc = await pdfjs.getDocument({ data: new Uint8Array(fs.readFileSync('Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf')) }).promise;
 for (let n = 1; n <= doc.numPages; n++) {
   const page = await doc.getPage(n);
   const vp = page.getViewport({ scale: 1.4 });
@@ -2941,7 +2941,7 @@ const text = (await (await doc.getPage(2)).getTextContent()).items.map(i => i.st
 1. **Fonte de verdade**: `scripts/lib/flowchart-core.mjs` (dados + layout + SVG). Nunca edite o HTML/PDF gerados.
 2. Mudou uma jornada (tela nova, guarda de acesso, status ou gravação)? Atualize `DIAGRAMS` e rode `npm run flow`.
 3. Mudou a lista de lacunas? Atualize `GAPS` — ela alimenta a seção 12, o PDF e este mestre automaticamente.
-4. Ao criar/remover caso de uso, ajuste `scripts/lib/usecase-core.mjs` (ver `docs/mestre-casos-de-uso.md`).
+4. Ao criar/remover caso de uso, ajuste `scripts/lib/usecase-core.mjs` (ver `Fluxograma/Diagrama C. De Uso/mestre-casos-de-uso.md`).
 5. Rode `npm run mestres` para manter este documento sincronizado com o código.
 
 ---
@@ -3094,7 +3094,7 @@ const text = (await (await doc.getPage(2)).getTextContent()).items.map(i => i.st
  * Lê o mapeamento de telas/fluxos do app (app/page.tsx, lib/store.tsx, components/*,
  * services/*, app/api/*, supabase/migrations) e gera:
  *
- *   docs/fluxograma-usuario.html   → documento visual autocontido (SVGs inline, sem CDN)
+ *   Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html → documento autocontido (SVGs inline, sem CDN)
  *
  * Uso:
  *   node scripts/generate-user-flowchart.mjs
@@ -4383,7 +4383,8 @@ import {
 } from './lib/flowchart-core.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const OUT_HTML = path.join(ROOT, 'docs', 'fluxograma-usuario.html');
+const DOCS_DIR = path.join(ROOT, 'Fluxograma', 'Diagrama C. De Uso');
+const OUT_HTML = path.join(DOCS_DIR, 'fluxograma-usuario.html');
 const SVG_DUMP_DIR = process.env.FLOW_EMIT_SVG || '';
 const EMIT_JSON = process.env.FLOW_EMIT_JSON || '';
 
@@ -4863,7 +4864,7 @@ if (EMIT_JSON) {
 fs.mkdirSync(path.dirname(OUT_HTML), { recursive: true });
 fs.writeFileSync(OUT_HTML, buildHtml(), 'utf8');
 console.log(
-  `✓ docs/fluxograma-usuario.html gerado (${DIAGRAMS.length} diagramas, ${(
+  `✓ Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html gerado (${DIAGRAMS.length} diagramas, ${(
     fs.statSync(OUT_HTML).size / 1024
   ).toFixed(1)} KB)`
 );
@@ -4886,7 +4887,7 @@ console.log(
  *   3. Monta o PDF A4 — capa, sumário numerado, os 7 fluxos, o diagrama de casos de
  *      uso, o catálogo de UC, permissões, máquina de estados, lacunas e arquivos.
  *
- * Saída: docs/fluxograma-usuario.pdf
+ * Saída: Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf (+ casos-de-uso.pdf)
  */
 
 import fs from 'node:fs';
@@ -4906,11 +4907,13 @@ import {
 import { PdfDoc, PALETTE, pdfSafe } from './lib/pdf-kit.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const OUT_PDF = path.join(ROOT, 'docs', 'fluxograma-usuario.pdf');
-const OUT_PDF_UC = path.join(ROOT, 'docs', 'casos-de-uso.pdf');
+const DOCS_REL = 'Fluxograma/Diagrama C. De Uso';
+const DOCS_DIR = path.join(ROOT, 'Fluxograma', 'Diagrama C. De Uso');
+const OUT_PDF = path.join(DOCS_DIR, 'fluxograma-usuario.pdf');
+const OUT_PDF_UC = path.join(DOCS_DIR, 'casos-de-uso.pdf');
 /** FLOW_PDF_ONLY=fluxos|casos limita a geração a um dos documentos. */
 const ONLY = (process.env.FLOW_PDF_ONLY || '').toLowerCase();
-const MANIFEST = process.env.FLOW_MANIFEST || path.join(ROOT, 'docs', '.flowchart-data.json');
+const MANIFEST = process.env.FLOW_MANIFEST || path.join(DOCS_DIR, '.flowchart-data.json');
 const PNG_DIR = process.env.FLOW_PNG_DIR || '';
 const HTML_SCRIPT = path.join(ROOT, 'scripts', 'generate-user-flowchart.mjs');
 const CORE_FILES = [
@@ -5189,7 +5192,7 @@ async function renderStructure(doc, manifest, figures, record) {
     { boldFirst: true }
   );
   doc.paragraph(
-    'Para leitura com zoom, os mesmos diagramas estão disponíveis em docs/fluxograma-usuario.html, gerado a partir deste mesmo núcleo de dados.',
+    'Para leitura com zoom, os mesmos diagramas estão disponíveis em fluxograma-usuario.html (nesta mesma pasta), gerado a partir deste mesmo núcleo de dados.',
     { size: 8.4, color: PALETTE.faint }
   );
 
@@ -5271,8 +5274,8 @@ async function renderStructure(doc, manifest, figures, record) {
       'Ao mudar uma jornada, atualize scripts/lib/flowchart-core.mjs (fluxos) ou scripts/lib/usecase-core.mjs (casos de uso) e rode os geradores.'
   );
   doc.bullets([
-    'node scripts/generate-user-flowchart.mjs ......... regenera docs/fluxograma-usuario.html',
-    'node scripts/generate-user-flowchart-pdf.mjs ..... regenera docs/fluxograma-usuario.pdf',
+    'node scripts/generate-user-flowchart.mjs ......... regenera fluxograma-usuario.html',
+    'node scripts/generate-user-flowchart-pdf.mjs ..... regenera os dois PDFs desta pasta',
     'npm i -D @resvg/resvg-js ......................... rasterizador usado para embutir os diagramas',
   ]);
 }
@@ -5326,7 +5329,7 @@ function coverUseCases(doc, manifest, figures) {
     x: 52, y: 80, size: 8.4, font: doc.fonts.regular, color: PALETTE.faint,
   });
   doc.page.drawText(
-    pdfSafe('Documento complementar a docs/fluxograma-usuario.pdf, que detalha as jornadas passo a passo.'),
+    pdfSafe('Documento complementar a fluxograma-usuario.pdf, que detalha as jornadas passo a passo.'),
     { x: 52, y: 64, size: 8.4, font: doc.fonts.regular, color: PALETTE.faint }
   );
 }
@@ -5450,7 +5453,7 @@ async function renderUseCaseStructure(doc, manifest, figures, record) {
   );
   doc.bullets([
     'npm run flow .......................... regenera HTML, o PDF do fluxograma e este PDF de casos de uso',
-    'FLOW_PDF_ONLY=casos npm run flow:pdf ... regenera apenas docs/casos-de-uso.pdf',
+    'FLOW_PDF_ONLY=casos npm run flow:pdf ... regenera apenas casos-de-uso.pdf',
   ]);
 }
 
@@ -5517,7 +5520,7 @@ async function main() {
     fs.writeFileSync(OUT_PDF, bytes);
     pageCounts.main = doc.pages.length;
     console.log(
-      `✓ docs/fluxograma-usuario.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
+      `✓ Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
     );
   }
 
@@ -5532,13 +5535,13 @@ async function main() {
     fs.writeFileSync(OUT_PDF_UC, bytes);
     pageCounts.uc = doc.pages.length;
     console.log(
-      `✓ docs/casos-de-uso.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
+      `✓ Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
     );
     console.log(`  sumário: ${Object.entries(ucPageMap).map(([k, v]) => `${k}=p${v}`).join(' · ')}`);
   }
 
   // sidecar usado pelos geradores de documentação mestre (não versionado)
-  const sidecar = path.join(ROOT, 'docs', '.flowchart-pages.json');
+  const sidecar = path.join(DOCS_DIR, '.flowchart-pages.json');
   const previous = fs.existsSync(sidecar) ? JSON.parse(fs.readFileSync(sidecar, 'utf8')) : {};
   fs.writeFileSync(sidecar, JSON.stringify({ ...previous, ...pageCounts, generatedAt: new Date().toISOString() }, null, 2));
 }
