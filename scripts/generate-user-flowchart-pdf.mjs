@@ -27,6 +27,9 @@ import { PdfDoc, PALETTE, pdfSafe } from './lib/pdf-kit.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_PDF = path.join(ROOT, 'docs', 'fluxograma-usuario.pdf');
+const OUT_PDF_UC = path.join(ROOT, 'docs', 'casos-de-uso.pdf');
+/** FLOW_PDF_ONLY=fluxos|casos limita a geração a um dos documentos. */
+const ONLY = (process.env.FLOW_PDF_ONLY || '').toLowerCase();
 const MANIFEST = process.env.FLOW_MANIFEST || path.join(ROOT, 'docs', '.flowchart-data.json');
 const PNG_DIR = process.env.FLOW_PNG_DIR || '';
 const HTML_SCRIPT = path.join(ROOT, 'scripts', 'generate-user-flowchart.mjs');
@@ -38,6 +41,21 @@ const CORE_FILES = [
 const A4 = { portrait: { width: 595.28, height: 841.89 }, landscape: { width: 841.89, height: 595.28 } };
 const TOC_ENTRIES = [];
 const SHORT_ACTORS = { visitante: 'Visitante', atleta: 'Atleta', lojista: 'Lojista', admin: 'Super Admin' };
+
+const UC_ACTOR_INFO = {
+  visitante: 'Navega, busca, filtra, curte publicações e compra sem exigir conta (pedido criado como "guest-user").',
+  atleta: 'Papel "user": favorita produtos, anuncia equipamentos C2C, publica e comenta no feed, agenda treinadores e compra com custódia.',
+  lojista: 'Papel "seller": cria e personaliza a loja oficial, mantém o catálogo B2C e solicita o selo de verificação por CNPJ.',
+  admin: 'E-mails master autorizados: acessa o painel executivo, homologa lojas, modera catálogo, gere usuários, pedidos e o banco.',
+};
+
+const UC_EXTERNAL_INFO = {
+  google: 'Provedor de identidade do login social (popup + retorno em /auth/callback).',
+  supabaseAuth: 'Serviço de autenticação: e-mail/senha, OAuth Google, sessões e callback.',
+  postgres: 'Banco relacional com RLS: profiles, stores, products, orders e community_posts.',
+  pix: 'Meio de pagamento instantâneo com QR Code, copia-e-cola e desconto de 5%.',
+  correios: 'Cálculo de prazo e frete (SEDEX/PAC) apresentado no checkout e na ficha do produto.',
+};
 const shortActor = (a) => SHORT_ACTORS[a] || a;
 
 /* ------------------------------------------------------------------ *
@@ -397,6 +415,193 @@ async function renderStructure(doc, manifest, figures, record) {
  * 5. Execução (duas passagens para numerar o sumário)                 *
  * ------------------------------------------------------------------ */
 
+/* ---------------- documento "Casos de uso" ---------------- */
+
+function coverUseCases(doc, manifest, figures) {
+  const { width: W, height: H } = A4.portrait;
+  doc.newPageIfFresh(A4.portrait);
+  doc.page.drawRectangle({ x: 0, y: 0, width: W, height: H, color: PALETTE.dark });
+  doc.page.drawRectangle({ x: 0, y: H - 6, width: W, height: 6, color: PALETTE.accent });
+
+  doc.page.drawRectangle({ x: 52, y: H - 138, width: 46, height: 46, color: PALETTE.accent });
+  doc.page.drawText('CM', { x: 60, y: H - 121, size: 20, font: doc.fonts.bold, color: PALETTE.white });
+
+  doc.page.drawText('CoreMotiom', { x: 52, y: H - 204, size: 34, font: doc.fonts.bold, color: PALETTE.white });
+  doc.page.drawText(pdfSafe('Diagrama e catálogo de'), {
+    x: 52, y: H - 230, size: 15.5, font: doc.fonts.regular, color: PALETTE.amber,
+  });
+  doc.page.drawText(pdfSafe('casos de uso'), {
+    x: 52, y: H - 250, size: 15.5, font: doc.fonts.regular, color: PALETTE.amber,
+  });
+  doc.page.drawText(pdfSafe('Tudo que a plataforma oferece: 48 casos de uso em 6 módulos funcionais.'), {
+    x: 52, y: H - 288, size: 10.4, font: doc.fonts.regular, color: PALETTE.faint,
+  });
+  doc.page.drawText(pdfSafe(manifest.meta.stack), {
+    x: 52, y: H - 306, size: 9.4, font: doc.fonts.regular, color: PALETTE.faint,
+  });
+
+  const st = manifest.useCases.stats;
+  const stats = [
+    [String(st.total), 'casos de uso'],
+    [String(st.modules), 'módulos funcionais'],
+    [String(st.atores), 'atores primários'],
+    [String(st.externos), 'sistemas externos'],
+  ];
+  stats.forEach(([value, label], i) => {
+    const x = 52 + i * 122;
+    const y = H - 404;
+    doc.page.drawRectangle({ x, y, width: 108, height: 66, color: PALETTE.darkSoft, borderColor: PALETTE.accent, borderWidth: 0.7 });
+    doc.page.drawText(value, { x: x + 12, y: y + 34, size: 21, font: doc.fonts.bold, color: PALETTE.white });
+    doc.page.drawText(pdfSafe(label), { x: x + 12, y: y + 18, size: 7.6, font: doc.fonts.regular, color: PALETTE.faint });
+  });
+
+  const stamp = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' }).format(new Date());
+  doc.page.drawText(pdfSafe(`Gerado em ${stamp} a partir do código-fonte de ${manifest.meta.repo}`), {
+    x: 52, y: 80, size: 8.4, font: doc.fonts.regular, color: PALETTE.faint,
+  });
+  doc.page.drawText(
+    pdfSafe('Documento complementar a docs/fluxograma-usuario.pdf, que detalha as jornadas passo a passo.'),
+    { x: 52, y: 64, size: 8.4, font: doc.fonts.regular, color: PALETTE.faint }
+  );
+}
+
+function tocEntriesUseCases() {
+  return [
+    { id: 'uc-atores', title: '1. Atores e sistemas externos', level: 1 },
+    { id: 'uc-diagrama', title: '2. Diagrama de casos de uso', level: 1 },
+    { id: 'uc-catalogo', title: '3. Catálogo completo (48 casos de uso)', level: 2 },
+    { id: 'uc-resumo', title: '4. Resumo por módulo', level: 1 },
+    { id: 'uc-lacunas', title: '5. Casos de uso com lacuna conhecida', level: 2 },
+    { id: 'uc-manutencao', title: '6. Manutenção deste documento', level: 2 },
+  ];
+}
+
+async function renderUseCaseStructure(doc, manifest, figures, record) {
+  const uc = manifest.useCases;
+  const figure = figures.find((f) => f.kind === 'usecase');
+  const catalog = uc.modules.flatMap((m) => m.uc.map((u) => ({ ...u, module: m.title })));
+
+  /* --- 1. atores e sistemas externos --- */
+  doc.newPage(A4.portrait);
+  record('uc-atores');
+  sectionHeader(doc, {
+    title: '1. Atores e sistemas externos',
+    desc:
+      'Atores primários são pessoas com papel definido no sistema; os sistemas externos participam de casos de uso específicos e aparecem tracejados em azul no diagrama.',
+  });
+  doc.heading('Atores primários', { level: 2 });
+  doc.table(
+    ['Ator', 'Papel no sistema', 'O que faz'],
+    Object.entries(uc.actors).map(([key, a]) => [SHORT_ACTORS[key] || a.label, String(key), UC_ACTOR_INFO[key] || '']),
+    [16, 12, 72],
+    { boldFirst: true }
+  );
+  doc.heading('Sistemas externos', { level: 2 });
+  doc.table(
+    ['Sistema', 'Participação'],
+    Object.entries(uc.externals).map(([key, e]) => [e.label, UC_EXTERNAL_INFO[key] || '']),
+    [22, 78],
+    { boldFirst: true }
+  );
+
+  /* --- 2. diagrama --- */
+  record('uc-diagrama');
+  doc.newPage(bestOrientation(figure.aspect, 92));
+  doc.page.drawRectangle({ x: doc.margin, y: doc.height - doc.margin - 4, width: 3, height: 16, color: PALETTE.accent });
+  doc.page.drawText(pdfSafe('2. Diagrama de casos de uso'), {
+    x: doc.margin + 10, y: doc.height - doc.margin + 2, size: 12.6, font: doc.fonts.bold, color: PALETTE.ink,
+  });
+  doc.y = doc.height - doc.margin - 16;
+  doc.paragraph(figure.desc, { size: 8.8, color: PALETTE.muted, after: 4 });
+  doc.paragraph(
+    'Legenda: atores primários nos corredores laterais · sistemas externos em azul tracejado · relações «include» em roxo · ponto âmbar = lacuna conhecida.',
+    { size: 8, color: PALETTE.faint, after: 4 }
+  );
+  await doc.placeImage(figure.png, { maxHeight: doc.y - doc.margin - 44, cacheKey: 'usecase-doc' });
+
+  /* --- 3. catálogo --- */
+  doc.newPage(A4.portrait);
+  record('uc-catalogo');
+  doc.heading('3. Catálogo completo de casos de uso', { level: 1 });
+  doc.pills([
+    ['Casos de uso', String(uc.stats.total)],
+    ['Módulos', String(uc.stats.modules)],
+    ['Com lacuna', String(uc.stats.parciais)],
+  ]);
+  const rows = [];
+  for (const m of uc.modules) {
+    rows.push({ group: m.title });
+    for (const u of m.uc) {
+      rows.push({
+        cells: [
+          u.id,
+          u.flag ? `${u.name}   (!) ${u.flag}` : u.name,
+          u.actors.map(shortActor).join(', ') + (u.ext ? ` + ${u.ext}` : ''),
+          u.src,
+        ],
+      });
+    }
+  }
+  doc.table(['ID', 'Caso de uso', 'Atores', 'Onde está no código'], rows, [7, 42, 18, 33]);
+
+  /* --- 4. resumo por módulo --- */
+  doc.newPage(A4.portrait);
+  record('uc-resumo');
+  doc.heading('4. Resumo por módulo', { level: 1 });
+  doc.paragraph('Distribuição dos casos de uso, atores envolvidos e lacunas conhecidas por módulo funcional.');
+  doc.table(
+    ['Módulo', 'UCs', 'Atores', 'Lacunas'],
+    uc.modules.map((m) => [
+      m.title,
+      String(m.uc.length),
+      m.actors.map((a) => SHORT_ACTORS[a] || a).join(', ') || 'Sistema',
+      m.uc.filter((u) => u.flag).length ? `${m.uc.filter((u) => u.flag).length} (${m.uc.filter((u) => u.flag).map((u) => u.id).join(', ')})` : '—',
+    ]),
+    [30, 6, 24, 40],
+    { boldFirst: true }
+  );
+
+  /* --- 5. lacunas --- */
+  record('uc-lacunas');
+  doc.heading('5. Casos de uso com lacuna conhecida', { level: 1 });
+  doc.paragraph(
+    'Comportamentos parciais ou inoperantes no código atual — os mesmos pontos marcados com (!) no catálogo e com ponto âmbar no diagrama.'
+  );
+  const flagged = catalog.filter((u) => u.flag);
+  doc.table(
+    ['ID', 'Caso de uso', 'Módulo', 'Lacuna'],
+    flagged.map((u) => [u.id, u.name, u.module, u.flag]),
+    [6, 30, 22, 42],
+    { boldFirst: true }
+  );
+
+  /* --- 6. manutenção --- */
+  record('uc-manutencao');
+  doc.heading('6. Manutenção deste documento', { level: 1 });
+  doc.paragraph(
+    'Diagrama, estatísticas e catálogo são derivados de scripts/lib/usecase-core.mjs. Ao criar ou remover um caso de uso, ' +
+      'edite a lista do módulo correspondente e rode os geradores — as contagens da capa, do catálogo e o diagrama se ajustam sozinhos.'
+  );
+  doc.bullets([
+    'npm run flow .......................... regenera HTML, o PDF do fluxograma e este PDF de casos de uso',
+    'FLOW_PDF_ONLY=casos npm run flow:pdf ... regenera apenas docs/casos-de-uso.pdf',
+  ]);
+}
+
+async function buildUseCaseDoc(manifest, figures, pageMap) {
+  const doc = await PdfDoc.create({
+    title: 'CoreMotiom — Casos de uso',
+    subject: 'Diagrama e catálogo de casos de uso da plataforma CoreMotiom',
+    footerLabel: `${manifest.meta.product} · Casos de uso`,
+  });
+  coverUseCases(doc, manifest, figures);
+  tableOfContents(doc, TOC_ENTRIES, pageMap || {});
+  await renderUseCaseStructure(doc, manifest, figures, (id) => {
+    if (pageMap) pageMap[id] = doc.pages.length;
+  });
+  return doc;
+}
+
 function tocEntries(figures) {
   const ucNum = figures.find((f) => f.kind === 'usecase')?.num ?? 8;
   const entries = [{ id: 'sec-mapa', title: '1. Visão geral e mapa dos diagramas', level: 1 }];
@@ -431,22 +636,36 @@ async function main() {
   const manifest = ensureManifest();
   console.log('• rasterizando diagramas…');
   const figures = await renderFigures(manifest);
-
-  TOC_ENTRIES.length = 0;
-  TOC_ENTRIES.push(...tocEntries(figures));
-
-  const pageMap = {};
-  await build(manifest, figures, pageMap); // passagem 1: mede as páginas
-  const doc = await build(manifest, figures, pageMap); // passagem 2: sumário numerado
-  await doc.stampFooters({ label: `${manifest.meta.product} · Fluxograma do usuário & casos de uso` });
-
-  const bytes = await doc.save();
   fs.mkdirSync(path.dirname(OUT_PDF), { recursive: true });
-  fs.writeFileSync(OUT_PDF, bytes);
-  console.log(
-    `✓ docs/fluxograma-usuario.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
-  );
-  console.log(`  sumário: ${Object.entries(pageMap).map(([k, v]) => `${k}=p${v}`).join(' · ')}`);
+
+  if (ONLY !== 'casos') {
+    TOC_ENTRIES.length = 0;
+    TOC_ENTRIES.push(...tocEntries(figures));
+    const pageMap = {};
+    await build(manifest, figures, pageMap);            // passagem 1: mede as páginas
+    const doc = await build(manifest, figures, pageMap); // passagem 2: sumário numerado
+    await doc.stampFooters({ label: `${manifest.meta.product} · Fluxograma do usuário & casos de uso` });
+    const bytes = await doc.save();
+    fs.writeFileSync(OUT_PDF, bytes);
+    console.log(
+      `✓ docs/fluxograma-usuario.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
+    );
+  }
+
+  if (ONLY !== 'fluxos') {
+    TOC_ENTRIES.length = 0;
+    TOC_ENTRIES.push(...tocEntriesUseCases());
+    const ucPageMap = {};
+    await buildUseCaseDoc(manifest, figures, ucPageMap);
+    const doc = await buildUseCaseDoc(manifest, figures, ucPageMap);
+    await doc.stampFooters({ label: `${manifest.meta.product} · Casos de uso` });
+    const bytes = await doc.save();
+    fs.writeFileSync(OUT_PDF_UC, bytes);
+    console.log(
+      `✓ docs/casos-de-uso.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
+    );
+    console.log(`  sumário: ${Object.entries(ucPageMap).map(([k, v]) => `${k}=p${v}`).join(' · ')}`);
+  }
 }
 
 main().catch((err) => {

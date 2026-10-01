@@ -94,11 +94,13 @@ A documentação viva das jornadas do produto tem duas saídas, ambas geradas po
 | --- | --- |
 | `docs/fluxograma-usuario.html` | documento navegável (autocontido, sem CDN): 7 fluxos de usuário, diagrama UML de casos de uso, catálogo de 48 UC, permissões, máquina de estados, lacunas e arquivos-chave |
 | `docs/fluxograma-usuario.pdf` | o mesmo conteúdo em PDF A4, com capa, sumário numerado e os diagramas embutidos em alta resolução |
+| `docs/casos-de-uso.pdf` | recorte só de casos de uso: atores e sistemas externos, diagrama UML, catálogo dos 48 UC, resumo por módulo e lacunas |
 
 ```bash
-npm run flow        # gera HTML e PDF
+npm run flow        # gera HTML + os dois PDFs
 npm run flow:html   # apenas docs/fluxograma-usuario.html
-npm run flow:pdf    # apenas docs/fluxograma-usuario.pdf (rasteriza os SVGs e monta o A4)
+npm run flow:pdf    # docs/fluxograma-usuario.pdf e docs/casos-de-uso.pdf
+npm run flow:uc     # apenas docs/casos-de-uso.pdf
 ```
 
 Os arquivos são **gerados** — nunca edite o HTML/PDF à mão. A fonte de verdade é:
