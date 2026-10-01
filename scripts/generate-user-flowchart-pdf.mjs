@@ -22,7 +22,14 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
 import { DIAGRAMS, renderDiagram, layout, ACTORS } from './lib/flowchart-core.mjs';
-import { renderUseCaseSvg } from './lib/usecase-core.mjs';
+import {
+  renderUseCaseSvg,
+  USE_CASE_DIAGRAM,
+  USE_CASE_MODULES,
+  USE_CASE_STATS,
+  UC_ACTOR_INFO,
+  UC_EXTERNAL_INFO,
+} from './lib/usecase-core.mjs';
 import { PdfDoc, PALETTE, pdfSafe } from './lib/pdf-kit.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -42,20 +49,6 @@ const A4 = { portrait: { width: 595.28, height: 841.89 }, landscape: { width: 84
 const TOC_ENTRIES = [];
 const SHORT_ACTORS = { visitante: 'Visitante', atleta: 'Atleta', lojista: 'Lojista', admin: 'Super Admin' };
 
-const UC_ACTOR_INFO = {
-  visitante: 'Navega, busca, filtra, curte publicações e compra sem exigir conta (pedido criado como "guest-user").',
-  atleta: 'Papel "user": favorita produtos, anuncia equipamentos C2C, publica e comenta no feed, agenda treinadores e compra com custódia.',
-  lojista: 'Papel "seller": cria e personaliza a loja oficial, mantém o catálogo B2C e solicita o selo de verificação por CNPJ.',
-  admin: 'E-mails master autorizados: acessa o painel executivo, homologa lojas, modera catálogo, gere usuários, pedidos e o banco.',
-};
-
-const UC_EXTERNAL_INFO = {
-  google: 'Provedor de identidade do login social (popup + retorno em /auth/callback).',
-  supabaseAuth: 'Serviço de autenticação: e-mail/senha, OAuth Google, sessões e callback.',
-  postgres: 'Banco relacional com RLS: profiles, stores, products, orders e community_posts.',
-  pix: 'Meio de pagamento instantâneo com QR Code, copia-e-cola e desconto de 5%.',
-  correios: 'Cálculo de prazo e frete (SEDEX/PAC) apresentado no checkout e na ficha do produto.',
-};
 const shortActor = (a) => SHORT_ACTORS[a] || a;
 
 /* ------------------------------------------------------------------ *
@@ -638,6 +631,8 @@ async function main() {
   const figures = await renderFigures(manifest);
   fs.mkdirSync(path.dirname(OUT_PDF), { recursive: true });
 
+  const pageCounts = {};
+
   if (ONLY !== 'casos') {
     TOC_ENTRIES.length = 0;
     TOC_ENTRIES.push(...tocEntries(figures));
@@ -647,6 +642,7 @@ async function main() {
     await doc.stampFooters({ label: `${manifest.meta.product} · Fluxograma do usuário & casos de uso` });
     const bytes = await doc.save();
     fs.writeFileSync(OUT_PDF, bytes);
+    pageCounts.main = doc.pages.length;
     console.log(
       `✓ docs/fluxograma-usuario.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
     );
@@ -661,11 +657,17 @@ async function main() {
     await doc.stampFooters({ label: `${manifest.meta.product} · Casos de uso` });
     const bytes = await doc.save();
     fs.writeFileSync(OUT_PDF_UC, bytes);
+    pageCounts.uc = doc.pages.length;
     console.log(
       `✓ docs/casos-de-uso.pdf gerado (${doc.pages.length} páginas, ${(bytes.length / 1024).toFixed(0)} KB)`
     );
     console.log(`  sumário: ${Object.entries(ucPageMap).map(([k, v]) => `${k}=p${v}`).join(' · ')}`);
   }
+
+  // sidecar usado pelos geradores de documentação mestre (não versionado)
+  const sidecar = path.join(ROOT, 'docs', '.flowchart-pages.json');
+  const previous = fs.existsSync(sidecar) ? JSON.parse(fs.readFileSync(sidecar, 'utf8')) : {};
+  fs.writeFileSync(sidecar, JSON.stringify({ ...previous, ...pageCounts, generatedAt: new Date().toISOString() }, null, 2));
 }
 
 main().catch((err) => {

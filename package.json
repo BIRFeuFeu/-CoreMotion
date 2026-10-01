@@ -14,6 +14,7 @@
     "flow:pdf": "node scripts/generate-user-flowchart-pdf.mjs",
     "flow:uc": "FLOW_PDF_ONLY=casos node scripts/generate-user-flowchart-pdf.mjs",
     "flow": "npm run flow:html && npm run flow:pdf",
+    "mestres": "node scripts/generate-master-docs.mjs",
     "clean": "next clean"
   },
   "dependencies": {

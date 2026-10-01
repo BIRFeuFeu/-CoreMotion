@@ -37,6 +37,21 @@ export const UC_EXTERNALS = {
  * 2. Casos de uso por módulo                                          *
  * ------------------------------------------------------------------ */
 
+export const UC_ACTOR_INFO = {
+  visitante: 'Navega, busca, filtra, curte publicações e compra sem exigir conta (pedido criado como "guest-user").',
+  atleta: 'Papel "user": favorita produtos, anuncia equipamentos C2C, publica e comenta no feed, agenda treinadores e compra com custódia.',
+  lojista: 'Papel "seller": cria e personaliza a loja oficial, mantém o catálogo B2C e solicita o selo de verificação por CNPJ.',
+  admin: 'E-mails master autorizados: acessa o painel executivo, homologa lojas, modera catálogo, gere usuários, pedidos e o banco.',
+};
+
+export const UC_EXTERNAL_INFO = {
+  google: 'Provedor de identidade do login social (popup + retorno em /auth/callback).',
+  supabaseAuth: 'Serviço de autenticação: e-mail/senha, OAuth Google, sessões e callback.',
+  postgres: 'Banco relacional com RLS: profiles, stores, products, orders e community_posts.',
+  pix: 'Meio de pagamento instantâneo com QR Code, copia-e-cola e desconto de 5%.',
+  correios: 'Cálculo de prazo e frete (SEDEX/PAC) apresentado no checkout e na ficha do produto.',
+};
+
 export const USE_CASE_MODULES = [
   {
     id: 'm-conta',

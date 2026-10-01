@@ -9,3 +9,6 @@ coverage/
 
 # artefato intermediário do gerador de fluxograma (regenerado on-demand)
 docs/.flowchart-data.json
+
+# sidecar de contagem de páginas dos PDFs (regenerado on-demand)
+docs/.flowchart-pages.json
