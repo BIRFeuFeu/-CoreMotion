@@ -83,3 +83,57 @@ components/
 ├── admin/        # Auditoria administrativa, moderação e métricas
 └── shared/       # Header, Footer, EmptyStates, Skeletons
 ```
+
+---
+
+## 5. Documentação de Fluxos e Casos de Uso
+
+A documentação viva das jornadas do produto fica toda em **`Fluxograma/Diagrama C. De Uso/`** e é gerada por
+script (HTML navegável, dois PDFs e dois arquivos mestre autocontidos):
+
+| Artefato | Conteúdo |
+| --- | --- |
+| `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html` | documento navegável (autocontido, sem CDN): 7 fluxos de usuário, diagrama UML de casos de uso, catálogo de 48 UC, permissões, máquina de estados, lacunas e arquivos-chave |
+| `Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf` | o mesmo conteúdo em PDF A4, com capa, sumário numerado e os diagramas embutidos em alta resolução |
+| `Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf` | recorte só de casos de uso: atores e sistemas externos, diagrama UML, catálogo dos 48 UC, resumo por módulo e lacunas |
+| `Fluxograma/Diagrama C. De Uso/mestre-fluxograma.md` | **arquivo mestre** autocontido do fluxograma: dossiê completo do site, dados dos 7 fluxos, regras de layout/render e código-fonte de referência |
+| `Fluxograma/Diagrama C. De Uso/mestre-casos-de-uso.md` | **arquivo mestre** autocontido dos casos de uso: 48 UC, atores, integrações, regras do diagrama UML e código do núcleo |
+
+```bash
+npm run flow        # gera HTML + os dois PDFs
+npm run flow:html   # apenas Fluxograma/Diagrama C. De Uso/fluxograma-usuario.html
+npm run flow:pdf    # Fluxograma/Diagrama C. De Uso/fluxograma-usuario.pdf e Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf
+npm run flow:uc     # apenas Fluxograma/Diagrama C. De Uso/casos-de-uso.pdf
+npm run mestres     # regenera os dois arquivos mestre (Fluxograma/Diagrama C. De Uso/mestre-*.md)
+```
+
+Os **arquivos mestre** são documentos autocontidos pensados para um chat novo (ou um dev sem o
+repositório) recriar a documentação inteira: eles carregam o dossiê do site, os dados normativos dos
+diagramas, a especificação de layout e o código-fonte dos núcleos. Rode `npm run flow:pdf` antes de
+`npm run mestres` para que as contagens de páginas citadas neles fiquem corretas (o gerador lê o
+sidecar `.flowchart-pages.json`).
+
+Os arquivos são **gerados** — nunca edite o HTML/PDF à mão. A fonte de verdade é:
+
+```text
+scripts/lib/flowchart-core.mjs   # fluxos de usuário (nós, arestas), tabelas de permissões/status/lacunas,
+                                 # motor de layout, roteamento ortogonal e renderizador SVG
+scripts/lib/usecase-core.mjs     # atores, 48 casos de uso em 6 módulos e o layout do diagrama UML
+scripts/lib/pdf-kit.mjs          # mini-kit A4 (texto, tabelas, cartões, imagens, rodapé numerado)
+scripts/generate-user-flowchart.mjs      # entrada que produz HTML + manifesto JSON
+scripts/generate-user-flowchart-pdf.mjs  # entrada que produz o PDF
+```
+
+Regras de manutenção:
+
+1. Ao mudar uma jornada (nova tela, guarda de acesso, status ou gravação no banco), atualize o diagrama
+   correspondente em `scripts/lib/flowchart-core.mjs` e rode `npm run flow`.
+2. Ao criar/remover uma funcionalidade, atualize os casos de uso em `scripts/lib/usecase-core.mjs`
+   (o diagrama, as estatísticas e o catálogo se ajustam automaticamente).
+3. O gerador de HTML valida arestas órfãs, nós fora da área e labels sobrepostos; avisos de layout
+   aparecem no terminal e devem ser resolvidos antes do commit.
+4. Casos de uso com `flag` (e nós âmbar marcados com `(!)` no PDF) documentam lacunas conhecidas;
+   ao corrigir a lacuna, remova o marcador e atualize a seção 10 ("Lacunas e riscos").
+5. O PDF precisa de `pdf-lib` e `@resvg/resvg-js` (ambos em `devDependencies`). Em ambientes offline,
+   aponte `PDF_LIB_PATH` para o módulo `pdf-lib` e `FLOW_PNG_DIR` para uma pasta com os PNGs
+   numerados (`01-…png` a `08-…png`) gerados por `FLOW_EMIT_SVG=/tmp/fluxos npm run flow:html`.
