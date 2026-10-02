@@ -3,35 +3,86 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#11151c">
-<meta name="description" content="Diagrama completo dos 48 casos de uso do CoreMotiom. Navegue pelos módulos, aproxime e explore as conexões.">
-<title>Casos de uso · CoreMotiom</title>
+<meta name="theme-color" content="#FFFDF9">
+<meta name="description" content="O que dá para fazer no CoreMotiom, em 48 situações do dia a dia explicadas para qualquer pessoa.">
+<title>Casos de uso do CoreMotiom</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="viewer.css">
 </head>
 <body>
-<header class="topbar">
-  <div class="identity"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 5H9L5 12l4 7h8M11 12h8"/></svg></span><div><strong>CoreMotiom</strong><span class="divider">/</span><span class="page-name">Casos de uso</span></div><span class="meta">48 UC · 6 módulos</span></div>
-  <div class="top-actions"><label class="module-select"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><select id="module" aria-label="Ir para um módulo"><option value="">Ir para módulo</option><option value="0">01 · Conta & Acesso</option><option value="1">02 · Descoberta & Compra</option><option value="2">03 · Oferta & Lojas</option><option value="3">04 · Comunidade & Serviços</option><option value="4">05 · Administração</option><option value="5">06 · Plataforma & Integrações</option></select></label><a class="text-button svg-download" href="diagrama.svg" download title="Baixar o diagrama em SVG">SVG <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg></a><a class="text-button package" href="coremotiom-diagrama.zip" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg><span>Baixar página</span></a></div>
+<header class="top">
+  <div class="brand">
+    <span class="mark" aria-hidden="true">C</span>
+    <span class="titles">
+      <span class="name">Casos de uso do CoreMotiom</span>
+      <span class="sub">O que dá para fazer na plataforma, em 48 situações do dia a dia</span>
+    </span>
+  </div>
+  <div class="actions">
+    <button id="notes-button" class="link" aria-expanded="false" aria-controls="notes">Como ler</button>
+    <a class="link" href="diagrama.svg" download title="Baixar o desenho em SVG">Baixar imagem</a>
+    <a class="link solid package" href="coremotiom-diagrama.zip" download title="Baixar a página completa em ZIP"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v10m-4-4 4 4 4-4M6 17v3h12v-3"/></svg><span>Baixar página</span></a>
+  </div>
 </header>
-<main id="stage" tabindex="0" aria-label="Diagrama navegável de casos de uso" aria-describedby="instructions">
-  <img id="diagram" src="diagrama.svg" width="1736" height="1921" alt="Diagrama completo do CoreMotiom: 48 casos de uso distribuídos em Conta e Acesso, Descoberta e Compra, Oferta e Lojas, Comunidade e Serviços, Administração e Plataforma e Integrações." draggable="false">
-</main>
-<div id="load-error" class="load-error" role="alert" hidden>Não foi possível carregar o diagrama. Mantenha o arquivo diagrama.svg na mesma pasta da página e tente recarregar.</div>
-<div class="canvas-label" aria-hidden="true"><span></span> DIAGRAMA DE CASOS DE USO <small>UML</small></div>
-<div class="bottom-tools" role="group" aria-label="Controles do diagrama">
-  <button id="minus" class="icon-button" title="Diminuir zoom (−)" aria-label="Diminuir zoom"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
-  <button id="actual" class="zoom-value" title="Tamanho real (1)" aria-label="Restaurar zoom para 100%"><output id="zoom">100%</output></button>
-  <button id="plus" class="icon-button" title="Aumentar zoom (+)" aria-label="Aumentar zoom"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></button>
-  <span class="tool-divider"></span>
-  <button id="fit" class="icon-button" title="Enquadrar tudo (0 ou duplo clique)" aria-label="Enquadrar todo o diagrama"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button>
-  <button id="width" class="icon-button" title="Ajustar à largura (L)" aria-label="Ajustar diagrama à largura"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5v14M21 5v14M6 12h12M9 9l-3 3 3 3m6-6 3 3-3 3"/></svg></button>
-  <span class="tool-divider"></span>
-  <button id="help-button" class="icon-button" title="Como navegar (?)" aria-label="Abrir instruções de navegação" aria-expanded="false" aria-controls="help"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 8.5a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4M12 16v.2"/></svg></button>
+
+<nav class="areas" aria-label="Ir para uma área do desenho">
+  <button class="chip all" data-area="" aria-pressed="true">Ver tudo</button>
+  <button class="chip" data-area="0" style="--dot:#7E8C99" aria-pressed="false">Conta e acesso</button>
+  <button class="chip" data-area="1" style="--dot:#7E8C99" aria-pressed="false">Descobrir e comprar</button>
+  <button class="chip" data-area="2" style="--dot:#5E9A7E" aria-pressed="false">Oferta e lojas</button>
+  <button class="chip" data-area="3" style="--dot:#5E9A7E" aria-pressed="false">Comunidade e serviços</button>
+  <button class="chip" data-area="4" style="--dot:#BE7E72" aria-pressed="false">Administração</button>
+  <button class="chip" data-area="5" style="--dot:#8E86B8" aria-pressed="false">Plataforma e integrações</button>
+</nav>
+
+<div class="page">
+  <aside id="notes" class="notes" aria-label="Como ler este desenho">
+    <button id="notes-close" class="notes-close" aria-label="Fechar as explicações">Fechar</button>
+    <h2>Como ler este desenho</h2>
+    <p>Cada caixa é uma coisa que dá para fazer no CoreMotiom. Por exemplo: criar uma conta, buscar um produto, anunciar um equipamento usado, acompanhar um pedido.</p>
+    <p>As caixas estão separadas por assunto. Cada faixa do desenho é uma área, com o nome escrito à esquerda.</p>
+    <p>Do lado de fora ficam as pessoas e os serviços que participam: visitantes, atletas, lojistas e o administrador da plataforma — além de serviços de fora, como o Google, o banco e a transportadora.</p>
+    <h3>As marcas do desenho</h3>
+    <ul class="key">
+      <li><span class="dot" style="--dot:#7E8C99"></span>Quem usa a plataforma</li>
+      <li><span class="dot" style="--dot:#6E93B8"></span>Serviços de fora</li>
+      <li><span class="dash" style="--dot:#8E86B8"></span>Uma etapa leva à outra</li>
+      <li><span class="dot" style="--dot:#D89A3C"></span>Ainda falta definir</li>
+    </ul>
+    <h3>Para andar pelo desenho</h3>
+    <p>Arraste para mover, use a roda do mouse para aproximar e clique em <em>Ver tudo</em> quando quiser voltar ao começo. No celular, use dois dedos para aproximar.</p>
+    <p class="small">As 48 situações vêm do documento mestre do projeto. O ponto amarelo marca um assunto que ainda precisa ser definido; a falta dele não significa que a função já está no ar.</p>
+  </aside>
+
+  <main id="stage" tabindex="0" aria-label="Desenho navegável dos casos de uso" aria-describedby="hint">
+    <img id="diagram" src="diagrama.svg" width="1736" height="1855" alt="Desenho com 48 situações do CoreMotiom separadas em seis áreas: Conta e acesso; Descobrir e comprar; Oferta e lojas; Comunidade e serviços; Administração; Plataforma e integrações. À esquerda e à direita aparecem as pessoas que usam a plataforma e os serviços de fora." draggable="false">
+    <div id="load-error" class="load-error" role="alert" hidden>Não foi possível carregar o desenho. Mantenha o arquivo diagrama.svg na mesma pasta desta página.</div>
+    <p id="hint" class="hint">Arraste para andar pelo desenho · use a roda do mouse para aproximar</p>
+  </main>
 </div>
-<div id="help" class="help-panel" hidden><strong>Navegar pelo diagrama</strong><dl><dt>Mover</dt><dd>Arraste ou use as setas</dd><dt>Zoom</dt><dd>Roda do mouse, pinça ou <kbd>+</kbd> <kbd>−</kbd></dd><dt>Ver tudo</dt><dd>Duplo clique ou <kbd>0</kbd></dd><dt>Tamanho real</dt><dd><kbd>1</kbd></dd><dt>Ajustar à largura</dt><dd><kbd>L</kbd></dd></dl><p>Use “Ir para módulo” para aproximar uma seção.</p></div>
-<p id="instructions" class="navigation-hint">Arraste para mover <span>·</span> Role para aproximar</p>
-<aside class="minimap" aria-label="Visão geral do diagrama"><div class="minimap-title">VISÃO GERAL<span>↗</span></div><svg id="map" viewBox="0 0 1736 1921" tabindex="0" role="slider" aria-label="Navegação vertical pela visão geral" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><image href="diagrama.svg" width="1736" height="1921"/><rect id="map-window" x="0" y="0" width="1736" height="1921" rx="22"/></svg></aside>
+
+<div class="tools" role="group" aria-label="Aproximar e afastar">
+  <button id="minus" title="Afastar (tecla −)" aria-label="Afastar">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
+  </button>
+  <button id="actual" class="amount" title="Voltar ao tamanho real (tecla 1)"><output id="zoom">100%</output></button>
+  <button id="plus" title="Aproximar (tecla +)" aria-label="Aproximar">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>
+  </button>
+  <span class="rule" aria-hidden="true"></span>
+  <button id="fit" title="Ver tudo (tecla 0 ou duplo clique)" aria-label="Ver o desenho inteiro">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg>
+  </button>
+</div>
+
+<aside class="map" aria-label="Onde estou no desenho">
+  <p>Onde estou</p>
+  <svg id="map" viewBox="0 0 1736 1855" tabindex="0" role="slider" aria-label="Andar pelo desenho" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <image href="diagrama.svg" width="1736" height="1855"/>
+    <rect id="map-window" x="0" y="0" width="1736" height="1855" rx="24"/>
+  </svg>
+</aside>
+
 <script src="viewer.js"></script>
 </body>
 </html>

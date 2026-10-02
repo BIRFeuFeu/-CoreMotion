@@ -1,53 +1,49 @@
-COREMOTIOM — DIAGRAMA DE CASOS DE USO
+COREMOTIOM — CASOS DE USO (PÁGINA DE APRESENTAÇÃO)
 
-Esta página é estática. Não precisa de GitHub, banco de dados, Node.js, npm
-ou instalação. Não carrega bibliotecas ou fontes de serviços externos.
+O que é
+Esta página mostra, em linguagem simples, tudo o que dá para fazer no
+CoreMotiom: 48 situações do dia a dia, separadas em seis áreas. Ela é feita
+para qualquer pessoa entender, mesmo sem conhecer o projeto.
 
-ABRIR NO COMPUTADOR
+Abrir no computador
 1. Extraia todos os arquivos do ZIP para uma pasta.
-2. Abra index.html no navegador.
-3. Mantenha o HTML, CSS, JavaScript, favicon e diagrama.svg juntos.
+2. Abra o arquivo index.html no navegador.
+3. Mantenha os arquivos todos juntos (a página precisa do diagrama.svg).
 
-PUBLICAR PARA ACESSO POR LINK (SEM GITHUB)
-1. Crie ou entre na sua conta Netlify para gerenciar a publicação.
-2. Acesse https://app.netlify.com/drop
-3. Extraia o ZIP. Arraste a pasta que contém index.html para a área de upload.
-   Não envie a pasta inteira do repositório do CoreMotiom.
-4. Após a publicação, copie o endereço fornecido pelo Netlify e envie à pessoa.
-5. Para atualizar, envie a pasta atualizada na área de deploy do mesmo projeto.
+A página não usa internet, contas, banco de dados ou instalação. As letras
+também não dependem de fontes externas.
 
-Consulte as condições e os limites do plano de hospedagem escolhido.
-Instruções oficiais:
+Publicar para enviar um link (sem GitHub)
+1. Entre em https://app.netlify.com/drop
+2. Extraia o ZIP e arraste a pasta que contém o index.html para o site.
+3. O Netlify mostra um endereço. Copie e envie para quem quiser.
+4. Para atualizar, envie a pasta de novo na mesma área de publicação.
+
+Consulte as condições do plano de hospedagem escolhido.
+Instruções oficiais do Netlify:
 https://docs.netlify.com/deploy/create-deploys/#drag-and-drop
 
-COMPARTILHAR SEM HOSPEDAGEM
-Envie o ZIP por e-mail ou como documento no WhatsApp. A outra pessoa deve
-extrair a pasta inteira e abrir index.html em um computador. Para celulares,
-prefira publicar e compartilhar um link.
+Enviar por e-mail ou WhatsApp (sem publicar)
+Envie o ZIP. A pessoa extrai a pasta inteira e abre o index.html em um
+computador. Funciona mesmo sem internet. No celular, o melhor é publicar e
+enviar o link.
 
-NAVEGAÇÃO
-- Arraste o diagrama para movê-lo.
-- Roda do mouse ou pinça com dois dedos: zoom no ponto indicado.
-- Botões + e −: aproximar e afastar.
-- Duplo clique ou tecla 0: enquadrar tudo.
-- Tecla 1: tamanho real; tecla L: ajustar à largura.
-- Setas: mover. ?: ajuda; Escape: fechar ajuda.
-- Menu "Ir para módulo": aproximar uma seção sem esconder as demais.
-- Clique ou arraste no minimapa para navegar.
-- Botão SVG: baixar o diagrama vetorial.
+Como andar pelo desenho
+- Arraste o desenho para mover.
+- Use a roda do mouse para aproximar; no celular, use dois dedos.
+- "Ver tudo" mostra o conjunto; os botões coloridos mostram uma área.
+- "Como ler" (no celular) explica o desenho em palavras simples.
+- O quadro "Onde estou" (canto) mostra a parte visível e permite clicar.
+- Teclas: setas movem, + e − aproximam, 0 mostra tudo, 1 volta ao tamanho real.
 
-ESCOPO
-Os 48 casos de uso e suas relações vêm do documento mestre do CoreMotiom.
-A página permite visualizar o diagrama, não executar funcionalidades do produto.
-Os pontos âmbar preservam as lacunas do catálogo original. Ausência de ponto
-não comprova implementação em produção. Em particular, frete e pagamento
-no código analisado usam simulações, não integrações reais.
+Cuidado com a leitura dos dados
+Os 48 casos e as relações vêm do documento mestre do projeto. O ponto
+amarelo marca um assunto que ainda precisa ser definido; a ausência do ponto
+não significa que a função já funciona em produção. Em especial, frete e
+pagamento no código analisado usam simulações, não integrações reais.
 
-PRIVACIDADE E ACESSO
-Não há autenticação nesta página: ao publicá-la, o diagrama ficará acessível
-publicamente. O pacote não inclui o repositório, arquivos .env ou credenciais.
-O preview no Arena serve para conferir o trabalho; não é uma hospedagem
-permanente. Para acesso independente da sessão, publique em um host estático.
-
-O botão "Baixar página" pertence ao preview do Arena; o pacote distribuído
-mantém o botão SVG e os mesmos controles de navegação, sem depender de outro ZIP.
+Privacidade
+A página não tem senha: ao publicá-la, qualquer pessoa com o link verá o
+diagrama. O pacote não inclui o código do produto, arquivos .env nem
+credenciais. O preview dentro do Arena serve para conferir o trabalho; para
+acesso fora da sessão, publique em um serviço de páginas estáticas.

@@ -19,7 +19,7 @@ with ZipFile(folder / 'coremotiom-diagrama.zip', 'w', ZIP_DEFLATED) as z:
         data = (folder / name).read_bytes()
         if name == 'index.html':
             # Downloading the source package must not recursively embed itself.
-            data = re.sub(r'<a class="text-button package".*?</a>', '', data.decode(), flags=re.S).encode()
+            data = re.sub(r'<a [^>]*class="[^"]*package[^"]*"[^>]*>.*?</a>', '', data.decode(), flags=re.S).encode()
         z.writestr(name, data)
 print('Pacote criado: coremotiom-diagrama.zip')
 `, dir, ...files], { stdio: 'inherit' });

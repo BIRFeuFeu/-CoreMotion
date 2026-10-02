@@ -1,272 +1,266 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1736 1921" width="1736" height="1921" role="img" aria-label="Diagrama de casos de uso — tudo que a plataforma oferece" class="flow-svg" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif">
-<title>CoreMotiom — Diagrama completo dos 48 casos de uso</title><defs><marker id="uc-include" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A78BFA" /></marker>
-<marker id="uc-ext" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#38BDF8" /></marker></defs>
-<rect x="0" y="0" width="1736" height="1921" fill="#111620" />
-<circle cx="250" cy="48" r="5" fill="#8B93A7" />
-<text x="266" y="52" font-size="13" font-weight="600" fill="#aab8ce">Atores primários</text>
-<circle cx="620" cy="48" r="5" fill="#38BDF8" />
-<text x="636" y="52" font-size="13" font-weight="600" fill="#aab8ce">Sistemas externos</text>
-<circle cx="990" cy="48" r="5" fill="#A78BFA" />
-<text x="1006" y="52" font-size="13" font-weight="600" fill="#aab8ce">Relação «include»</text>
-<circle cx="1360" cy="48" r="5" fill="#FBBF24" />
-<text x="1376" y="52" font-size="13" font-weight="600" fill="#aab8ce">Lacuna conhecida</text>
-<rect x="244" y="104" width="1192" height="1689" rx="24" fill="#141b26" stroke="#364253" stroke-width="1.6" />
-<text x="264" y="129" font-size="13.4" font-weight="700" fill="#C7CDDA">CoreMotiom — Sistema de Marketplace Esportivo</text>
-<text x="1416" y="129" text-anchor="end" font-size="10.8" font-weight="700" letter-spacing="1.1" fill="#9daec4">48 CASOS DE USO · 6 MÓDULOS</text>
-<path d="M158,239 V530.5" fill="none" stroke="#8B93A7" stroke-width="1.7" opacity="0.85" />
-<path d="M118,239 H158" fill="none" stroke="#8B93A7" stroke-width="1.7" opacity="0.85" />
-<path d="M158,239 H270" fill="none" stroke="#8B93A7" stroke-width="1.5" opacity="0.9" />
-<path d="M158,530.5 H270" fill="none" stroke="#8B93A7" stroke-width="1.5" opacity="0.9" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 66 1736 1855" width="1736" height="1855" role="img" aria-label="Diagrama de casos de uso — tudo que a plataforma oferece" class="flow-svg" font-family="Georgia, 'Iowan Old Style', 'Times New Roman', serif">
+<title>CoreMotiom — tudo o que dá para fazer na plataforma</title>
+<desc>Mapa com 48 situações do dia a dia, separadas em seis áreas. À esquerda e à direita aparecem quem usa a plataforma e os serviços de fora. O ponto amarelo marca um assunto que ainda precisa ser definido.</desc>
+<defs><marker id="uc-include" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8E86B8" /></marker>
+<marker id="uc-ext" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#6E93B8" /></marker></defs>
+<rect x="0" y="0" width="1736" height="1921" fill="#FBF8F2" />
+<g transform="translate(0,-66)"><rect x="244" y="104" width="1192" height="1689" rx="24" fill="#FFFDF9" stroke="#D9D1C1" stroke-width="1.6" />
+<text x="264" y="129" font-size="13.4" font-weight="700" fill="#2F3A42">CoreMotiom — tudo o que dá para fazer na plataforma</text>
+<text x="1416" y="129" text-anchor="end" font-size="10.8" font-weight="700" letter-spacing="1.1" fill="#7E888F">48 situações do dia a dia · 6 áreas</text>
+<path d="M158,239 V530.5" fill="none" stroke="#7E8C99" stroke-width="1.7" opacity="0.85" />
+<path d="M118,239 H158" fill="none" stroke="#7E8C99" stroke-width="1.7" opacity="0.85" />
+<path d="M158,239 H270" fill="none" stroke="#7E8C99" stroke-width="1.5" opacity="0.9" />
+<path d="M158,530.5 H270" fill="none" stroke="#7E8C99" stroke-width="1.5" opacity="0.9" />
 
-  <circle cx="96" cy="220" r="8.5" fill="none" stroke="#8B93A7" stroke-width="1.7" />
-  <path d="M96,228.5 V246" stroke="#8B93A7" stroke-width="1.7" fill="none" />
-  <path d="M80,236 H112" stroke="#8B93A7" stroke-width="1.7" fill="none" />
-  <path d="M83,266 L96,246 L109,266" stroke="#8B93A7" stroke-width="1.7" fill="none" />
-  <text x="96" y="283" text-anchor="middle" font-size="12.6" font-weight="700" fill="#E5E7EB">Visitante</text>
-<path d="M176,255 V1106" fill="none" stroke="#34D399" stroke-width="1.7" opacity="0.85" />
-<path d="M118,1106 H176" fill="none" stroke="#34D399" stroke-width="1.7" opacity="0.85" />
-<path d="M176,255 H270" fill="none" stroke="#34D399" stroke-width="1.5" opacity="0.9" />
-<path d="M176,546.5 H270" fill="none" stroke="#34D399" stroke-width="1.5" opacity="0.9" />
-<path d="M176,838 H270" fill="none" stroke="#34D399" stroke-width="1.5" opacity="0.9" />
-<path d="M176,1106 H270" fill="none" stroke="#34D399" stroke-width="1.5" opacity="0.9" />
+  <circle cx="96" cy="220" r="8.5" fill="none" stroke="#7E8C99" stroke-width="1.7" />
+  <path d="M96,228.5 V246" stroke="#7E8C99" stroke-width="1.7" fill="none" />
+  <path d="M80,236 H112" stroke="#7E8C99" stroke-width="1.7" fill="none" />
+  <path d="M83,266 L96,246 L109,266" stroke="#7E8C99" stroke-width="1.7" fill="none" />
+  <text x="96" y="283" text-anchor="middle" font-size="12.6" font-weight="700" fill="#333C44">Visitante</text>
+<path d="M176,255 V1106" fill="none" stroke="#5E9A7E" stroke-width="1.7" opacity="0.85" />
+<path d="M118,1106 H176" fill="none" stroke="#5E9A7E" stroke-width="1.7" opacity="0.85" />
+<path d="M176,255 H270" fill="none" stroke="#5E9A7E" stroke-width="1.5" opacity="0.9" />
+<path d="M176,546.5 H270" fill="none" stroke="#5E9A7E" stroke-width="1.5" opacity="0.9" />
+<path d="M176,838 H270" fill="none" stroke="#5E9A7E" stroke-width="1.5" opacity="0.9" />
+<path d="M176,1106 H270" fill="none" stroke="#5E9A7E" stroke-width="1.5" opacity="0.9" />
 
-  <circle cx="96" cy="1087" r="8.5" fill="none" stroke="#34D399" stroke-width="1.7" />
-  <path d="M96,1095.5 V1113" stroke="#34D399" stroke-width="1.7" fill="none" />
-  <path d="M80,1103 H112" stroke="#34D399" stroke-width="1.7" fill="none" />
-  <path d="M83,1133 L96,1113 L109,1133" stroke="#34D399" stroke-width="1.7" fill="none" />
-  <text x="96" y="1150" text-anchor="middle" font-size="12.6" font-weight="700" fill="#ECFDF5">Atleta (usuário)</text>
-<path d="M194,854 V854" fill="none" stroke="#38BDF8" stroke-width="1.7" opacity="0.85" />
-<path d="M118,854 H194" fill="none" stroke="#38BDF8" stroke-width="1.7" opacity="0.85" />
-<path d="M194,854 H270" fill="none" stroke="#38BDF8" stroke-width="1.5" opacity="0.9" />
+  <circle cx="96" cy="1087" r="8.5" fill="none" stroke="#5E9A7E" stroke-width="1.7" />
+  <path d="M96,1095.5 V1113" stroke="#5E9A7E" stroke-width="1.7" fill="none" />
+  <path d="M80,1103 H112" stroke="#5E9A7E" stroke-width="1.7" fill="none" />
+  <path d="M83,1133 L96,1113 L109,1133" stroke="#5E9A7E" stroke-width="1.7" fill="none" />
+  <text x="96" y="1150" text-anchor="middle" font-size="12.6" font-weight="700" fill="#333C44">Atleta</text>
+<path d="M194,854 V854" fill="none" stroke="#6E93B8" stroke-width="1.7" opacity="0.85" />
+<path d="M118,854 H194" fill="none" stroke="#6E93B8" stroke-width="1.7" opacity="0.85" />
+<path d="M194,854 H270" fill="none" stroke="#6E93B8" stroke-width="1.5" opacity="0.9" />
 
-  <circle cx="96" cy="835" r="8.5" fill="none" stroke="#38BDF8" stroke-width="1.7" />
-  <path d="M96,843.5 V861" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M80,851 H112" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M83,881 L96,861 L109,881" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <text x="96" y="898" text-anchor="middle" font-size="12.6" font-weight="700" fill="#EFF6FF">Lojista (vendedor)</text>
-<path d="M1490,1371.5 V1423.5" fill="none" stroke="#F87171" stroke-width="1.7" opacity="0.85" />
-<path d="M1436,1397.5 H1490" fill="none" stroke="#F87171" stroke-width="1.5" opacity="0.9" />
+  <circle cx="96" cy="835" r="8.5" fill="none" stroke="#6E93B8" stroke-width="1.7" />
+  <path d="M96,843.5 V861" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M80,851 H112" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M83,881 L96,861 L109,881" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <text x="96" y="898" text-anchor="middle" font-size="12.6" font-weight="700" fill="#333C44">Lojista</text>
+<path d="M1490,1371.5 V1423.5" fill="none" stroke="#BE7E72" stroke-width="1.7" opacity="0.85" />
+<path d="M1436,1397.5 H1490" fill="none" stroke="#BE7E72" stroke-width="1.5" opacity="0.9" />
 
-  <circle cx="1536" cy="1378.5" r="8.5" fill="none" stroke="#F87171" stroke-width="1.7" />
-  <path d="M1536,1387 V1404.5" stroke="#F87171" stroke-width="1.7" fill="none" />
-  <path d="M1520,1394.5 H1552" stroke="#F87171" stroke-width="1.7" fill="none" />
-  <path d="M1523,1424.5 L1536,1404.5 L1549,1424.5" stroke="#F87171" stroke-width="1.7" fill="none" />
-  <text x="1536" y="1441.5" text-anchor="middle" font-size="12.6" font-weight="700" fill="#FEF2F2">Super Admin</text>
-<rect x="270" y="134" width="1140" height="242" rx="16" fill="#171f2b" stroke="#8B93A7" stroke-width="1.3" stroke-dasharray="none" stroke-opacity=".48" />
-<text x="288" y="159" font-size="12.8" font-weight="700" fill="#8B93A7">Conta &amp; Acesso</text>
-<text x="1392" y="159" text-anchor="end" font-size="10.2" font-weight="700" fill="#9daec4">8 UC · Visitante · Atleta</text>
-<rect x="288" y="172" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="194.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC01</text>
-<text x="338" y="195.2" font-size="13" fill="#edf2fa" font-weight="450">Criar conta (Atleta C2C ou Lojista B2C)</text>
-<rect x="862" y="172" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="194.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC02</text>
-<text x="912" y="195.2" font-size="13" fill="#edf2fa" font-weight="450">Entrar com e-mail e senha</text>
-<rect x="862" y="219" width="530" height="38" rx="19" fill="#1c2935" stroke="#38BDF8" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="241.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC03</text>
-<text x="912" y="242.2" font-size="13" fill="#edf2fa" font-weight="450">Entrar com Google (OAuth)</text>
-<rect x="288" y="219" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="241.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC04</text>
-<text x="338" y="242.2" font-size="13" fill="#edf2fa" font-weight="450">Usar acesso rápido de demonstração</text>
-<rect x="288" y="266" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="288.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC05</text>
-<text x="338" y="289.2" font-size="13" fill="#edf2fa" font-weight="450">Simular outro papel (visitante/atleta/lojista/admin)</text>
-<rect x="862" y="266" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="288.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC06</text>
-<text x="912" y="289.2" font-size="13" fill="#edf2fa" font-weight="450">Editar perfil e interesses esportivos</text>
-<circle cx="1376" cy="285" r="4" fill="#FBBF24" />
+  <circle cx="1536" cy="1378.5" r="8.5" fill="none" stroke="#BE7E72" stroke-width="1.7" />
+  <path d="M1536,1387 V1404.5" stroke="#BE7E72" stroke-width="1.7" fill="none" />
+  <path d="M1520,1394.5 H1552" stroke="#BE7E72" stroke-width="1.7" fill="none" />
+  <path d="M1523,1424.5 L1536,1404.5 L1549,1424.5" stroke="#BE7E72" stroke-width="1.7" fill="none" />
+  <text x="1536" y="1441.5" text-anchor="middle" font-size="12.6" font-weight="700" fill="#333C44">Administrador</text>
+<rect x="270" y="134" width="1140" height="242" rx="16" fill="#FFFFFF" stroke="#7E8C99" stroke-width="1.3" stroke-dasharray="none" stroke-opacity="0.5" />
+<text x="288" y="159" font-size="14" font-weight="700" fill="#7E8C99">Conta e Acesso</text>
+<text x="1392" y="159" text-anchor="end" font-size="10.2" font-weight="700" fill="#8A939A">8 situações · Visitante · Atleta</text>
+<rect x="288" y="172" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="304" y="194.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC01</text>
+<text x="338" y="195.2" font-size="13.4" fill="#333C44"><tspan x="338" y="193.2">Criar conta (como atleta ou como lojista)</tspan></text>
+<rect x="862" y="172" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="878" y="194.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC02</text>
+<text x="912" y="195.2" font-size="13.4" fill="#333C44"><tspan x="912" y="193.2">Entrar com e-mail e senha</tspan></text>
+<rect x="862" y="219" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#6E93B8" stroke-width="1.25" />
+<text x="878" y="241.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC03</text>
+<text x="912" y="242.2" font-size="13.4" fill="#333C44"><tspan x="912" y="240.2">Entrar com a conta Google</tspan></text>
+<rect x="288" y="219" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="304" y="241.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC04</text>
+<text x="338" y="242.2" font-size="13.4" fill="#333C44"><tspan x="338" y="240.2">Entrar rápido em modo demonstração</tspan></text>
+<rect x="288" y="266" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="304" y="288.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC05</text>
+<text x="338" y="289.2" font-size="13.4" fill="#333C44"><tspan x="338" y="287.2">Trocar de perfil para testar a plataforma</tspan></text>
+<rect x="862" y="266" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="878" y="288.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC06</text>
+<text x="912" y="289.2" font-size="13.4" fill="#333C44"><tspan x="912" y="287.2">Editar perfil e interesses esportivos</tspan></text>
+<circle cx="1376" cy="285" r="4" fill="#D89A3C" />
 <title>UC06: sem tela</title>
-<rect x="288" y="313" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="335.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC07</text>
-<text x="338" y="336.2" font-size="13" fill="#edf2fa" font-weight="450">Recuperar senha</text>
-<circle cx="802" cy="332" r="4" fill="#FBBF24" />
+<rect x="288" y="313" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="304" y="335.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC07</text>
+<text x="338" y="336.2" font-size="13.4" fill="#333C44"><tspan x="338" y="334.2">Recuperar senha</tspan></text>
+<circle cx="802" cy="332" r="4" fill="#D89A3C" />
 <title>UC07: inoperante</title>
-<rect x="862" y="313" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="335.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC08</text>
-<text x="912" y="336.2" font-size="13" fill="#edf2fa" font-weight="450">Encerrar sessão (logout)</text>
-<rect x="270" y="402" width="1140" height="289" rx="16" fill="#171f2b" stroke="#8B93A7" stroke-width="1.3" stroke-dasharray="none" stroke-opacity=".48" />
-<text x="288" y="427" font-size="12.8" font-weight="700" fill="#8B93A7">Descoberta &amp; Compra</text>
-<text x="1392" y="427" text-anchor="end" font-size="10.2" font-weight="700" fill="#9daec4">10 UC · Visitante · Atleta</text>
-<rect x="288" y="440" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="462.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC09</text>
-<text x="338" y="463.2" font-size="13" fill="#edf2fa" font-weight="450">Navegar pela Home e vitrines de destaque</text>
-<rect x="862" y="440" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="462.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC10</text>
-<text x="912" y="463.2" font-size="13" fill="#edf2fa" font-weight="450">Buscar produtos no catálogo (⌘K)</text>
-<rect x="288" y="487" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="509.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC11</text>
-<text x="338" y="510.2" font-size="13" fill="#edf2fa" font-weight="450"><tspan x="338" y="503.2">Filtrar e ordenar catálogo (tipo, categoria, modalidade,</tspan><tspan x="338" y="518.2">condição, selo)</tspan></text>
-<rect x="862" y="487" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="509.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC12</text>
-<text x="912" y="510.2" font-size="13" fill="#edf2fa" font-weight="450">Ver ficha do produto (galeria, tamanhos, avaliação)</text>
-<rect x="288" y="534" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="556.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC13</text>
-<text x="338" y="557.2" font-size="13" fill="#edf2fa" font-weight="450">Calcular frete por CEP</text>
-<rect x="862" y="534" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="556.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC14</text>
-<text x="912" y="557.2" font-size="13" fill="#edf2fa" font-weight="450">Salvar produto nos favoritos</text>
-<circle cx="1376" cy="553" r="4" fill="#FBBF24" />
+<rect x="862" y="313" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="878" y="335.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC08</text>
+<text x="912" y="336.2" font-size="13.4" fill="#333C44"><tspan x="912" y="334.2">Encerrar sessão (logout)</tspan></text>
+<rect x="270" y="402" width="1140" height="289" rx="16" fill="#FFFFFF" stroke="#7E8C99" stroke-width="1.3" stroke-dasharray="none" stroke-opacity="0.5" />
+<text x="288" y="427" font-size="14" font-weight="700" fill="#7E8C99">Descoberta e Compra</text>
+<text x="1392" y="427" text-anchor="end" font-size="10.2" font-weight="700" fill="#8A939A">10 situações · Visitante · Atleta</text>
+<rect x="288" y="440" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="304" y="462.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC09</text>
+<text x="338" y="463.2" font-size="13.4" fill="#333C44"><tspan x="338" y="461.2">Navegar pela Home e vitrines de destaque</tspan></text>
+<rect x="862" y="440" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="878" y="462.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC10</text>
+<text x="912" y="463.2" font-size="13.4" fill="#333C44"><tspan x="912" y="461.2">Buscar produtos no catálogo</tspan></text>
+<rect x="288" y="487" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="304" y="509.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC11</text>
+<text x="338" y="510.2" font-size="13.4" fill="#333C44"><tspan x="338" y="500.7">Filtrar e ordenar produtos (tipo, categoria, esporte,</tspan><tspan x="338" y="516.2">condição, selo)</tspan></text>
+<rect x="862" y="487" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="878" y="509.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC12</text>
+<text x="912" y="510.2" font-size="13.4" fill="#333C44"><tspan x="912" y="508.2">Ver detalhes do produto (fotos, tamanhos, avaliações)</tspan></text>
+<rect x="288" y="534" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="304" y="556.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC13</text>
+<text x="338" y="557.2" font-size="13.4" fill="#333C44"><tspan x="338" y="555.2">Calcular frete por CEP</tspan></text>
+<rect x="862" y="534" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="878" y="556.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC14</text>
+<text x="912" y="557.2" font-size="13.4" fill="#333C44"><tspan x="912" y="555.2">Salvar produto nos favoritos</tspan></text>
+<circle cx="1376" cy="553" r="4" fill="#D89A3C" />
 <title>UC14: sem tela</title>
-<rect x="288" y="581" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="603.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC15</text>
-<text x="338" y="604.2" font-size="13" fill="#edf2fa" font-weight="450">Gerenciar carrinho (quantidade, remover, subtotal)</text>
-<rect x="288" y="628" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="650.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC16</text>
-<text x="338" y="651.2" font-size="13" fill="#edf2fa" font-weight="450">Finalizar compra (carrinho → entrega → pagamento)</text>
-<rect x="862" y="581" width="530" height="38" rx="19" fill="#1c2935" stroke="#38BDF8" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="603.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC17</text>
-<text x="912" y="604.2" font-size="13" fill="#edf2fa" font-weight="450">Pagar com PIX, cartão ou boleto</text>
-<rect x="862" y="628" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="650.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC18</text>
-<text x="912" y="651.2" font-size="13" fill="#edf2fa" font-weight="450">Acompanhar pedidos e rastreio</text>
-<circle cx="1376" cy="647" r="4" fill="#FBBF24" />
+<rect x="288" y="581" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="304" y="603.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC15</text>
+<text x="338" y="604.2" font-size="13.4" fill="#333C44"><tspan x="338" y="602.2">Gerenciar carrinho (quantidade, remover, subtotal)</tspan></text>
+<rect x="288" y="628" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="304" y="650.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC16</text>
+<text x="338" y="651.2" font-size="13.4" fill="#333C44"><tspan x="338" y="649.2">Finalizar compra (carrinho, entrega e pagamento)</tspan></text>
+<rect x="862" y="581" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#6E93B8" stroke-width="1.25" />
+<text x="878" y="603.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC17</text>
+<text x="912" y="604.2" font-size="13.4" fill="#333C44"><tspan x="912" y="602.2">Pagar com PIX, cartão ou boleto</tspan></text>
+<rect x="862" y="628" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="878" y="650.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC18</text>
+<text x="912" y="651.2" font-size="13.4" fill="#333C44"><tspan x="912" y="649.2">Acompanhar pedidos e rastreio</tspan></text>
+<circle cx="1376" cy="647" r="4" fill="#D89A3C" />
 <title>UC18: sem tela</title>
-<path d="M818,647 H840 V600 H819" fill="none" stroke="#A78BFA" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#uc-include)" />
-<text x="824" y="625" font-size="9" font-weight="600" fill="#C4B5FD">«include»</text>
-<rect x="270" y="717" width="1140" height="242" rx="16" fill="#171f2b" stroke="#34D399" stroke-width="1.3" stroke-dasharray="none" stroke-opacity=".48" />
-<text x="288" y="742" font-size="12.8" font-weight="700" fill="#34D399">Oferta &amp; Lojas</text>
-<text x="1392" y="742" text-anchor="end" font-size="10.2" font-weight="700" fill="#9daec4">8 UC · Atleta · Lojista</text>
-<rect x="288" y="755" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="777.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC19</text>
-<text x="338" y="778.2" font-size="13" fill="#edf2fa" font-weight="450">Anunciar equipamento seminovo (C2C)</text>
-<rect x="862" y="755" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="777.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC20</text>
-<text x="912" y="778.2" font-size="13" fill="#edf2fa" font-weight="450">Gerenciar meus anúncios (listar e excluir)</text>
-<rect x="288" y="802" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="824.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC21</text>
-<text x="338" y="825.2" font-size="13" fill="#edf2fa" font-weight="450">Acompanhar vendas em custódia</text>
-<circle cx="802" cy="821" r="4" fill="#FBBF24" />
+<path d="M314,666 V575" fill="none" stroke="#8E86B8" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#uc-include)" />
+<text x="322" y="623.5" font-size="9.2" fill="#7C7295">inclui</text>
+<rect x="270" y="717" width="1140" height="242" rx="16" fill="#FFFFFF" stroke="#5E9A7E" stroke-width="1.3" stroke-dasharray="none" stroke-opacity="0.5" />
+<text x="288" y="742" font-size="14" font-weight="700" fill="#5E9A7E">Oferta e Lojas</text>
+<text x="1392" y="742" text-anchor="end" font-size="10.2" font-weight="700" fill="#8A939A">8 situações · Atleta · Lojista</text>
+<rect x="288" y="755" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="304" y="777.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC19</text>
+<text x="338" y="778.2" font-size="13.4" fill="#333C44"><tspan x="338" y="776.2">Anunciar equipamento usado (venda entre pessoas)</tspan></text>
+<rect x="862" y="755" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="878" y="777.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC20</text>
+<text x="912" y="778.2" font-size="13.4" fill="#333C44"><tspan x="912" y="776.2">Gerenciar meus anúncios (ver e excluir)</tspan></text>
+<rect x="288" y="802" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="304" y="824.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC21</text>
+<text x="338" y="825.2" font-size="13.4" fill="#333C44"><tspan x="338" y="815.7">Acompanhar minhas vendas (pagamento guardado até a</tspan><tspan x="338" y="831.2">entrega)</tspan></text>
+<circle cx="802" cy="821" r="4" fill="#D89A3C" />
 <title>UC21: placeholder</title>
-<rect x="862" y="802" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="824.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC22</text>
-<text x="912" y="825.2" font-size="13" fill="#edf2fa" font-weight="450">Salvar rascunho de anúncio</text>
-<circle cx="1376" cy="821" r="4" fill="#FBBF24" />
+<rect x="862" y="802" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="878" y="824.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC22</text>
+<text x="912" y="825.2" font-size="13.4" fill="#333C44"><tspan x="912" y="823.2">Salvar rascunho de anúncio</tspan></text>
+<circle cx="1376" cy="821" r="4" fill="#D89A3C" />
 <title>UC22: placeholder</title>
-<rect x="288" y="849" width="530" height="38" rx="19" fill="#1c2935" stroke="#38BDF8" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="871.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC23</text>
-<text x="338" y="872.2" font-size="13" fill="#edf2fa" font-weight="450">Criar loja oficial (B2C)</text>
-<rect x="862" y="849" width="530" height="38" rx="19" fill="#1c2935" stroke="#38BDF8" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="871.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC24</text>
-<text x="912" y="872.2" font-size="13" fill="#edf2fa" font-weight="450">Exibir catálogo e perfil público da loja</text>
-<rect x="288" y="896" width="530" height="38" rx="19" fill="#1c2935" stroke="#38BDF8" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="918.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC25</text>
-<text x="338" y="919.2" font-size="13" fill="#edf2fa" font-weight="450">Solicitar selo de loja verificada (CNPJ)</text>
-<rect x="862" y="896" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="918.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC26</text>
-<text x="912" y="919.2" font-size="13" fill="#edf2fa" font-weight="450">Filtrar lojas verificadas</text>
-<rect x="270" y="985" width="1140" height="242" rx="16" fill="#171f2b" stroke="#34D399" stroke-width="1.3" stroke-dasharray="none" stroke-opacity=".48" />
-<text x="288" y="1010" font-size="12.8" font-weight="700" fill="#34D399">Comunidade &amp; Serviços</text>
-<text x="1392" y="1010" text-anchor="end" font-size="10.2" font-weight="700" fill="#9daec4">7 UC · Atleta</text>
-<rect x="288" y="1023" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1045.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC27</text>
-<text x="338" y="1046.2" font-size="13" fill="#edf2fa" font-weight="450">Publicar no feed da comunidade</text>
-<rect x="862" y="1023" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="1045.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC28</text>
-<text x="912" y="1046.2" font-size="13" fill="#edf2fa" font-weight="450">Curtir publicação</text>
-<rect x="288" y="1070" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1092.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC29</text>
-<text x="338" y="1093.2" font-size="13" fill="#edf2fa" font-weight="450">Comentar publicação</text>
-<rect x="862" y="1070" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="1092.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC30</text>
-<text x="912" y="1093.2" font-size="13" fill="#edf2fa" font-weight="450">Filtrar feed por categoria</text>
-<rect x="288" y="1117" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1139.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC31</text>
-<text x="338" y="1140.2" font-size="13" fill="#edf2fa" font-weight="450">Denunciar publicação para moderação</text>
-<circle cx="802" cy="1136" r="4" fill="#FBBF24" />
+<rect x="288" y="849" width="530" height="38" rx="19" fill="#EEF2F6" stroke="#6E93B8" stroke-width="1.25" />
+<text x="304" y="871.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC23</text>
+<text x="338" y="872.2" font-size="13.4" fill="#333C44"><tspan x="338" y="870.2">Criar loja oficial (empresa)</tspan></text>
+<rect x="862" y="849" width="530" height="38" rx="19" fill="#EEF2F6" stroke="#6E93B8" stroke-width="1.25" />
+<text x="878" y="871.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC24</text>
+<text x="912" y="872.2" font-size="13.4" fill="#333C44"><tspan x="912" y="870.2">Exibir catálogo e perfil público da loja</tspan></text>
+<rect x="288" y="896" width="530" height="38" rx="19" fill="#EEF2F6" stroke="#6E93B8" stroke-width="1.25" />
+<text x="304" y="918.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC25</text>
+<text x="338" y="919.2" font-size="13.4" fill="#333C44"><tspan x="338" y="917.2">Pedir selo de loja verificada (CNPJ)</tspan></text>
+<rect x="862" y="896" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="878" y="918.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC26</text>
+<text x="912" y="919.2" font-size="13.4" fill="#333C44"><tspan x="912" y="917.2">Filtrar lojas verificadas</tspan></text>
+<rect x="270" y="985" width="1140" height="242" rx="16" fill="#FFFFFF" stroke="#5E9A7E" stroke-width="1.3" stroke-dasharray="none" stroke-opacity="0.5" />
+<text x="288" y="1010" font-size="14" font-weight="700" fill="#5E9A7E">Comunidade e Serviços</text>
+<text x="1392" y="1010" text-anchor="end" font-size="10.2" font-weight="700" fill="#8A939A">7 situações · Atleta</text>
+<rect x="288" y="1023" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="304" y="1045.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC27</text>
+<text x="338" y="1046.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1044.2">Publicar no feed da comunidade</tspan></text>
+<rect x="862" y="1023" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="878" y="1045.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC28</text>
+<text x="912" y="1046.2" font-size="13.4" fill="#333C44"><tspan x="912" y="1044.2">Curtir publicação</tspan></text>
+<rect x="288" y="1070" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="304" y="1092.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC29</text>
+<text x="338" y="1093.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1091.2">Comentar publicação</tspan></text>
+<rect x="862" y="1070" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="878" y="1092.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC30</text>
+<text x="912" y="1093.2" font-size="13.4" fill="#333C44"><tspan x="912" y="1091.2">Filtrar feed por categoria</tspan></text>
+<rect x="288" y="1117" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="304" y="1139.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC31</text>
+<text x="338" y="1140.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1138.2">Denunciar publicação para a moderação</tspan></text>
+<circle cx="802" cy="1136" r="4" fill="#D89A3C" />
 <title>UC31: sem UI</title>
-<rect x="862" y="1117" width="530" height="38" rx="19" fill="#1c2935" stroke="#8B93A7" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="1139.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC32</text>
-<text x="912" y="1140.2" font-size="13" fill="#edf2fa" font-weight="450">Buscar treinador por modalidade</text>
-<rect x="288" y="1164" width="530" height="38" rx="19" fill="#1c2935" stroke="#34D399" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1186.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC33</text>
-<text x="338" y="1187.2" font-size="13" fill="#edf2fa" font-weight="450">Agendar assessoria esportiva</text>
-<circle cx="802" cy="1183" r="4" fill="#FBBF24" />
+<rect x="862" y="1117" width="530" height="38" rx="19" fill="#F6F3EC" stroke="#7E8C99" stroke-width="1.25" />
+<text x="878" y="1139.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC32</text>
+<text x="912" y="1140.2" font-size="13.4" fill="#333C44"><tspan x="912" y="1138.2">Buscar treinador por modalidade</tspan></text>
+<rect x="288" y="1164" width="530" height="38" rx="19" fill="#EFF4EE" stroke="#5E9A7E" stroke-width="1.25" />
+<text x="304" y="1186.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC33</text>
+<text x="338" y="1187.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1185.2">Agendar assessoria esportiva</tspan></text>
+<circle cx="802" cy="1183" r="4" fill="#D89A3C" />
 <title>UC33: não persiste</title>
-<rect x="270" y="1253" width="1140" height="289" rx="16" fill="#171f2b" stroke="#F87171" stroke-width="1.3" stroke-dasharray="none" stroke-opacity=".48" />
-<text x="288" y="1278" font-size="12.8" font-weight="700" fill="#F87171">Administração</text>
-<text x="1392" y="1278" text-anchor="end" font-size="10.2" font-weight="700" fill="#9daec4">9 UC · Super Admin</text>
-<rect x="288" y="1291" width="530" height="38" rx="19" fill="#1c2935" stroke="#F87171" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1313.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC34</text>
-<text x="338" y="1314.2" font-size="13" fill="#edf2fa" font-weight="450">Acessar painel executivo master</text>
-<rect x="862" y="1291" width="530" height="38" rx="19" fill="#1c2935" stroke="#F87171" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="1313.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC35</text>
-<text x="912" y="1314.2" font-size="13" fill="#edf2fa" font-weight="450">Ver métricas (GMV, custódia 4,5%, B2C × C2C)</text>
-<rect x="288" y="1338" width="530" height="38" rx="19" fill="#1c2935" stroke="#F87171" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1360.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC36</text>
-<text x="338" y="1361.2" font-size="13" fill="#edf2fa" font-weight="450">Auditar loja: aprovar ou recusar selo</text>
-<rect x="862" y="1338" width="530" height="38" rx="19" fill="#1c2935" stroke="#F87171" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="1360.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC37</text>
-<text x="912" y="1361.2" font-size="13" fill="#edf2fa" font-weight="450">Moderar catálogo (status e exclusão)</text>
-<rect x="288" y="1385" width="530" height="38" rx="19" fill="#1c2935" stroke="#F87171" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1407.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC38</text>
-<text x="338" y="1408.2" font-size="13" fill="#edf2fa" font-weight="450">Gerenciar usuários (criar, papel, banir, excluir)</text>
-<rect x="862" y="1385" width="530" height="38" rx="19" fill="#1c2935" stroke="#F87171" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="1407.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC39</text>
-<text x="912" y="1408.2" font-size="13" fill="#edf2fa" font-weight="450">Atualizar status de pedidos e pagamentos</text>
-<circle cx="1376" cy="1404" r="4" fill="#FBBF24" />
+<rect x="270" y="1253" width="1140" height="289" rx="16" fill="#FFFFFF" stroke="#BE7E72" stroke-width="1.3" stroke-dasharray="none" stroke-opacity="0.5" />
+<text x="288" y="1278" font-size="14" font-weight="700" fill="#BE7E72">Administração</text>
+<text x="1392" y="1278" text-anchor="end" font-size="10.2" font-weight="700" fill="#8A939A">9 situações · Administrador</text>
+<rect x="288" y="1291" width="530" height="38" rx="19" fill="#F7EFED" stroke="#BE7E72" stroke-width="1.25" />
+<text x="304" y="1313.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC34</text>
+<text x="338" y="1314.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1312.2">Entrar no painel do administrador</tspan></text>
+<rect x="862" y="1291" width="530" height="38" rx="19" fill="#F7EFED" stroke="#BE7E72" stroke-width="1.25" />
+<text x="878" y="1313.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC35</text>
+<text x="912" y="1314.2" font-size="13.4" fill="#333C44"><tspan x="912" y="1304.7">Ver números do negócio (vendas, taxa de 4,5%, lojas e</tspan><tspan x="912" y="1320.2">pessoas)</tspan></text>
+<rect x="288" y="1338" width="530" height="38" rx="19" fill="#F7EFED" stroke="#BE7E72" stroke-width="1.25" />
+<text x="304" y="1360.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC36</text>
+<text x="338" y="1361.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1359.2">Analisar loja: aprovar ou recusar o selo</tspan></text>
+<rect x="862" y="1338" width="530" height="38" rx="19" fill="#F7EFED" stroke="#BE7E72" stroke-width="1.25" />
+<text x="878" y="1360.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC37</text>
+<text x="912" y="1361.2" font-size="13.4" fill="#333C44"><tspan x="912" y="1359.2">Moderar produtos (situação e remoção)</tspan></text>
+<rect x="288" y="1385" width="530" height="38" rx="19" fill="#F7EFED" stroke="#BE7E72" stroke-width="1.25" />
+<text x="304" y="1407.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC38</text>
+<text x="338" y="1408.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1406.2">Gerenciar usuários (criar, permissão, banir)</tspan></text>
+<rect x="862" y="1385" width="530" height="38" rx="19" fill="#F7EFED" stroke="#BE7E72" stroke-width="1.25" />
+<text x="878" y="1407.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC39</text>
+<text x="912" y="1408.2" font-size="13.4" fill="#333C44"><tspan x="912" y="1406.2">Atualizar situação de pedidos e pagamentos</tspan></text>
+<circle cx="1376" cy="1404" r="4" fill="#D89A3C" />
 <title>UC39: só memória</title>
-<rect x="288" y="1432" width="530" height="38" rx="19" fill="#1c2935" stroke="#F87171" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1454.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC40</text>
-<text x="338" y="1455.2" font-size="13" fill="#edf2fa" font-weight="450">Confirmar pagamento em sandbox</text>
-<rect x="862" y="1432" width="530" height="38" rx="19" fill="#1c2935" stroke="#F87171" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="1454.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC41</text>
-<text x="912" y="1455.2" font-size="13" fill="#edf2fa" font-weight="450">Sincronizar dados com Supabase</text>
-<rect x="288" y="1479" width="530" height="38" rx="19" fill="#1c2935" stroke="#F87171" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1501.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC42</text>
-<text x="338" y="1502.2" font-size="13" fill="#edf2fa" font-weight="450">Diagnosticar banco e abrir console SQL</text>
-<rect x="270" y="1568" width="1140" height="195" rx="16" fill="#171f2b" stroke="#A78BFA" stroke-width="1.3" stroke-dasharray="none" stroke-opacity=".48" />
-<text x="288" y="1593" font-size="12.8" font-weight="700" fill="#A78BFA">Plataforma &amp; Integrações</text>
-<text x="1392" y="1593" text-anchor="end" font-size="10.2" font-weight="700" fill="#9daec4">6 UC · </text>
-<rect x="862" y="1606" width="530" height="38" rx="19" fill="#1c2935" stroke="#38BDF8" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="1628.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC43</text>
-<text x="912" y="1629.2" font-size="13" fill="#edf2fa" font-weight="450">Autenticar contas no Supabase Auth</text>
-<rect x="862" y="1653" width="530" height="38" rx="19" fill="#1c2935" stroke="#38BDF8" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="1675.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC44</text>
-<text x="912" y="1676.2" font-size="13" fill="#edf2fa" font-weight="450">Persistir dados em PostgreSQL com RLS</text>
-<rect x="288" y="1606" width="530" height="38" rx="19" fill="#1c2935" stroke="#A78BFA" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1628.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC45</text>
-<text x="338" y="1629.2" font-size="13" fill="#edf2fa" font-weight="450">Expor API Routes internas (produtos, lojas, usuários)</text>
-<rect x="288" y="1653" width="530" height="38" rx="19" fill="#1c2935" stroke="#A78BFA" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1675.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC46</text>
-<text x="338" y="1676.2" font-size="13" fill="#edf2fa" font-weight="450">Servir imagens do catálogo</text>
-<rect x="288" y="1700" width="530" height="38" rx="19" fill="#1c2935" stroke="#A78BFA" stroke-width="1.25" stroke-opacity=".7" />
-<text x="304" y="1722.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC47</text>
-<text x="338" y="1723.2" font-size="13" fill="#edf2fa" font-weight="450">Operar em modo offline com dados iniciais</text>
-<rect x="862" y="1700" width="530" height="38" rx="19" fill="#1c2935" stroke="#38BDF8" stroke-width="1.25" stroke-opacity=".7" />
-<text x="878" y="1722.7" font-size="10" font-weight="700" fill="#b3c0d2" font-family="ui-monospace, SFMono-Regular, Consolas, monospace">UC48</text>
-<text x="912" y="1723.2" font-size="13" fill="#edf2fa" font-weight="450">Consultar prazo e frete da transportadora</text>
-<path d="M1392,238 H1524 V238 H1560" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#uc-ext)" />
+<rect x="288" y="1432" width="530" height="38" rx="19" fill="#F7EFED" stroke="#BE7E72" stroke-width="1.25" />
+<text x="304" y="1454.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC40</text>
+<text x="338" y="1455.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1453.2">Confirmar pagamento de teste</tspan></text>
+<rect x="862" y="1432" width="530" height="38" rx="19" fill="#F7EFED" stroke="#BE7E72" stroke-width="1.25" />
+<text x="878" y="1454.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC41</text>
+<text x="912" y="1455.2" font-size="13.4" fill="#333C44"><tspan x="912" y="1453.2">Sincronizar dados com o banco na nuvem</tspan></text>
+<rect x="288" y="1479" width="530" height="38" rx="19" fill="#F7EFED" stroke="#BE7E72" stroke-width="1.25" />
+<text x="304" y="1501.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC42</text>
+<text x="338" y="1502.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1500.2">Verificar o banco de dados e abrir consultas</tspan></text>
+<rect x="270" y="1568" width="1140" height="195" rx="16" fill="#FFFFFF" stroke="#8E86B8" stroke-width="1.3" stroke-dasharray="none" stroke-opacity="0.5" />
+<text x="288" y="1593" font-size="14" font-weight="700" fill="#8E86B8">Plataforma e Integrações</text>
+<text x="1392" y="1593" text-anchor="end" font-size="10.2" font-weight="700" fill="#8A939A">6 situações</text>
+<rect x="862" y="1606" width="530" height="38" rx="19" fill="#F1EFF6" stroke="#6E93B8" stroke-width="1.25" />
+<text x="878" y="1628.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC43</text>
+<text x="912" y="1629.2" font-size="13.4" fill="#333C44"><tspan x="912" y="1627.2">Autenticar contas no Supabase (login)</tspan></text>
+<rect x="862" y="1653" width="530" height="38" rx="19" fill="#F1EFF6" stroke="#6E93B8" stroke-width="1.25" />
+<text x="878" y="1675.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC44</text>
+<text x="912" y="1676.2" font-size="13.4" fill="#333C44"><tspan x="912" y="1674.2">Guardar dados com segurança (regras por usuário)</tspan></text>
+<rect x="288" y="1606" width="530" height="38" rx="19" fill="#F1EFF6" stroke="#8E86B8" stroke-width="1.25" />
+<text x="304" y="1628.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC45</text>
+<text x="338" y="1629.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1619.7">Entregar dados internos para o site (produtos, lojas,</tspan><tspan x="338" y="1635.2">usuários)</tspan></text>
+<rect x="288" y="1653" width="530" height="38" rx="19" fill="#F1EFF6" stroke="#8E86B8" stroke-width="1.25" />
+<text x="304" y="1675.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC46</text>
+<text x="338" y="1676.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1674.2">Exibir as imagens dos produtos</tspan></text>
+<rect x="288" y="1700" width="530" height="38" rx="19" fill="#F1EFF6" stroke="#8E86B8" stroke-width="1.25" />
+<text x="304" y="1722.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC47</text>
+<text x="338" y="1723.2" font-size="13.4" fill="#333C44"><tspan x="338" y="1721.2">Funcionar sem internet, com dados iniciais</tspan></text>
+<rect x="862" y="1700" width="530" height="38" rx="19" fill="#F1EFF6" stroke="#6E93B8" stroke-width="1.25" />
+<text x="878" y="1722.7" font-size="9.6" letter-spacing="0.4" fill="#ADB6BC">UC48</text>
+<text x="912" y="1723.2" font-size="13.4" fill="#333C44"><tspan x="912" y="1721.2">Consultar prazo e frete na transportadora</tspan></text>
+<path d="M1392,238 H1524 V238 H1560" fill="none" stroke="#6E93B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#uc-ext)" />
 
-  <circle cx="1586" cy="219" r="8.5" fill="none" stroke="#38BDF8" stroke-width="1.7" />
-  <path d="M1586,227.5 V245" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M1570,235 H1602" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M1573,265 L1586,245 L1599,265" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <text x="1586" y="282" text-anchor="middle" font-size="12.6" font-weight="700" fill="#A9D8F2">Google OAuth</text>
-<path d="M1392,600 H1524 V600 H1560" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#uc-ext)" />
+  <circle cx="1586" cy="219" r="8.5" fill="none" stroke="#6E93B8" stroke-width="1.7" />
+  <path d="M1586,227.5 V245" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M1570,235 H1602" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M1573,265 L1586,245 L1599,265" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <text x="1586" y="282" text-anchor="middle" font-size="12.6" font-weight="700" fill="#4E7191">Google</text>
+<path d="M1392,600 H1524 V600 H1560" fill="none" stroke="#6E93B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#uc-ext)" />
 
-  <circle cx="1586" cy="581" r="8.5" fill="none" stroke="#38BDF8" stroke-width="1.7" />
-  <path d="M1586,589.5 V607" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M1570,597 H1602" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M1573,627 L1586,607 L1599,627" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <text x="1586" y="644" text-anchor="middle" font-size="12.6" font-weight="700" fill="#A9D8F2">Banco / PIX</text>
-<path d="M1392,1625 H1524 V1625 H1560" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#uc-ext)" />
+  <circle cx="1586" cy="581" r="8.5" fill="none" stroke="#6E93B8" stroke-width="1.7" />
+  <path d="M1586,589.5 V607" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M1570,597 H1602" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M1573,627 L1586,607 L1599,627" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <text x="1586" y="644" text-anchor="middle" font-size="12.6" font-weight="700" fill="#4E7191">Banco (PIX)</text>
+<path d="M1392,1625 H1524 V1625 H1560" fill="none" stroke="#6E93B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#uc-ext)" />
 
-  <circle cx="1586" cy="1606" r="8.5" fill="none" stroke="#38BDF8" stroke-width="1.7" />
-  <path d="M1586,1614.5 V1632" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M1570,1622 H1602" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M1573,1652 L1586,1632 L1599,1652" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <text x="1586" y="1669" text-anchor="middle" font-size="12.6" font-weight="700" fill="#A9D8F2">Supabase Auth</text>
-<path d="M1392,1672 H1524 V1717 H1560" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#uc-ext)" />
+  <circle cx="1586" cy="1606" r="8.5" fill="none" stroke="#6E93B8" stroke-width="1.7" />
+  <path d="M1586,1614.5 V1632" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M1570,1622 H1602" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M1573,1652 L1586,1632 L1599,1652" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <text x="1586" y="1669" text-anchor="middle" font-size="12.6" font-weight="700" fill="#4E7191">Supabase (login)</text>
+<path d="M1392,1672 H1524 V1717 H1560" fill="none" stroke="#6E93B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#uc-ext)" />
 
-  <circle cx="1586" cy="1698" r="8.5" fill="none" stroke="#38BDF8" stroke-width="1.7" />
-  <path d="M1586,1706.5 V1724" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M1570,1714 H1602" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M1573,1744 L1586,1724 L1599,1744" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <text x="1586" y="1761" text-anchor="middle" font-size="12.6" font-weight="700" fill="#A9D8F2">PostgreSQL (RLS)</text>
-<path d="M1392,1719 H1524 V1809 H1560" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#uc-ext)" />
+  <circle cx="1586" cy="1698" r="8.5" fill="none" stroke="#6E93B8" stroke-width="1.7" />
+  <path d="M1586,1706.5 V1724" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M1570,1714 H1602" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M1573,1744 L1586,1724 L1599,1744" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <text x="1586" y="1761" text-anchor="middle" font-size="12.6" font-weight="700" fill="#4E7191">Banco de dados</text>
+<path d="M1392,1719 H1524 V1809 H1560" fill="none" stroke="#6E93B8" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#uc-ext)" />
 
-  <circle cx="1586" cy="1790" r="8.5" fill="none" stroke="#38BDF8" stroke-width="1.7" />
-  <path d="M1586,1798.5 V1816" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M1570,1806 H1602" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <path d="M1573,1836 L1586,1816 L1599,1836" stroke="#38BDF8" stroke-width="1.7" fill="none" />
-  <text x="1586" y="1853" text-anchor="middle" font-size="12.6" font-weight="700" fill="#A9D8F2">Transportadora</text>
+  <circle cx="1586" cy="1790" r="8.5" fill="none" stroke="#6E93B8" stroke-width="1.7" />
+  <path d="M1586,1798.5 V1816" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M1570,1806 H1602" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <path d="M1573,1836 L1586,1816 L1599,1836" stroke="#6E93B8" stroke-width="1.7" fill="none" />
+  <text x="1586" y="1853" text-anchor="middle" font-size="12.6" font-weight="700" fill="#4E7191">Transportadora</text></g>
 </svg>
