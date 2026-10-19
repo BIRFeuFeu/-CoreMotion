@@ -1,8 +1,9 @@
 # CoreMotion — Plano de execução da Etapa 5
 ## Guia da equipe de 4 integrantes + prompts para usar no Arena IA
 
-**Data:** 16/10/2026  
+**Data:** 16/10/2026 · revisão de papéis em 19/10/2026  
 **Finalidade:** concluir e validar o sistema, produzir a documentação do TCC e preparar a entrega ao professor Antonio Carlos.  
+**Versão:** 3 — papéis reformulados em quatro frentes independentes.  
 **Situação deste arquivo:** plano inicial atualizado; a versão consolidada está em `DOCUMENTO-FINAL-DE-EXECUCAO.md`. Nenhum dos planos comprova conclusão de funcionalidades ou testes.
 
 ---
@@ -36,32 +37,39 @@ Inspeção inicial do repositório `BIRFeuFeu/-CoreMotion`:
 - Já existem diagramas, PDFs e arquivos mestre em `Fluxograma/Diagrama C. De Uso/`.
 - Os geradores estão em `scripts/`, incluindo `scripts/lib/flowchart-core.mjs` e `scripts/lib/usecase-core.mjs`.
 - O material de documentação existente descreve perfis visitante, usuário, lojista e administrador, além de modo demonstrativo e possíveis lacunas de segurança. Isso é **pista para auditoria**, não comprovação do comportamento atual.
-- `CONTRIBUTING.md` ainda menciona equipe de 5 pessoas e um fluxo de branches genérico. Deve ser revisado para refletir a organização real, sem contrariar as regras da sessão Arena.
+- `CONTRIBUTING.md` descrevia uma equipe de 5 pessoas com revisão obrigatória; foi alinhado nesta rodada a quatro frentes independentes, sem revisão bloqueante. O fluxo de branches deve continuar respeitando a branch fixa de cada sessão Arena.
 
 **Regra:** conferir código e execução antes de declarar que algo funciona. Não confundir interface pronta, dados locais ou botões demonstrativos com integração real.
 
 ## 3. Como a equipe vai trabalhar com o Arena
 
-### 3.1 Responsabilidades
+Cada pessoa é responsável por uma **fatia completa do trabalho**: interface, servidor e dados do seu escopo, além de um entregável próprio de fechamento. Nenhuma frente espera a conclusão, a revisão, o repasse ou a autorização de outra pessoa para executar a sua parte.
 
-| Integrante | Frente principal | Revisor de apoio | Entrega principal |
+O que existe entre as frentes são **contratos de interface versionados no repositório** — tipos, schemas, rotas e documentos em `docs/etapa-5/contratos/` — e o **mapa de propriedade de arquivos**. Contrato é artefato público, não favor pessoal: qualquer pessoa consegue trabalhar sozinha lendo o contrato, mesmo que a outra frente ainda não tenha começado.
+
+### 3.1 Responsabilidades — quatro frentes independentes
+
+| Integrante | Frente independente | Escopo completo (interface + servidor + dados) | Entregável de fechamento próprio |
 | --- | --- | --- | --- |
-| Pessoa 1 — [nome] | Frontend e experiência de uso | Pessoa 4 | Telas e navegação completas para os perfis |
-| Pessoa 2 — [nome] | Backend, banco e segurança | Pessoa 1 | Autenticação, permissões, persistência e migrações |
-| Pessoa 3 — [nome] | TCC, requisitos e diagramas | Pessoa 2 | Documento fiel ao sistema e diagramas atualizados |
-| Pessoa 4 — [nome] | Testes, README, apresentação e entrega | Pessoa 3 | Evidências, instruções reproduzíveis, slides e links |
+| Pessoa 1 — [nome] | Identidade, acesso e administração | Cadastro, login, sessão, papéis de Administrador, Supervisor e Usuário, painel administrativo, RLS e migrações de identidade, remoção de segredos | Hierarquia aplicada no servidor e no banco, matriz de permissões publicada e scripts de banco reproduzíveis |
+| Pessoa 2 — [nome] | Catálogo, negócio e comunidade | Produtos, lojas, anúncios C2C, carrinho, checkout, pedidos, comunidade e treinadores — telas, rotas e consultas do domínio | Jornada de compra e venda completa, com persistência real e simulações rotuladas |
+| Pessoa 3 — [nome] | Documento acadêmico, requisitos e diagramas | TCC conforme o modelo, referências verificáveis, catálogo de requisitos, casos de uso, fluxogramas e roteiro de capturas | TCC em DOCX e PDF, diagramas legíveis em A4 e para slides, matriz de rastreabilidade |
+| Pessoa 4 — [nome] | Verificação, publicação e entrega | Ambiente de teste próprio, plano e execução de testes, README, apresentação, Daily Scrum, links públicos e resposta final | Relatório de testes com evidências, README validado, slides publicados e checklist de entrega |
 
-O responsável coordena, executa com auxílio do Arena e confere o resultado. Não deve simplesmente aceitar a resposta da IA sem verificar.
+Cada frente verifica o próprio trabalho: `npm run lint`, `npm run type-check`, `npm run build` e os testes do seu escopo. O responsável executa com auxílio do Arena, confere o resultado e registra o que não foi possível verificar. Não deve aceitar a resposta da IA sem evidência.
 
-### 3.2 Regras contra conflitos
+### 3.2 Regras de independência
 
-1. Cada pessoa usa uma conversa própria no Arena conectada ao repositório, respeitando a branch fixa atribuída à sua sessão. **Não peça ao Arena para trocar ou criar outra branch.**
-2. A equipe define um integrador antes de começar. Sugestão: Pessoa 4 coordena a fila; Pessoa 2 revisa alterações técnicas de integração.
-3. Antes de editar, o Arena deve listar arquivos envolvidos e dependências. Não editar o mesmo arquivo em duas frentes ao mesmo tempo.
-4. Arquivos compartilhados — especialmente `lib/store.tsx`, `lib/types.ts`, componentes administrativos, schemas e contratos das APIs — exigem coordenação entre Pessoas 1 e 2.
-5. Não iniciar integração final enquanto os contratos de perfis e permissões não estiverem aprovados.
-6. Publicação, push, abertura e merge de PR devem ocorrer com autorização da equipe, para a branch permitida pela sessão. Não fazer merge automático de trabalho ainda não revisado.
-7. Antes de cada rodada, confirmar qual versão integrada está disponível. Mudanças em conversas separadas não devem ser presumidas como sincronizadas.
+1. **Escopo vertical.** Cada frente entrega sua parte de ponta a ponta: tela, regra no servidor e dado persistido. Não existe “eu faço a tela e outra pessoa liga no banco”.
+2. **Nenhuma espera por pessoa.** Ninguém aguarda revisão, aprovação, repasse ou entrega de outra frente para começar, continuar ou concluir. Se faltar informação, registra `PENDENTE` e segue pelo contrato.
+3. **Branch fixa.** Cada pessoa usa a própria conversa no Arena conectada ao repositório, respeitando a branch atribuída à sessão. **Não peça ao Arena para trocar ou criar outra branch.**
+4. **Contrato é a única combinação entre frentes.** O contrato do próprio escopo é publicado em `docs/etapa-5/contratos/` e em `lib/types.ts`/`lib/schemas/` antes da implementação. Mudanças de contrato são aditivas e registradas com data; quem consome lê a versão publicada, sem reunião obrigatória.
+5. **Mapa de propriedade de arquivos.** Cada arquivo tem um guardião declarado. Quem não é guardião pode fazer mudança aditiva e pequena no seu próprio PR, sem autorização prévia; o guardião ajusta depois, se necessário. Não editar o mesmo arquivo em duas frentes ao mesmo tempo.
+6. **Verificação individual.** Cada frente roda suas verificações e registra comando, resultado e limitação em `docs/etapa-5/pessoa-N/`. Falha anterior não impede avanço; precisa ser registrada.
+7. **Revisão cruzada é opcional.** Quando acontecer, vira registro no repositório. Não é condição para concluir nem portão para publicar.
+8. **Merge é ato de liberação, não de dependência.** Push na branch da sessão é livre, com autorização da equipe. O merge na `main` é uma liberação única, feita quando a versão estiver verificada, e não é pré-requisito para nenhuma frente terminar sua função.
+9. **Conflito se resolve por contrato, CI e conversa curta** — nunca parando a outra frente.
+10. **Ninguém presume o estado da outra sessão.** Antes de cada rodada, cada frente confere no repositório a versão realmente disponível e não trata mudanças de outra conversa como sincronizadas.
 
 ### 3.3 Uso responsável da IA
 
@@ -73,15 +81,18 @@ O responsável coordena, executa com auxílio do Arena e confere o resultado. N�
 - A equipe deve revisar autoria, fontes e eventual declaração de uso de IA conforme as regras da instituição.
 - O Arena pode gerar arquivos e instruções, mas permissões de publicação, acesso às contas, reuniões reais e validação com o professor dependem de pessoas.
 
-### 3.4 Cabeçalho comum — colar antes dos prompts de cada pessoa
+### 3.4 Cabeçalho comum — colar antes do prompt de cada pessoa
 
 ```text
 Você está auxiliando a equipe do CoreMotion na Etapa 5 do TCC.
-Leia docs/etapa-5/PLANO-EQUIPE-E-PROMPTS.md, o enunciado e os anexos disponíveis.
+Leia docs/etapa-5/DOCUMENTO-FINAL-DE-EXECUCAO.md, o enunciado e o modelo em
+docs/etapa-5/referencias/Modelo-de-TCC.docx.pdf. Consulte também
+docs/etapa-5/referencias/LEITURA-DO-MODELO.md e os contratos em docs/etapa-5/contratos/.
 Trabalhe no repositório e na branch permitida pela sessão Arena, sem trocar de branch.
 Inspecione o código real antes de fazer afirmações. Diferencie implementado, demonstrativo,
 pendente e não verificado. Não invente fontes, testes, imagens, reuniões ou links.
-Antes de editar, apresente os arquivos envolvidos e os conflitos com outras frentes.
+Trabalhe apenas no escopo da sua frente. Antes de editar, declare os arquivos que ela possui,
+os contratos de interface que consome e eventuais mudanças aditivas em arquivos de outra frente.
 Não exponha segredos, não altere produção e não publique nem faça merge sem autorização.
 Preserve a arquitetura existente e aproveite os diagramas e scripts já disponíveis.
 Quando algo depender de acesso, decisão ou documento ausente, registre o bloqueio.
@@ -89,290 +100,303 @@ Ao concluir, informe arquivos alterados, verificações executadas, resultado e 
 Minha função é a Pessoa [1, 2, 3 ou 4]. Meu nome é [nome].
 ```
 
-Substituir os campos entre colchetes antes de enviar. Os prompts abaixo são sequenciais: executar uma rodada, revisar e só então avançar.
+Substituir os campos entre colchetes antes de enviar. Cada prompt abaixo é autossuficiente: executar a rodada, registrar a evidência e seguir sem esperar outra frente.
 
-## 4. Pessoa 1 — Frontend e experiência de uso
-
-### Objetivo
-
-Entregar uma interface completa, coerente e utilizável, integrada aos contratos definidos com a Pessoa 2, sem telas vazias nem funcionalidades falsas apresentadas como reais.
-
-### Tarefas
-
-1. Inventariar telas, menus, formulários, modais e links. Conferir quais componentes são usados de verdade; há arquivos de reexportação em subpastas.
-2. Identificar telas ausentes, navegação sem destino, botões sem ação e operações que apenas alteram dados locais.
-3. Alinhar com a Pessoa 2 os perfis, a matriz de permissões, os contratos das APIs e os estados de erro.
-4. Completar os fluxos previstos no escopo aprovado: autenticação, navegação do marketplace, produtos, loja, anúncios e painéis pertinentes. Não ampliar o escopo com funcionalidades não exigidas.
-5. Adaptar menus e telas de Usuário, Supervisor e Administrador. Lojista pode continuar como perfil de negócio; não equivale automaticamente a Supervisor.
-6. Mostrar estados de carregamento, vazio, sucesso, erro e acesso negado. Validar formulários, mas lembrar que a validação também deve existir no servidor.
-7. Revisar responsividade, foco de teclado, rótulos de campos, contraste e legibilidade.
-8. Entregar uma lista de cenários para a Pessoa 4 e capturas reais para a Pessoa 3.
-
-### Arquivos prováveis
-
-`components/`, `app/page.tsx`, `app/globals.css` e arquivos de apresentação relacionados. Alterações em `lib/store.tsx` ou `lib/types.ts` precisam ser combinadas com a Pessoa 2.
-
-### Critérios de conclusão
-
-- [ ] Nenhum menu do escopo leva a tela vazia ou erro não tratado.
-- [ ] Fluxos principais funcionam com o backend de testes, não apenas com dados locais.
-- [ ] Menus refletem permissões reais, com bloqueios de servidor sob responsabilidade da Pessoa 2.
-- [ ] Interface conferida em celular e computador, com evidências reais.
-- [ ] Formulários têm mensagens claras e não perdem dados desnecessariamente.
-- [ ] Alterações não criam novas falhas nas verificações técnicas; falhas anteriores são registradas.
-
-### Prompt 1A — Diagnóstico do frontend
-
-```text
-Sou a Pessoa 1, responsável pelo frontend.
-Audite a interface do CoreMotion sem alterar arquivos nesta primeira rodada.
-Mapeie telas, navegação, formulários e componentes realmente importados.
-Compare o comportamento com o escopo da Etapa 5 e destaque telas vazias,
-botões sem ação, recursos demonstrativos, responsividade e acessibilidade.
-Não trate o que diz a documentação antiga como prova de funcionamento.
-Crie docs/etapa-5/pessoa-1/diagnostico-frontend.md com:
-problema, evidência no arquivo, impacto, prioridade e critério de aceite.
-Liste as dependências da Pessoa 2 e os arquivos compartilhados.
-Proponha lotes pequenos de implementação e aguarde minha aprovação.
-```
-
-### Prompt 1B — Implementação
-
-```text
-Implemente somente o lote aprovado no diagnóstico da Pessoa 1: [identificar lote].
-Use a matriz de permissões e o contrato de integração aprovados pela Pessoa 2.
-Se esses documentos ainda não existirem, liste o bloqueio e não invente APIs ou perfis.
-Preserve o visual do projeto, corrija os fluxos do escopo e inclua estados de
-carregamento, vazio, sucesso, erro e acesso negado.
-Não simule persistência real com localStorage nem trate esconder botões como segurança.
-Não altere migrações, políticas RLS ou regras de servidor sem coordenação.
-Execute as verificações disponíveis e registre resultados reais e limitações em
-docs/etapa-5/pessoa-1/registro-implementacao.md.
-```
-
-### Prompt 1C — Revisão e repasse
-
-```text
-Revise as alterações do frontend após a integração com a Pessoa 2.
-Percorra os fluxos de Usuário, Supervisor e Administrador, identificando
-se cada validação foi executada ou se está apenas proposta.
-Crie docs/etapa-5/pessoa-1/repasse-frontend.md com telas alteradas, passos de uso,
-cenários para a Pessoa 4 e lista das capturas necessárias ao TCC.
-Se não houver ferramenta de navegador, não invente screenshots: forneça um roteiro
-para eu capturá-las e registre que a revisão visual está pendente.
-```
-
-## 5. Pessoa 2 — Backend, banco e segurança
+## 4. Pessoa 1 — Identidade, acesso e administração
 
 ### Objetivo
 
-Garantir que o sistema autentique usuários, persista dados e aplique a hierarquia exigida no servidor e no banco, e não apenas na interface.
+Entregar a hierarquia Administrador → Supervisor → Usuário funcionando de ponta a ponta — tela, servidor e banco — com autenticação real, sessão validada no servidor e painel administrativo com permissões aplicadas. Nenhuma etapa depende da frente de catálogo.
+
+### Escopo completo
+
+- **Interface:** cadastro, login, recuperação de senha, sessão, menu por papel, painel administrativo e estados de acesso negado.
+- **Servidor:** rotas e Server Actions de autenticação e usuários, verificação de sessão, validação de entrada e registro de auditoria.
+- **Dados:** migrações incrementais, políticas RLS, definição dos três papéis, scripts de banco e remoção de credenciais do repositório.
 
 ### Tarefas
 
-1. Auditar Auth, rotas, Server Actions, serviços, sessões, SQL e RLS do Supabase.
-2. Definir com a equipe uma **matriz de permissões**. Proposta inicial, sujeita a aprovação:
-   - Usuário: consultar catálogo e executar operações próprias do escopo.
-   - Supervisor: moderar operações ou conteúdos autorizados, sem promover administradores nem acessar dados sem necessidade.
-   - Administrador: administrar o sistema e os perfis autorizados, com controles de segurança.
-   - Visitante e lojista: manter como atores adicionais se existirem no produto; não substituem os três níveis exigidos.
-3. Definir como os papéis são atribuídos, alterados e auditados. Usuário comum não pode se promover no cadastro nem enviando uma requisição modificada.
-4. Criar contratos para a Pessoa 1: operações, dados de entrada/saída, estados e erros.
-5. Implementar verificações de autenticação, autorização, propriedade dos registros e validação de entrada em todos os pontos relevantes.
-6. Revisar atalhos de demonstração e privilégios baseados em e-mail ou estado do navegador. Separar demonstração de ambiente real e eliminar caminhos de escalada indevida.
-7. Criar migrações incrementais, dados fictícios de teste quando necessários e instruções de aplicação. Não editar silenciosamente uma migração já aplicada para esconder mudanças.
-8. Distinguir pedido registrado de pagamento real. Não afirmar integração financeira, custódia ou PIX real sem evidência técnica.
-9. Revisar `.env.example`, sem valores secretos, e repassar à Pessoa 4 os passos reais de configuração.
-10. Preparar testes positivos e negativos de acesso para a Pessoa 4.
+1. Remover credenciais e fallbacks secretos do código e do bundle do cliente; exigir configuração por variáveis de ambiente.
+2. Implementar sessão no servidor (cookie httpOnly) e um único helper de verificação usado por todas as rotas e actions do escopo.
+3. Definir os papéis Administrador, Supervisor e Usuário em `lib/types.ts` e no banco; manter lojista como vínculo de negócio, não como nível de acesso.
+4. Publicar `docs/etapa-5/contratos/matriz-permissoes.md` com capacidades, invariantes e decisões registradas.
+5. Impedir autopromoção: cadastro sempre cria `user`; nenhum `role`, `userId` ou `seller_id` do cliente é aceito; RLS com trava de coluna.
+6. Remover privilégio por e-mail, prefixo ou lista fixa de administradores, inclusive do bundle e do SQL.
+7. Ligar o painel administrativo a endpoints reais: criar, promover, banir, desbanir e excluir com autorização e auditoria.
+8. Eliminar o login de demonstração e a troca de papel pelo menu; se houver modo demonstrativo, isolá-lo por flag e rotulá-lo.
+9. Criar migrações incrementais, script de recriação do banco e documentação de aplicação e reversão.
+10. Escrever testes positivos e negativos do escopo e registrar resultados reais.
 
-### Arquivos prováveis
+### Arquivos que a frente possui
 
-`app/api/`, `app/actions/`, `services/`, `lib/`, `types/`, `middleware.ts`, `supabase/migrations/` e scripts de banco. Evitar alterações visuais paralelas às da Pessoa 1.
+`app/api/users/`, `app/api/auth/`, `app/actions/auth.ts`, `services/auth.ts`, `services/authService.ts`, `services/supabaseClient.ts`, `lib/store.tsx`, `lib/types.ts`, `lib/db.ts`, `lib/supabase.ts`, `middleware.ts`, `supabase/migrations/`, `components/AuthModal.tsx`, `components/admin/`, `components/AdminDashboard.tsx`, `docs/etapa-5/contratos/matriz-permissoes.md`.
 
 ### Critérios de conclusão
 
-- [ ] Os três perfis exigidos existem e possuem permissões aprovadas.
-- [ ] Acesso direto à API não contorna a hierarquia.
-- [ ] Alterar o navegador ou o corpo da requisição não promove o usuário.
-- [ ] Usuário não lê nem altera registros privados de outro usuário sem autorização.
-- [ ] Regras de RLS e credenciais privilegiadas são revisadas conforme a arquitetura real.
-- [ ] Banco de testes pode ser recriado com os scripts documentados.
-- [ ] Dados persistem após recarregar e entrar novamente.
-- [ ] Modo demonstrativo está separado e claramente identificado.
+☐ Os três níveis exigidos existem e são aplicados no servidor e no banco.
+☐ Acesso direto à API não contorna a hierarquia; anônimo recebe 401 e sem permissão recebe 403.
+☐ Alterar navegador, `localStorage` ou corpo da requisição não promove ninguém.
+☐ Nenhuma credencial ou privilégio por e-mail permanece no código ou no bundle.
+☐ Painel administrativo persiste após recarregar e registra quem executou cada ação sensível.
+☐ Banco de teste pode ser recriado pelos scripts documentados, com plano de reversão.
+☐ Verificações e testes do escopo registrados, com o que não foi possível verificar marcado como pendente.
 
-### Prompt 2A — Auditoria e contrato
-
-```text
-Sou a Pessoa 2, responsável por backend, banco e segurança.
-Audite autenticação, sessões, APIs, Server Actions, serviços, SQL e políticas RLS.
-Confirme os perfis atuais no código e a diferença entre modo demo e banco real.
-Investigue autorização apenas no cliente, privilégios por e-mail, possibilidade de
-autopromoção, acesso entre usuários e exposição de credenciais, sem reproduzir segredos.
-Não execute alterações no banco nesta rodada.
-Crie docs/etapa-5/pessoa-2/auditoria-backend.md,
-docs/etapa-5/pessoa-2/matriz-permissoes.md e
-docs/etapa-5/pessoa-2/contrato-integracao.md.
-Na matriz, proponha Administrador, Supervisor e Usuário e preserve papéis de negócio
-quando necessário. Marque as decisões que precisam de aprovação da equipe.
-Priorize riscos e proponha migrações, testes e um plano de reversão.
-Aguarde aprovação antes de implementar.
-```
-
-### Prompt 2B — Implementação segura
+### Prompt 1A — Auditoria de identidade e acesso
 
 ```text
-Implemente o lote aprovado da auditoria da Pessoa 2: [identificar lote].
-Aplique a matriz de permissões aprovada no servidor e no banco, conforme a arquitetura.
-Valide sessão, papel, propriedade do registro e dados recebidos; não confie em papel,
-ID de usuário ou indicador de admin enviado pelo navegador.
-Impeça autopromoção e separe atalhos demonstrativos do funcionamento real.
-Versione mudanças SQL em migrações incrementais e atualize tipos e contratos necessários.
-Não use chave privilegiada no cliente nem execute migrações, seeds ou limpezas em produção.
-Se faltar ambiente seguro, prepare os scripts e marque a aplicação como pendente.
-Inclua testes positivos e negativos, execute o que for possível e registre comandos,
-resultados reais, riscos e instruções em docs/etapa-5/pessoa-2/registro-backend.md.
+Sou a Pessoa 1, responsável por identidade, acesso e administração.
+Audite somente o meu escopo, sem alterar arquivos nesta rodada: autenticação, sessão,
+rotas e actions de usuários, painel administrativo, RLS, migrações e segredos.
+Confirme no código o que é real, o que é demonstrativo e o que está ausente.
+Verifique especificamente: login que aceita senha inválida, autopromoção por metadado,
+privilégio por e-mail ou prefixo, rotas administrativas sem sessão, credenciais no bundle
+e ausência do papel Supervisor.
+Crie docs/etapa-5/pessoa-1/auditoria-identidade.md com problema, evidência por arquivo e linha,
+impacto, prioridade, critério de aceite e dependência de contrato (não de pessoa).
+Proponha lotes pequenos e verificáveis e aguarde minha aprovação para implementar.
 ```
 
-### Prompt 2C — Repasse técnico
+### Prompt 1B — Implementação do lote aprovado
 
 ```text
-Prepare o repasse do backend para as Pessoas 1 e 4.
-Atualize contrato-integracao.md e matriz-permissoes.md para o comportamento implementado.
-Crie docs/etapa-5/pessoa-2/repasse-backend.md com configuração sem segredos,
-ordem das migrações, criação segura de contas de teste, rotas/operações por perfil,
-cenários de acesso negado, limitações e estado dos testes.
-Diferencie integração real, simulação e funcionalidade ainda pendente.
-Não declare segurança validada sem evidências dos testes correspondentes.
+Implemente somente o lote aprovado em docs/etapa-5/pessoa-1/auditoria-identidade.md.
+Aplique a matriz de permissões do meu escopo no servidor e no banco, sem confiar em papel,
+userId ou indicador de admin enviado pelo navegador.
+Remova privilégios por e-mail/prefixo, impeça autopromoção e separe demonstração do ambiente real.
+Versione mudanças SQL em migrações incrementais, atualize tipos e contratos de forma aditiva e
+não edite arquivos de outra frente sem registrar a mudança como aditiva.
+Não use chave privilegiada no cliente nem execute migração em produção.
+Inclua testes positivos e negativos do escopo, execute o que for possível e registre comandos,
+resultados reais, limitações e reversão em docs/etapa-5/pessoa-1/registro-implementacao.md.
+Não declare segurança validada sem evidência dos testes correspondentes.
 ```
 
-## 6. Pessoa 3 — TCC, requisitos e diagramas
+### Prompt 1C — Verificação e publicação do contrato
+
+```text
+Revise o meu escopo já implementado e verifique sozinho, sem esperar outra frente:
+sessão, papéis, painel administrativo, RLS e remoção de segredos.
+Execute npm run lint, npm run type-check, npm run build e os testes do escopo.
+Atualize docs/etapa-5/contratos/matriz-permissoes.md para o comportamento realmente implementado
+e publique em docs/etapa-5/pessoa-1/estado-identidade.md o que está integrado, o que é simulado,
+o que está pendente e como outra pessoa consome o contrato sem me consultar.
+Se algo depender de banco ou acesso indisponível, registre BLOQUEADO com a instrução de reprodução.
+Não afirme conformidade de segurança sem os testes correspondentes.
+```
+
+## 5. Pessoa 2 — Catálogo, negócio e comunidade
 
 ### Objetivo
 
-Produzir documentação acadêmica legível, rastreável e fiel à versão integrada do sistema, usando o modelo do professor e reaproveitando os diagramas existentes.
+Entregar a jornada de catálogo, compra, venda e comunidade de ponta a ponta — tela, servidor e dados — com persistência real ou estado vazio honesto, sem depender da frente de identidade para avançar.
+
+### Escopo completo
+
+- **Interface:** início, marketplace, detalhe do produto, lojas, anúncio C2C, carrinho, checkout, comunidade e treinadores.
+- **Servidor:** rotas e actions de produtos, lojas, anúncios e pedidos; validação; cálculo de total no servidor.
+- **Dados:** consultas do domínio, verificação de loja, pedidos e conteúdo da comunidade.
 
 ### Tarefas
 
-1. Obter o PDF de requisitos e o modelo original do TCC. Registrar exigências e lacunas.
-2. Receber nomes completos, instituição, curso, orientador, cidade, ano e grafia oficial do aplicativo.
-3. Elaborar estrutura de capítulos conforme o modelo. Em geral: introdução, problema, objetivos, justificativa, fundamentação, metodologia, desenvolvimento, testes/resultados, conclusão e referências; não impor essa estrutura se o modelo exigir outra.
-4. Descrever arquitetura, tecnologias, requisitos funcionais e não funcionais, perfis, banco e jornadas de uso reais.
-5. Criar rastreabilidade: requisito → caso de uso → tela/API → teste → evidência.
-6. Revisar o material em `Fluxograma/Diagrama C. De Uso/`. Confrontar o catálogo existente com o sistema; contagens antigas não são metas de completude.
-7. Atualizar as fontes dos diagramas e regenerar os arquivos; não editar PDFs/HTML gerados à mão.
-8. Criar versão A4 do diagrama, com decomposição por módulos se necessário, e versão adequada para slides. Não encolher um diagrama inteiro a ponto de ficar ilegível.
-9. Descrever casos principais com ator, objetivo, pré-condições, fluxo principal, alternativas e pós-condições. Usar fluxogramas ou passos numerados como complemento.
-10. Inserir capturas reais fornecidas pelas Pessoas 1 e 4, com legenda, fonte e proteção de dados pessoais.
-11. Buscar referências verificáveis. Não usar referências inventadas ou tratar respostas da IA como fonte técnica primária.
-12. Conferir sumário, numeração, citações, referências, legendas e diagramação na exportação final.
+1. Inventariar telas, rotas e serviços do domínio e identificar o que só altera estado local.
+2. Ligar produtos, lojas e anúncios a dados persistidos; eliminar o uso de `INITIAL_*` como fachada em ambiente real.
+3. Corrigir a solicitação de verificação de loja para gravar `pending`, separando-a da aprovação.
+4. Exigir sessão no checkout; calcular subtotal, frete e total no servidor; validar estoque.
+5. Rotular pagamento e custódia como simulação enquanto não houver integração financeira real.
+6. Implementar estados de carregamento, vazio, sucesso, erro e acesso negado nas telas do escopo.
+7. Revisar responsividade, foco de teclado, rótulos e contraste nas telas do escopo.
+8. Persistir ou marcar explicitamente como não integrados comunidade, treinadores e recursos demonstrativos.
+9. Escrever testes do domínio e registrar resultados reais.
+10. Publicar `docs/etapa-5/contratos/contrato-catalogo.md` com operações, dados de entrada/saída e erros.
 
-### Arquivos sob sua coordenação
+### Arquivos que a frente possui
 
-`docs/etapa-5/pessoa-3/`, fontes de documentação em `scripts/lib/`, templates de documentação e artefatos em `Fluxograma/Diagrama C. De Uso/`. Alterar somente conteúdo pertinente; combinar mudanças em scripts compartilhados.
+`app/api/products/`, `app/api/stores/`, `app/api/listings/`, `app/actions/products.ts`, `app/actions/orders.ts`, `app/actions/stores.ts`, `services/products.ts`, `services/stores.ts`, `services/listings.ts`, `services/productService.ts`, `services/storeService.ts`, `services/orderService.ts`, `services/communityService.ts`, `lib/db-queries.ts`, `lib/schemas/product.schema.ts`, `lib/schemas/store.schema.ts`, `lib/schemas/order.schema.ts`, `app/page.tsx`, `components/Sidebar.tsx`, `components/HomeHeroAndHighlights.tsx`, `components/MarketplaceView.tsx`, `components/ProductCard.tsx`, `components/ProductDetailModal.tsx`, `components/StoresView.tsx`, `components/CreateStoreModal.tsx`, `components/SellC2CView.tsx`, `components/CheckoutModal.tsx`, `components/CommunityView.tsx`, `components/CoachesView.tsx`, `docs/etapa-5/contratos/contrato-catalogo.md`.
 
 ### Critérios de conclusão
 
-- [ ] Modelo e requisitos do professor foram conferidos; se ausentes, documento continua identificado como rascunho.
-- [ ] Documento corresponde ao sistema testado, sem anunciar recursos simulados como reais.
-- [ ] Diagrama representa corretamente os atores e suas permissões.
-- [ ] Versões A4 e de apresentação são legíveis em tamanho real.
-- [ ] Casos de uso, requisitos e testes são rastreáveis.
-- [ ] Fontes e referências são verificáveis.
-- [ ] Arquivo editável, versão de leitura e link público da documentação foram conferidos pela equipe.
+☐ Nenhum menu do escopo leva a tela vazia ou erro não tratado.
+☐ Fluxos principais funcionam com dados persistidos, não apenas com dados locais.
+☐ Verificação de loja grava `pending` e só supervisor ou administrador aprova.
+☐ Checkout sem sessão é bloqueado; total e frete não são manipuláveis pelo cliente.
+☐ Nenhum texto promete pagamento ou custódia reais sem integração comprovada.
+☐ Interface conferida em celular e computador, com evidências reais.
+☐ Verificações e testes do escopo registrados, com pendências explícitas.
 
-### Prompt 3A — Estrutura e lacunas acadêmicas
+### Prompt 2A — Diagnóstico do domínio
+
+```text
+Sou a Pessoa 2, responsável por catálogo, negócio e comunidade.
+Audite somente o meu escopo, sem alterar arquivos nesta rodada: telas, rotas, actions,
+serviços e consultas de produtos, lojas, anúncios, checkout, pedidos, comunidade e treinadores.
+Classifique cada operação como real, demonstrativa, pendente ou não verificada, com arquivo e linha.
+Destaque telas vazias, botões sem efeito, dados iniciais usados como fachada, verificação de loja
+que grava o status errado, checkout sem sessão e textos que prometem pagamento real.
+Crie docs/etapa-5/pessoa-2/diagnostico-catalogo.md com problema, evidência, impacto, prioridade,
+critério de aceite e o contrato de interface envolvido (não a pessoa).
+Proponha lotes pequenos e aguarde minha aprovação.
+```
+
+### Prompt 2B — Implementação do lote aprovado
+
+```text
+Implemente somente o lote aprovado em docs/etapa-5/pessoa-2/diagnostico-catalogo.md.
+Ligue as telas do meu escopo a dados persistidos e preserve o visual existente.
+Garanta que dono de recurso venha da sessão no servidor e que valores de pedido sejam
+calculados no servidor, nunca aceitos do cliente.
+Corrija a verificação de loja e separe solicitação de aprovação.
+Inclua os estados de carregamento, vazio, sucesso, erro e acesso negado e rotule simulações.
+Não altere arquivos da frente de identidade sem registrar mudança aditiva e seu motivo.
+Execute as verificações disponíveis e registre comandos, resultados reais e limitações em
+docs/etapa-5/pessoa-2/registro-implementacao.md.
+```
+
+### Prompt 2C — Verificação e publicação do contrato
+
+```text
+Revise o meu escopo já implementado e verifique sozinho, sem esperar outra frente.
+Percorra catálogo, lojas, anúncio, checkout, pedidos e comunidade, distinguindo o que foi
+executado do que está apenas proposto.
+Execute npm run lint, npm run type-check, npm run build e os testes do escopo.
+Publique docs/etapa-5/contratos/contrato-catalogo.md com as operações, formatos e erros reais e
+docs/etapa-5/pessoa-2/estado-catalogo.md com passos de uso, limitações e cenários de teste do domínio.
+Se não houver ferramenta de navegador, não invente capturas: entregue o roteiro e registre a
+revisão visual como pendente.
+```
+
+## 6. Pessoa 3 — Documento acadêmico, requisitos e diagramas
+
+### Objetivo
+
+Produzir o TCC e os diagramas a partir do modelo institucional e do repositório, com rastreabilidade e referências verificáveis, sem esperar texto, decisão ou revisão de outra frente. Onde faltar dado, registrar `PENDENTE` e seguir.
+
+### Escopo completo
+
+- **Documento:** estrutura conforme o modelo, capa, folha de rosto, resumo, capítulos, referências e apêndices.
+- **Diagramas:** casos de uso e fluxogramas atualizados nas fontes, regenerados pelos scripts, em A4 e para slides.
+- **Rastreabilidade:** requisito → caso de uso → tela/API → teste → evidência, extraída do código e dos contratos publicados.
+
+### Tarefas
+
+1. Ler o modelo recebido e a leitura por página; registrar exigências e lacunas em `requisitos-documentais.md`.
+2. Montar a estrutura do TCC conforme o modelo e manter uma tabela de dados acadêmicos faltantes.
+3. Extrair do repositório arquitetura, stack, requisitos, banco, perfis e jornadas reais.
+4. Redigir os capítulos em `docs/etapa-5/pessoa-3/tcc/`, marcando `PENDENTE` onde faltar dado.
+5. Criar a matriz de rastreabilidade a partir dos contratos e do código disponíveis.
+6. Revisar as fontes dos diagramas em `scripts/lib/` e regenerar os arquivos pelos comandos do `package.json`.
+7. Produzir versão A4 legível e versão para slides, com decomposição por módulo se necessário.
+8. Documentar os casos principais com ator, objetivo, pré-condições, fluxo, alternativas e pós-condições.
+9. Escrever o roteiro das capturas necessárias, com legenda, fonte e proteção de dados pessoais.
+10. Conferir sumário, numeração, citações, referências e diagramação na exportação final.
+
+### Arquivos que a frente possui
+
+`docs/etapa-5/pessoa-3/`, `docs/etapa-5/referencias/LEITURA-DO-MODELO.md`, `Fluxograma/Diagrama C. De Uso/`, `scripts/lib/usecase-core.mjs`, `scripts/lib/flowchart-core.mjs`, `scripts/master-templates/` e as fontes de documentação correspondentes.
+
+### Critérios de conclusão
+
+☐ Modelo conferido e lacunas registradas; sem modelo completo, o documento permanece identificado como rascunho.
+☐ Documento corresponde ao que está implementado ou explicitamente marcado como pendente.
+☐ Diagrama representa os atores e permissões realmente aprovados.
+☐ Versões A4 e de apresentação legíveis em tamanho real.
+☐ Requisitos, casos de uso, testes e evidências rastreáveis.
+☐ Referências verificáveis, sem fonte inventada.
+
+### Prompt 3A — Estrutura e lacunas
 
 ```text
 Sou a Pessoa 3, responsável pelo TCC e pelos diagramas.
-Leia o enunciado, o PDF e o modelo acadêmico anexados, quando disponíveis.
-Se faltarem, registre exatamente o que falta e não declare conformidade ABNT definitiva.
-Inspecione o sistema e os documentos existentes, sem alterar código da aplicação.
-Crie docs/etapa-5/pessoa-3/requisitos-documentais.md com cada exigência,
-fonte da exigência, entrega correspondente e informação ainda necessária.
-Crie uma estrutura de TCC coerente com o modelo e uma tabela de dados acadêmicos faltantes.
-Diferencie afirmações confirmadas no código, confirmadas em execução e não verificadas.
-Não invente integrantes, instituição, resultados ou referências.
+Leia o modelo acadêmico em docs/etapa-5/referencias/ e a leitura por página.
+Se faltar algum documento, registre exatamente o que falta e não declare conformidade ABNT definitiva.
+Inspecione o repositório e os contratos publicados, sem alterar código da aplicação.
+Crie docs/etapa-5/pessoa-3/requisitos-documentais.md com cada exigência, fonte da exigência,
+entrega correspondente, informação ainda necessária e status.
+Crie a estrutura de capítulos coerente com o modelo e a tabela de dados acadêmicos faltantes.
+Não invente integrantes, instituição, resultados ou referências; use PENDENTE.
 ```
 
 ### Prompt 3B — Texto do TCC
 
 ```text
 Redija a versão de trabalho do TCC com base na estrutura aprovada, no modelo do professor,
-na matriz de permissões e na versão integrada do sistema.
+nos contratos publicados e no código disponível no repositório.
 Crie os arquivos em docs/etapa-5/pessoa-3/tcc/.
-Explique problema, objetivos, justificativa, método, arquitetura, requisitos,
-implementação, validação e conclusão, ajustando os capítulos ao modelo recebido.
-Inclua uma matriz requisito → caso de uso → tela/API → teste → evidência.
-Use somente resultados de teste documentados e referências verificáveis.
-Na ausência de dados, deixe marcações explícitas de PENDENTE e uma lista de coleta.
+Explique problema, objetivos, justificativa, método, arquitetura, requisitos, implementação,
+validação e conclusão, ajustando os capítulos ao modelo recebido.
+Inclua a matriz requisito → caso de uso → tela/API → teste → evidência.
+Use somente resultados de teste documentados no repositório e referências verificáveis.
+Na ausência de dados, marque PENDENTE e liste o que precisa ser coletado; não espere outra frente.
 Não apresente pagamento, custódia, segurança ou publicação como reais sem comprovação.
-Prepare arquivo editável e versão PDF se as ferramentas permitirem; se não,
-explique o procedimento de exportação e revisão final no editor.
 ```
 
 ### Prompt 3C — Diagramas e passos de uso
 
 ```text
 Revise os casos de uso e fluxogramas existentes em Fluxograma/Diagrama C. De Uso/.
-Confira scripts/lib/usecase-core.mjs e scripts/lib/flowchart-core.mjs contra
-os contratos aprovados e o código integrado. Não use o catálogo antigo como prova de conclusão.
-Atualize atores e permissões, incluindo Administrador, Supervisor e Usuário,
-sem apagar atores de negócio pertinentes. Use UML correta; include/extend só quando aplicáveis.
-Atualize as fontes e rode os geradores documentados no package.json quando possível.
+Confira scripts/lib/usecase-core.mjs e scripts/lib/flowchart-core.mjs contra os contratos
+publicados e o código disponível; não trate o catálogo antigo como prova de conclusão.
+Atualize atores e permissões, incluindo Administrador, Supervisor e Usuário, sem apagar atores
+de negócio pertinentes. Use UML correta; include/extend só quando aplicáveis.
+Atualize as fontes e rode os geradores documentados no package.json.
 Produza diagramas legíveis em páginas A4 e imagens vetoriais ou de boa resolução para slides,
 com visão geral e recortes por módulo quando necessário.
-Documente os principais casos com pré-condições, fluxo principal, alternativas e pós-condições.
-Crie docs/etapa-5/pessoa-3/revisao-diagramas.md com mudanças, comandos executados,
-arquivos gerados e verificações de legibilidade ainda pendentes.
+Documente os casos principais com pré-condições, fluxo principal, alternativas e pós-condições.
+Crie docs/etapa-5/pessoa-3/revisao-diagramas.md com mudanças, comandos executados, arquivos
+gerados e verificações de legibilidade ainda pendentes.
 ```
 
-## 7. Pessoa 4 — Testes, README, apresentação e entrega
+## 7. Pessoa 4 — Verificação, publicação e entrega
 
 ### Objetivo
 
-Verificar a versão integrada, organizar evidências reais e preparar uma entrega pública reproduzível, sem confundir arquivos gerados com links efetivamente publicados.
+Verificar a versão disponível e publicar a entrega com evidências reais, montando o próprio ambiente de teste com os scripts do repositório. Nenhum teste depende de outra pessoa executar algo: se a versão não permitir, o caso é registrado como `BLOQUEADO` ou `FALHOU`.
+
+### Escopo completo
+
+- **Verificação:** banco de testes próprio, plano, execução, registro e reteste.
+- **Documentação operacional:** README na raiz, instruções de execução e limitações reais.
+- **Entrega:** apresentação importável e publicada, Daily Scrum, checklist, links e resposta final.
 
 ### Tarefas
 
-1. Coordenar a lista de pendências e a integração entre as outras frentes.
-2. Preparar ambiente de testes com contas fictícias e autorização da Pessoa 2.
-3. Testar cadastro/login, fluxos de negócio, persistência, validações, responsividade e os três perfis.
-4. Testar acesso negado por URL/API, operações de outro usuário e tentativa de promoção indevida. Não fazer testes destrutivos ou ofensivos contra produção.
-5. Registrar cada caso com ID, versão, data, perfil, pré-condição, passos, resultado esperado, resultado obtido, evidência e status.
-6. Encaminhar falhas à pessoa responsável e executar reteste. Registrar o histórico; não apagar falhas para produzir um relatório artificialmente positivo.
-7. Criar `README.md` na raiz com visão geral, stack, pré-requisitos reais, instalação, variáveis sem segredos, preparação do banco, execução, build, testes, perfis, limitações e links reais.
-8. Verificar o gerenciador e lockfile existentes antes de definir instruções. O repositório tem `bun.lock`; não gerar lockfiles conflitantes sem decisão.
-9. Revisar `CONTRIBUTING.md` com a equipe para refletir 4 integrantes e as regras reais de colaboração, sem instruir sessões Arena a trocarem suas branches fixas.
-10. Preparar slides e notas de fala usando resultados e capturas reais. Incluir problema, solução, equipe, arquitetura, casos de uso, demonstração, testes, conclusão e referências pertinentes.
-11. Organizar os registros do Daily Scrum e imagens autênticas dos integrantes. Usar fotos, capturas de reuniões ou do quadro real com consentimento. A forma exata de imagem deve ser confirmada com o professor.
-12. Obter esclarecimento sobre publicação, preparar a opção autorizada e conferir todos os links em janela anônima.
-13. Publicar/importar a apresentação na plataforma exigida e preencher o modelo final de entrega.
+1. Criar ambiente de teste isolado com os scripts do repositório e contas fictícias.
+2. Escrever `plano-testes.md` com casos de login, fluxos principais, persistência, formulários, responsividade e autorização dos três perfis.
+3. Executar o que o ambiente permitir e registrar versão, data, passos, esperado, obtido, evidência e status.
+4. Testar acesso direto à API, operação sobre registro de outro usuário e tentativa de autopromoção.
+5. Criar `relatorio-testes.md` e `backlog-falhas.md`, encaminhando cada falha ao escopo correspondente.
+6. Escrever o `README.md` com stack, pré-requisitos, instalação, variáveis sem segredos, banco, execução, build, testes, perfis e limitações.
+7. Validar as instruções em ambiente limpo ou registrar o que não foi possível reproduzir.
+8. Preparar slides e notas de fala com resultados e capturas reais; explicar a importação e a publicação.
+9. Organizar o Daily Scrum com dados e imagens reais fornecidos pela equipe.
+10. Preencher `checklist-entrega.md` e `entrega-final.md`, conferindo cada link em janela anônima.
+
+### Arquivos que a frente possui
+
+`README.md`, `docs/etapa-5/pessoa-4/`, `docs/etapa-5/STATUS-EXECUCAO.md`, `.env.example` (revisão de nomes e comentários, sem valores), scripts de teste que criar em `scripts/`.
 
 ### Critérios de conclusão
 
-- [ ] Cenários principais e negativos executados e rastreáveis; pendências aparecem claramente.
-- [ ] Bugs bloqueantes corrigidos e retestados.
-- [ ] README validado em ambiente limpo ou com limitações de reprodução explicitadas.
-- [ ] Slides revisados e disponíveis no Google Slides ou PowerPoint Online por link de leitura.
-- [ ] Daily Scrum registra participação verdadeira dos quatro integrantes.
-- [ ] Repositório, documentação e apresentação acessíveis sem login do avaliador.
-- [ ] Publicação do sistema atende à interpretação confirmada com o professor.
-- [ ] Nenhuma credencial ou dado privado aparece nos arquivos e nas evidências.
+☐ Cenários principais e negativos executados e rastreáveis; pendências visíveis.
+☐ Bugs bloqueantes registrados no backlog e retestados quando houver correção disponível.
+☐ README validado em ambiente limpo ou com limitações explicitadas.
+☐ Slides publicados na plataforma exigida, com link de leitura testado.
+☐ Daily Scrum registra participação real dos quatro integrantes.
+☐ Repositório, documento e apresentação acessíveis sem login do avaliador.
+☐ Nenhuma credencial ou dado privado nas evidências.
 
 ### Prompt 4A — Plano e execução de testes
 
 ```text
-Sou a Pessoa 4, responsável por testes e entrega.
-Leia a matriz de permissões, os contratos e os repasses das Pessoas 1 e 2.
-Crie docs/etapa-5/pessoa-4/plano-testes.md com casos de login/cadastro,
-fluxos principais, persistência, formulários, responsividade e autorização dos três perfis.
+Sou a Pessoa 4, responsável por verificação e entrega.
+Leia os contratos publicados em docs/etapa-5/contratos/ e o código disponível; não espere repasse.
+Crie docs/etapa-5/pessoa-4/plano-testes.md com casos de login/cadastro, fluxos principais,
+persistência, formulários, responsividade e autorização dos três perfis.
 Inclua acesso direto à API, registros de outro usuário e tentativa de autopromoção.
-Execute apenas os testes possíveis no ambiente autorizado e seguro.
+Monte o ambiente de teste com os scripts do repositório e execute apenas o que for seguro.
 Registre versão, ambiente, data, passos, esperado, obtido, evidência e status.
-Use os status PASSOU, FALHOU, BLOQUEADO e NÃO EXECUTADO.
-Não marque teste como aprovado apenas porque o código parece correto.
-Crie relatorio-testes.md e backlog-falhas.md na mesma pasta, com responsável sugerido
-para cada falha. Não modifique funcionalidades de outra frente sem coordenação.
+Use os status PASSOU, FALHOU, BLOQUEADO e NÃO EXECUTADO; não aprove teste por leitura de código.
+Crie relatorio-testes.md e backlog-falhas.md na mesma pasta, com o escopo responsável por cada falha.
+Não modifique funcionalidades de outra frente; registre a falha e siga.
 ```
 
 ### Prompt 4B — README e preparação da publicação
@@ -380,30 +404,28 @@ para cada falha. Não modifique funcionalidades de outra frente sem coordenaçã
 ```text
 Crie ou atualize o README.md do CoreMotion com base na execução real.
 Verifique package.json, lockfiles, .env.example, migrações e configuração do Next.js.
-Documente instalação com o gerenciador escolhido, ambiente sem segredos,
-preparação de banco de testes, execução, build, perfis, scripts e limitações.
-Não apresente modo demo como sistema integrado. Não inclua contas ou senhas privadas.
+Documente instalação com o gerenciador escolhido, ambiente sem segredos, preparação de banco
+de testes, execução, build, perfis, scripts e limitações.
+Não apresente modo demo como sistema integrado e não inclua contas ou senhas privadas.
 Teste as instruções em ambiente isolado quando possível e registre o que não foi validado.
-Revise as divergências de CONTRIBUTING.md com o plano da equipe e proponha correções.
-Antes de publicar, destaque a ambiguidade da exigência “apenas no github.com” e solicite
-a decisão do professor. Explique a limitação do GitHub Pages para o backend Next.js.
+Antes de publicar, destaque a ambiguidade da exigência "apenas no github.com" e solicite a
+decisão do professor; explique a limitação do GitHub Pages para o backend Next.js.
 Prepare um checklist de publicação; não publique, mude visibilidade ou invente URLs.
 ```
 
 ### Prompt 4C — Apresentação
 
 ```text
-Prepare a apresentação do TCC a partir do texto revisado pela Pessoa 3 e dos testes reais.
+Prepare a apresentação do TCC a partir do TCC em produção e dos testes registrados no repositório.
 Se a duração oficial não estiver informada, proponha um roteiro enxuto e marque a duração
 como decisão pendente. Divida as falas entre os quatro integrantes.
 Inclua problema, objetivos, solução, papéis da equipe, arquitetura, casos de uso,
 demonstração dos três perfis, testes, resultados reais, limitações e conclusão.
 Use capturas reais e diagramas legíveis; não invente screenshots ou métricas.
-Gere roteiro, notas de fala e, se possível, um PPTX importável, em
-docs/etapa-5/pessoa-4/apresentacao/. Se não for possível gerar PPTX, entregue o conteúdo
-slide a slide. Explique como importar e conferir no Google Slides ou PowerPoint Online.
-Não trate o PPTX local como apresentação publicada. Aguarde a publicação autorizada
-para registrar um link real e verificar acesso de leitura sem login.
+Gere roteiro, notas de fala e, se possível, um PPTX importável em docs/etapa-5/pessoa-4/apresentacao/.
+Explique como importar e conferir no Google Slides ou PowerPoint Online.
+Não trate o PPTX local como apresentação publicada e aguarde a publicação autorizada para
+registrar um link real e verificar acesso de leitura sem login.
 ```
 
 ### Prompt 4D — Daily Scrum e entrega final
@@ -411,30 +433,29 @@ para registrar um link real e verificar acesso de leitura sem login.
 ```text
 Crie docs/etapa-5/pessoa-4/daily-scrum.md com um modelo de registro por encontro:
 data, presentes, o que cada um fez, o que fará, impedimentos, decisões e evidências.
-Use somente nomes, registros e imagens reais fornecidos pela equipe; se faltarem,
-deixe campos PENDENTE. Não reconstrua reuniões fictícias a partir de commits.
-Inclua um quadro com função de cada integrante e indicação das imagens reais a inserir.
-Depois, crie docs/etapa-5/pessoa-4/checklist-entrega.md e entrega-final.md
-com os campos exatos pedidos pelo professor. Não invente URLs nem declare acesso
-público sem verificação. Liste todos os links ainda não publicados ou não verificados.
+Use somente nomes, registros e imagens reais fornecidos pela equipe; se faltarem, deixe PENDENTE.
+Não reconstrua reuniões fictícias a partir de commits.
+Inclua um quadro com a função de cada integrante e a indicação das imagens reais a inserir.
+Depois, crie checklist-entrega.md e entrega-final.md com os campos exatos pedidos pelo professor.
+Não invente URLs nem declare acesso público sem verificação.
+Liste todos os links ainda não publicados ou não verificados.
 ```
 
-## 8. Ordem de execução e dependências
 
-Não há prazo oficial informado. Usar esta sequência e atribuir datas reais em reunião.
+## 8. Trilhas independentes e ponto de encontro
 
-| Fase | Ação | Quem atua | Condição para avançar |
-| --- | --- | --- | --- |
-| 1 — Alinhamento | Obter PDF/modelo, confirmar publicação, nomes e escopo | Todos; Pessoa 4 registra | Exigências e pendências registradas |
-| 2 — Diagnóstico | Auditar frontend e backend; planejar TCC e testes | Quatro em paralelo | Backlog priorizado e matriz de permissões aprovada |
-| 3 — Contratos | Definir perfis, APIs, dados e arquivos compartilhados | Pessoas 1 e 2 | Contrato disponível para implementação |
-| 4 — Implementação | Corrigir interface, servidor e banco em lotes | Pessoas 1 e 2 | Lotes integrados e verificações registradas |
-| 5 — Documentação contínua | Escrever capítulos e revisar fontes dos diagramas | Pessoa 3; Pessoa 4 prepara README/slides | Texto compatível com a versão integrada |
-| 6 — Validação | Executar testes, corrigir e retestar | Pessoa 4 coordena; Pessoas 1 e 2 corrigem | Sem falhas bloqueantes nos fluxos exigidos |
-| 7 — Fechamento | Congelar versão, gerar documentos finais e ensaiar | Todos | Documento, diagramas e slides da mesma versão |
-| 8 — Publicação | Publicar acessos autorizados e conferir anonimato | Pessoa 4 com a equipe | Links reais e acessíveis para avaliação |
+Não há prazo oficial informado e **não há ordem obrigatória entre as frentes**. Cada pessoa executa a própria sequência e conclui o seu entregável; o encontro acontece no repositório, por contratos publicados e verificações registradas.
 
-**Prioridade:** autorização e persistência → fluxos principais → testes → fidelidade documental → apresentação. Melhorias estéticas não devem impedir a correção de falhas de acesso.
+| Frente | Sequência própria | Conclui quando |
+| --- | --- | --- |
+| Pessoa 1 — Identidade e administração | Remover segredos → sessão no servidor → papéis e RLS → painel real → testes | Hierarquia não contornável, com testes registrados |
+| Pessoa 2 — Catálogo e negócio | Diagnóstico → persistência → checkout e verificação de loja → estados de UI → testes | Jornada completa com dados persistidos e simulações rotuladas |
+| Pessoa 3 — Documento e diagramas | Modelo e lacunas → estrutura → capítulos → diagramas → revisão final | TCC e diagramas legíveis, com pendências explícitas |
+| Pessoa 4 — Verificação e entrega | Ambiente próprio → plano e testes → README → slides → links | Evidências reais e links verificados |
+
+**Ponto de encontro — não é portão:** contratos em `docs/etapa-5/contratos/`, verificações do CI e `STATUS-EXECUCAO.md` atualizado. Qualquer frente pode avançar sem que as outras tenham terminado.
+
+**Prioridade técnica:** autorização e persistência → fluxos principais → testes → fidelidade documental → apresentação. Melhorias estéticas não devem impedir a correção de falhas de acesso.
 
 ### Modelo de Daily Scrum
 
@@ -452,22 +473,31 @@ Criar as pastas conforme necessário, sem duplicar arquivos grandes nem versiona
 
 ```text
 docs/etapa-5/
+  DOCUMENTO-FINAL-DE-EXECUCAO.md
   PLANO-EQUIPE-E-PROMPTS.md
-  pessoa-1/
-    diagnostico-frontend.md
-    registro-implementacao.md
-    repasse-frontend.md
-  pessoa-2/
-    auditoria-backend.md
+  STATUS-EXECUCAO.md
+  referencias/
+  contratos/
     matriz-permissoes.md
     contrato-integracao.md
-    registro-backend.md
-    repasse-backend.md
-  pessoa-3/
+    contrato-catalogo.md
+  diagnosticos/
+    frontend.md
+    backend.md
+    incidente-credenciais-expostas.md
+  pessoa-1/   # identidade, acesso e administração
+    auditoria-identidade.md
+    registro-implementacao.md
+    estado-identidade.md
+  pessoa-2/   # catálogo, negócio e comunidade
+    diagnostico-catalogo.md
+    registro-implementacao.md
+    estado-catalogo.md
+  pessoa-3/   # TCC, requisitos e diagramas
     requisitos-documentais.md
     revisao-diagramas.md
     tcc/
-  pessoa-4/
+  pessoa-4/   # verificação, publicação e entrega
     plano-testes.md
     relatorio-testes.md
     backlog-falhas.md
@@ -488,7 +518,7 @@ Uma tarefa só está pronta quando:
 3. Foi verificada por execução ou revisão apropriada, com evidência.
 4. Não depende de segredo ou arquivo privado escondido para o avaliador conseguir utilizá-la conforme as instruções.
 5. Está descrita de forma coerente no README, nos diagramas e no TCC, quando aplicável.
-6. Foi revisada por outra pessoa da equipe.
+6. Foi verificada com evidência reproduzível e auto-revisão registrada; revisão cruzada é bem-vinda, mas não é condição de conclusão.
 
 **Não é conclusão:** “o Arena disse que está pronto”, “o botão aparece”, “o build passou”, “o PDF foi gerado” ou “o link funciona apenas na minha conta”. Build não substitui teste funcional, e diagrama exportado não garante legibilidade.
 
@@ -524,10 +554,10 @@ Preencher somente depois de verificar os nomes e os links. Não entregar os camp
 ```text
 Nome do Aplicativo => [grafia oficial aprovada]
 Nome em ordem númerica de cada integrante da Equipe =>
-1. [Nome completo — Frontend]
-2. [Nome completo — Backend e banco]
-3. [Nome completo — TCC e diagramas]
-4. [Nome completo — Testes, apresentação e entrega]
+1. [Nome completo — Identidade, acesso e administração]
+2. [Nome completo — Catálogo, negócio e comunidade]
+3. [Nome completo — TCC, requisitos e diagramas]
+4. [Nome completo — Verificação, apresentação e entrega]
 
 Link do aplicativo no GitHub => [URL pública verificada]
 Link da Apresentação => [URL de leitura no Google Slides ou PowerPoint Online]
@@ -538,4 +568,4 @@ O SQL e o README devem estar localizáveis no repositório. Se o professor exigi
 
 ---
 
-**Resumo:** Pessoa 1 constrói e revisa a interface; Pessoa 2 garante regras, dados e segurança; Pessoa 3 transforma o sistema real em TCC e diagramas; Pessoa 4 valida, organiza a apresentação e confere a entrega. Todos participam das reuniões, revisam o resultado da IA e ensaiam a apresentação.
+**Resumo:** cada integrante responde por uma frente independente e por um entregável completo. Pessoa 1 entrega identidade, acesso e administração; Pessoa 2 entrega catálogo, negócio e comunidade; Pessoa 3 entrega o TCC e os diagramas; Pessoa 4 entrega a verificação e a publicação. Ninguém depende da conclusão, da revisão ou da autorização de outra pessoa: as frentes se encontram nos contratos versionados e nas evidências do repositório. Todos participam das reuniões, conferem o próprio resultado e ensaiam a apresentação.
