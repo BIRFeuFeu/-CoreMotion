@@ -1,6 +1,6 @@
 # GOVERNANÇA E GUIA DE ENGENHARIA — PROJETO COREMOTIOM
 
-Este documento estabelece os padrões técnicos, regras de ramificação (Git Flow), qualidade de código e arquitetura para a equipe de 5 desenvolvedores do CoreMotiom.
+Este documento estabelece os padrões técnicos, regras de ramificação (Git Flow), qualidade de código e arquitetura do CoreMotiom. O projeto é mantido por quatro integrantes organizados em **frentes independentes**, cada uma responsável por um escopo completo (interface, servidor e dados).
 
 ---
 
@@ -15,15 +15,15 @@ Este documento estabelece os padrões técnicos, regras de ramificação (Git Fl
 
 ---
 
-## 2. Git Flow Pragmático (Equipe de 5 Pessoas)
+## 2. Git Flow Pragmático (Quatro Frentes Independentes)
 
 ### Branch `main` Protegida
 - A branch `main` representa o ambiente de produção estável.
 - **Commits diretos na `main` são estritamente proibidos.**
 - Todo merge para a `main` exige:
   1. Pull Request (PR) aberto.
-  2. Pelo menos 1 revisão e aprovação (code review) de outro membro da equipe.
-  3. Sucesso completo na pipeline do GitHub Actions (`npm run ci`).
+  2. Sucesso completo na pipeline do GitHub Actions (`npm run ci`).
+  3. Revisão cruzada é recomendada e registrada no PR, mas **não é bloqueante**: cada frente verifica e responde pelo próprio escopo.
 
 ### Padrão de Nomenclatura de Branches
 Crie sua branch a partir da `main` atualizada seguindo a convenção:
